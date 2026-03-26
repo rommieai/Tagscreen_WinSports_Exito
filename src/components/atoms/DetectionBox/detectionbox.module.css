@@ -1,0 +1,18 @@
+.box {
+  position: fixed;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.box::before {
+  content: "";
+  background: url("../../../public/images/scanner_bg.svg") center no-repeat;
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+  left: -40px;
+  top: 0;
+  position: absolute;
+  transform: scale(1.5);
+}

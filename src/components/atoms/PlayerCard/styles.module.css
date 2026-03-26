@@ -1,0 +1,53 @@
+.card {
+  color: white;
+  padding: 20px;
+  width: 320px;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.brand {
+  color: white;
+  font-size: 20px;
+}
+
+.infoBox {
+  background: #0099ff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.club {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.logo {
+  width: 25px;
+  height: 25px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.socials {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+}

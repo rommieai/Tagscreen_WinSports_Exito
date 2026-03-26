@@ -1,0 +1,76 @@
+{
+  "boxes": [
+    {
+      "id": 0,
+      "trigger": "box",
+      "nombre": "Audífonos Inalámbricos",
+      "descuento": 35,
+      "precioSin": 99990,
+      "precioCon": 64990,
+      "imagen": "/images/products/audifonos-inalambricos.png",
+      "link": "https://articulo.mercadolibre.cl/MLC-1807926804"
+    },
+    {
+      "id": 1,
+      "trigger": "box",
+      "nombre": "Smart TV Qled 50",
+      "descuento": 35,
+      "precioSin": 499990,
+      "precioCon": 323653,
+      "imagen": "/images/products/smar-tv-qled.png",
+      "link": "https://www.mercadolibre.cl/smart-tv-qled-50-50q6qv-4k/p/MLC53505423"
+    },
+    {
+      "id": 2,
+      "trigger": "box",
+      "nombre": "Smart TV Qled 50",
+      "descuento": 35,
+      "precioSin": 499990,
+      "precioCon": 323653,
+      "imagen": "/images/products/smar-tv-qled.png",
+      "link": "https://www.mercadolibre.cl/smart-tv-qled-50-50q6qv-4k/p/MLC53505423"
+    },
+    {
+      "id": 3,
+      "trigger": "box",
+      "nombre": "Escritorio Ciriaca Vintage",
+      "descuento": 38,
+      "precioSin": 65490,
+      "precioCon": 39990,
+      "imagen": "/images/products/escritorio-ciriaca.png",
+      "link": "https://articulo.mercadolibre.cl/MLC-2838240670"
+    }
+  ],
+  "logos": [
+    {
+      "id": 0,
+      "trigger": "logo",
+      "nombre": "Zapatilla Puma",
+      "descuento": 30,
+      "precioSin": 49990,
+      "precioCon": 34990,
+      "imagen": "/images/products/zapatilla-puma.png",
+      "link": "https://articulo.mercadolibre.cl/MLC-1783599575"
+    },
+    {
+      "id": 1,
+      "trigger": "logo",
+      "nombre": "Apple iPhone 15",
+      "descuento": 31,
+      "precioSin": 979990,
+      "precioCon": 669990,
+      "imagen": "/images/products/iphone-15.png",
+      "link": "https://articulo.mercadolibre.cl/MLC-2065809674"
+    },
+    {
+      "id": 2,
+      "trigger": "logo",
+      "nombre": "Kit Kaiak Natura",
+      "descuento": 43,
+      "precioSin": 44490,
+      "precioCon": 24990,
+      "imagen": "/images/products/kit-natura.png",
+      "link": "https://www.mercadolibre.cl/kit-kaiak-oceano-femenino-natura/up/MLCU3809386434"
+    }
+  ]
+}

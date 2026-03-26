@@ -1,0 +1,10 @@
+.main_app {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  height: 100dvh;
+  overflow: hidden;
+  overflow-y: auto;
+}

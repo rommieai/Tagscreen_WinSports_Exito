@@ -1,0 +1,103 @@
+.notification_container {
+  position: absolute;
+  left: 50%;
+  top: 110px;
+  transform: translate(-50%, 0);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+}
+
+.container_message {
+  border-radius: 10px;
+  border: 2px solid #fff;
+  background: #fff;
+  padding: 6px 34px 7px 12px;
+  min-width: 225px;
+  transition: all 0.4s linear;
+}
+
+.container_message a {
+  width: 100%;
+  text-decoration: none !important;
+}
+
+.container_message svg {
+  position: absolute;
+  left: -33px;
+  top: 50%;
+  transform: translate(0, -50%);
+  transform-origin: center top;
+}
+
+.container_message p {
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 10px;
+  margin: 0;
+}
+
+.container_message svg path {
+  transition: all 0.4s linear;
+}
+
+.bell_animate svg {
+  animation: bell-swing 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+.ico_notification {
+  position: absolute;
+  right: -11px;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  border: solid 2px #0a0080;
+  overflow: hidden;
+}
+
+.ico_notification img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes bell-swing {
+  0% {
+    transform: rotate(0deg) translate(0, -50%);
+  }
+  10% {
+    transform: rotate(-15deg) translate(0, -50%);
+  }
+  20% {
+    transform: rotate(10deg) translate(0, -50%);
+  }
+  30% {
+    transform: rotate(-10deg) translate(0, -50%);
+  }
+  40% {
+    transform: rotate(7deg) translate(0, -50%);
+  }
+  50% {
+    transform: rotate(-7deg) translate(0, -50%);
+  }
+  60% {
+    transform: rotate(5deg) translate(0, -50%);
+  }
+  70% {
+    transform: rotate(-3deg) translate(0, -50%);
+  }
+  80% {
+    transform: rotate(2deg) translate(0, -50%);
+  }
+  90% {
+    transform: rotate(-1deg) translate(0, -50%);
+  }
+  100% {
+    transform: rotate(0deg) translate(0, -50%);
+  }
+}

@@ -1,0 +1,132 @@
+.containerInput {
+  border-radius: 20px;
+  border: 1px solid #0a0080;
+  background: #fff;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 96%;
+  height: 40px;
+  margin: 0 auto 10px;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  font-size: 13px;
+  padding: 3px 6px 3px;
+  padding-right: 18px;
+  z-index: 9;
+  transform: translate(-50%, 0);
+  max-width: 336px;
+}
+
+.containerInput input {
+  font-size: 13px;
+  padding: 6px 10px 4px;
+  width: 100%;
+}
+
+.textInput {
+  color: #7e7e7e;
+  text-align: center;
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+  display: inline-block;
+  text-align: center;
+  letter-spacing: -0.286px;
+  padding-left: 54px;
+}
+
+.containerInput input::placeholder {
+  font-size: 13px;
+  padding: 6px 10px 4px;
+}
+
+.logoChat {
+  width: 37px;
+  margin-right: 6px;
+}
+
+.logoChat img {
+  height: auto;
+  width: 100%;
+}
+
+.containerInput input {
+  display: block;
+  width: 100%;
+  padding: 0;
+}
+
+.containerInput input {
+  outline: none;
+}
+
+.containerInput input,
+.containerInput input::placeholder {
+  color: #000;
+  background-color: transparent;
+  font-family: "Inter";
+  font-size: 12px;
+  padding-right: 17px;
+  font-weight: 600;
+  border: none;
+  letter-spacing: -0.121px;
+}
+
+.containerInput input::placeholder {
+  opacity: 0.5;
+}
+
+.subMenu {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0px);
+  display: flex;
+  top: -37px;
+  align-items: center;
+  z-index: 5;
+  padding-bottom: 5px;
+  overflow-x: scroll;
+}
+
+.itemMenu {
+  border-radius: 7px;
+  background: #32347a;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-align: center;
+  font-family: "Inter";
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px 3px;
+  margin-left: 8px;
+  flex: 0 0 auto;
+  min-width: 160px;
+}
+
+.icoSend {
+  position: absolute;
+  top: 28%;
+  right: 16px;
+}
+
+.avatarImage {
+  border-radius: 50%;
+  border: solid #0a0080 2px;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  overflow: hidden;
+  left: -1px;
+  top: -1px;
+  position: absolute;
+}
+
+.avatarImage img {
+  height: 100%;
+  object-fit: cover !important;
+  width: 100%;
+}

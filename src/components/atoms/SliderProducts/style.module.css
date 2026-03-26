@@ -1,0 +1,125 @@
+.sliderWrapper {
+  overflow: hidden;
+  flex: 1;
+  position: relative;
+}
+
+.slidesTrack {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.productCard {
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.productImage {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.productInfo h3 {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.navButton {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.content {
+  background-size: cover;
+}
+.productTitle {
+  color: black;
+  margin: 0;
+  font-size: 6px;
+  font-weight: 400;
+  line-height: 7px;
+}
+
+.productTitle strong {
+  font-weight: 800;
+}
+
+.buyButton {
+  border-radius: 24.223px;
+  background: #011c63;
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 6px;
+  font-weight: 700;
+  padding: 2px 11px 3px;
+  display: block;
+  width: 54px;
+  margin: 2px auto 0;
+  text-transform: uppercase;
+}
+
+.sliderContainer {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0;
+  box-sizing: border-box;
+  height: 102px;
+}
+
+.sliderViewport {
+  overflow: hidden;
+  flex: 1;
+  position: relative;
+  border-radius: 12px;
+  height: 102px;
+}
+
+.track {
+  display: flex;
+  height: 102px;
+  will-change: transform;
+}
+
+.productSlide {
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0;
+  min-height: 102px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5px;
+}

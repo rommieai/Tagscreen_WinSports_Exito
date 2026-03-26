@@ -1,0 +1,19 @@
+.messageBasic {
+  border-radius: 0 10.183px 10.183px 10.183px;
+  background: #fff;
+  box-shadow: -4.073px 4.073px 4.073px 0 rgba(0, 0, 0, 0.3);
+  padding: 12px;
+  margin-bottom: 24px;
+  text-align: left;
+  max-width: 252px;
+}
+
+.messageBasic p {
+  color: #000;
+  font-family: Inter;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+  letter-spacing: -0.132px;
+  margin: 0;
+}

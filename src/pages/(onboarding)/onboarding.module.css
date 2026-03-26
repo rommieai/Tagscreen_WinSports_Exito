@@ -1,0 +1,76 @@
+.onboardingContainer {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background: #ffd101;
+  width: 100%;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+}
+
+.title {
+  color: #0a0080;
+  text-align: center;
+  font-family: "Inter";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+  line-height: 24px;
+  margin: 0;
+  padding: 0 20px;
+}
+
+.video {
+  max-width: 220px;
+  margin: 14px 0 12px;
+  border-radius: 20px;
+}
+
+.title strong {
+  font-weight: 900;
+}
+
+.nextBtn {
+  padding: 8px 42px;
+  border-radius: 200px;
+  background: #0a0080;
+  color: #fff;
+  text-align: center;
+  font-family: "Inter";
+  font-size: 16px;
+  font-weight: 700;
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+}
+
+.nextBtn:hover {
+  background-color: #ffffff;
+  color: #383838;
+}
+
+.skipBtn {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.skipBtn span {
+  color: #fff;
+  text-align: right;
+  font-family: "Inter";
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.286px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+@media (max-width: 390px) {
+  .video {
+    max-width: 190px;
+  }
+}

@@ -1,0 +1,99 @@
+.modalChat {
+  border-radius: 10px;
+  border-radius: 12px;
+  background: #ffd100;
+  padding: 0;
+  text-align: center;
+  position: relative;
+  height: 100%;
+  max-height: 240px;
+  padding-bottom: 10px;
+}
+
+.chatContainer {
+  overflow-y: scroll;
+  padding-top: 26px;
+  padding-right: 43px;
+  padding-left: 34px;
+  height: 100%;
+}
+
+.logoBrand {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 30px;
+  height: 30px;
+}
+
+.messageWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: solid #0a0080 2px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+  font-size: 0.75rem;
+  position: absolute;
+  top: -17px;
+  left: -17px;
+}
+
+.avatar img {
+  width: 100%;
+  height: auto;
+}
+
+.userChoice {
+  display: flex;
+  justify-content: right;
+}
+
+div.userChoice div {
+  margin: 0 0 20px;
+  padding: 10px 20px;
+  max-width: 254px;
+  border-radius: 10px 0 10px 10px;
+}
+
+.messageBubble {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  border-top-left-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  max-width: 85%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.messageText {
+  color: #1f2937;
+  font-size: 0.875rem;
+  white-space: pre-line;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.choiceBtn {
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 15px;
+  border-radius: 50px;
+  background: #011c63;
+  padding: 10px;
+  max-width: 254px;
+  margin: 0 auto 8px;
+  filter: drop-shadow(-4px 4px 4px rgba(0, 0, 0, 0.3));
+}

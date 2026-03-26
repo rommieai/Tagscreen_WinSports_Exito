@@ -1,0 +1,92 @@
+.container {
+  position: fixed; /* Usamos fixed para que se mantenga al hacer scroll */
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 300px; /* Cuadro pequeño */
+  z-index: 999; /* Capa superior */
+  padding: 10px 20px;
+  font-family: monospace;
+  font-weight: 800;
+  border-radius: 12px;
+  background-color: #111;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada para efecto flotante */
+}
+
+/* Título más pequeño para el cuadro pequeño */
+.container h2 {
+  font-size: 1.2rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #0f0;
+  margin-bottom: 20px;
+}
+
+.button {
+  width: 100%; /* Botón ancho completo */
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  transition: background 0.3s;
+}
+
+.button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.recording {
+  background-color: #dc3545 !important;
+  animation: pulse 1.5s infinite;
+}
+
+.status {
+  margin: 15px 0;
+  font-size: 0.9rem;
+  color: #007bff;
+}
+
+.resultBox {
+  margin-top: 15px;
+  border-radius: 6px;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.resultBox h3 {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+}
+
+.error {
+  color: #dc3545;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  background-color: #fff5f5;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.audioControl {
+  width: 100%;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}

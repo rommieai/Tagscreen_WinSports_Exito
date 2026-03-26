@@ -1,0 +1,81 @@
+.cardModalOverlay {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 340px;
+  max-width: 340px;
+  max-height: 279px;
+  display: flex;
+  z-index: 4;
+}
+
+.cardModalContent {
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+}
+
+.cardContainer {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.boxInfo {
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255, 228, 0, 0.2) 0%, #ffe400 100%);
+  padding: 37px 16px 12px 25px;
+  max-width: 316px;
+}
+
+.playerPick {
+  background: linear-gradient(
+    180deg,
+    rgba(200, 31, 35, 0.05) 0%,
+    rgba(200, 31, 35, 0.34) 30.69%,
+    #c81f23 100%
+  );
+}
+
+.brandInfo {
+  background: linear-gradient(180deg, rgba(90, 35, 137, 0.3) 0%, #a2138e 100%);
+  padding: 41px 26px 17px;
+}
+
+.playerInfo {
+  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  padding: 45px 33px 13px;
+}
+
+.trivia {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+}
+
+.goal {
+  background: linear-gradient(180deg, rgba(0, 16, 99, 0.05) 0%, #001063 100%);
+}
+
+.product {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, #fff 100%);
+}
+
+.joseModal {
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  padding: 45px 33px 13px;
+}

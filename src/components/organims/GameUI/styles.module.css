@@ -1,0 +1,151 @@
+.totalDetections {
+  position: absolute;
+  top: 84%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-weight: bold;
+  padding: 8px 15px;
+  font-size: 15px;
+  background: red;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+.dataGeneral {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+  overflow-y: scroll;
+  width: 100%;
+  z-index: 99999;
+}
+
+.itemData {
+  padding: 5px 10px;
+  background-color: blue;
+  color: #fff;
+  font-size: 10px;
+  border-radius: 20px;
+  min-width: 106px;
+}
+
+.itemData strong {
+  color: black;
+}
+
+.dataFaces {
+  position: absolute;
+  top: 40px;
+  left: 7px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.dataFaces h3 {
+  color: white;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.faceItem {
+  padding: 5px 10px;
+  background-color: rgb(255, 0, 204);
+  color: #fff;
+  font-size: 10px;
+  border-radius: 20px;
+  min-width: 120px;
+}
+
+.faceItem strong {
+  font-weight: 800;
+  color: black;
+}
+
+.dataJerseys {
+  position: absolute;
+  top: 90px;
+  left: 7px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.dataJerseys h3 {
+  color: white;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.jerseyItem {
+  padding: 5px 10px;
+  background-color: rgb(255, 0, 204);
+  color: #fff;
+  font-size: 10px;
+  border-radius: 20px;
+  min-width: 120px;
+}
+
+.dataEvents {
+  position: absolute;
+  top: 140px;
+  left: 7px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.dataEvents h3 {
+  color: white;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.eventItem {
+  padding: 5px 10px;
+  background-color: rgb(255, 0, 204);
+  color: #fff;
+  font-size: 10px;
+  border-radius: 20px;
+  min-width: 120px;
+}
+
+.dataTopEvent {
+  position: absolute;
+  top: 200px;
+  left: 7px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.dataTopEvents h3 {
+  color: white;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.topEventItem {
+  padding: 5px 10px;
+  background-color: rgb(255, 0, 204);
+  color: #fff;
+  font-size: 10px;
+  border-radius: 20px;
+  min-width: 120px;
+}

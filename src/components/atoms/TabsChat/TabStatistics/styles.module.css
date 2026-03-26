@@ -1,0 +1,110 @@
+.card {
+  background-color: #1434cb; /* Azul rey intenso */
+  color: white;
+  border-radius: 20px;
+  padding: 21px 27px;
+  width: 100%;
+  font-family: "Inter";
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  margin-bottom: 25px;
+}
+
+.teamBox {
+  background-color: white;
+  color: #050a30; /* Azul muy oscuro */
+  font-weight: 900;
+  font-size: 16px;
+  padding: 2px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  min-width: 64px;
+}
+
+.titleBox {
+  background-color: #00003e; /* Azul casi negro */
+  color: white;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 2px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-width: 120px;
+}
+
+.statsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.statRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}
+
+.number {
+  color: #ffbc00;
+  font-weight: 900;
+  font-size: 11px;
+  width: 40px;
+  text-align: center;
+}
+
+.line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 0 10px;
+}
+
+.label {
+  color: white;
+  font-weight: 500;
+  font-size: 11px;
+  text-align: center;
+  min-width: 160px;
+  position: relative;
+}
+
+.label::before {
+  content: "";
+  width: 41px;
+  background-color: #fff;
+  height: 1px;
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.label::after {
+  content: "";
+  width: 41px;
+  background-color: #fff;
+  height: 1px;
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
