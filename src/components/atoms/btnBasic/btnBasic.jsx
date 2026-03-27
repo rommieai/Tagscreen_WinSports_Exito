@@ -2,18 +2,14 @@ import { Link } from "react-router";
 import styles from "./styles.module.css";
 
 export default function BntBasic({ text, link, onClick }) {
-  if (link) {
+
     return (
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.btn_basic}
+      <Link
+        to={link}
+        className={styles.btnBasic}
         onClick={onClick}
       >
         {text}
-      </a>
+      </Link>
     );
-  }
-  return <div className={styles.btn_basic}>{text}</div>;
 }

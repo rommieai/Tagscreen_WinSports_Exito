@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { useState } from "react";
+import BtnBasic from "../../components/atoms/btnBasic/btnBasic";
 import styles from "./home.module.css";
 export default function Home() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -39,19 +40,14 @@ export default function Home() {
         }}
       >
         <img
-          src="/images/logos/logo-mercadolibre.png"
+          src="/images/logos/logo-main-home.svg"
           alt="Permisos"
-          style={{ width: "188px", height: "188px" }}
+          style={{ width: "177px", height: "70px" }}
           className={styles.logoMain}
         />
         {import.meta.env.VITE_APP_OFF !== "true" && (
-          <Link
-            className={`${styles.btnMain} ${!acceptedTerms ? styles.disabled : ""}`}
-            to="/onboarding"
-            onClick={handleContinueClick}
-          >
-            Comenzar
-          </Link>
+          <BtnBasic text="Comenzar" link="/onboarding" onClick={handleContinueClick} />
+          //${styles.btnMain} ${!acceptedTerms ? styles.disabled : ""}
         )}
 
         <div className={styles.termsContainer}>
@@ -64,13 +60,22 @@ export default function Home() {
             />
           </label>
           <p>
-            {!showError ? "He leído y acepto" : "Acepta"} los
+            {!showError ? "He leído y acepto" : "Acepta"} los{' '}
             <a
-              href="https://www.13.cl/programas/noticias-13/servicios-especiales/terminos-y-condiciones-zapoutmercadolibre"
+              href="#"
               target="_blank"
               onClick={handleTermsLinkClick}
             >
-              Términos y Condiciones.
+              Términos y Condiciones
+            </a>
+            <br></br>
+            y la{' '} 
+            <a
+              href="#"
+              target="_blank"
+              onClick={handleTermsLinkClick}
+            >
+              Política de Privacidad.
             </a>
           </p>
         </div>
