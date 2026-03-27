@@ -3,33 +3,17 @@
   min-width: 390px;
   height: 100dvh;
   width: 100%;
+  background: #FFE600;
+  background-size: cover;
 }
 
 .user_permissions {
   position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 28%;
+  left: 51%;
+  transform: translate(-50%, -50%);
+  top: 56%;
   text-align: center;
   transition: all 0.2s linear;
-}
-
-.btnMain {
-  padding: 8px 42px;
-  border-radius: 200px;
-  background: #0a0080;
-  color: #fff;
-  text-align: center;
-  font-family: "Inter";
-  font-size: 16px;
-  display: inline-block;
-  font-weight: 700;
-  transition: all 0.2s ease-in-out;
-}
-
-.btnMain:hover {
-  background-color: #ffffff;
-  color: #383838;
 }
 
 .error_message {
@@ -40,33 +24,20 @@
 }
 
 .logoMain {
-  width: 188px;
-  height: 188px;
-  max-height: 188px;
-  max-width: 188px;
-  margin-bottom: 18px;
-}
-
-.home_container {
-  background: #ffd100;
-  background-size: cover;
-}
-
-.termsContainer {
-  position: relative;
+  margin-bottom: 32px;
 }
 
 .termsLabel {
   position: absolute;
-  left: -25px;
+  left: -20px;
   top: 0;
-  border: 2px solid #000;
-  border-radius: 1px;
+  border: 2px solid #2B2B2B;
+  border-radius: 4px;
   cursor: pointer;
   background: transparent;
   width: 16px;
   height: 16px;
-  accent-color: #000;
+  accent-color: #2B2B2B;
 }
 
 .termsLabel input {
@@ -81,20 +52,21 @@
 }
 
 .termsContainer {
-  margin: 22px 0 0;
+  position: relative;
+  margin: 33px 0 0;
 }
 
 .termsContainer p {
-  color: #000;
+  color: #2B2B2B;
   text-align: center;
   margin: 0;
   font-family: "Inter";
-  font-size: 12px;
-  width: 278px;
+  font-size: 10px;
+  width: 237px;
 }
 
 .termsContainer a {
   font-weight: 700;
-  color: #000 !important;
+  color: #2B2B2B !important;
   text-decoration: underline;
 }
