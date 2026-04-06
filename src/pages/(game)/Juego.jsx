@@ -16,14 +16,14 @@ import {
 } from "../../context/CardModal/CardModalContext";
 import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudio";
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
+  authDomain: "tagscreenwin.firebaseapp.com",
+  databaseURL: "https://tagscreenwin-default-rtdb.firebaseio.com",
+  projectId: "tagscreenwin",
+  storageBucket: "tagscreenwin.firebasestorage.app",
+  messagingSenderId: "428382701077",
+  appId: "1:428382701077:web:a67f0e0ad89339bf91701c",
+  measurementId: "G-K0WFV4949D"
 };
 
 const Juego = () => {
@@ -64,7 +64,7 @@ const Juego = () => {
     productIndexRef.current = (productIndexRef.current + 1) % productSequence.length;
   };
 
-  const { events, isConnected, error, stats, getServiceStats } =
+  const { events, isConnected, error, stats, getServiceStats, downloadEventsJson } =
     useFirebaseEvents(firebaseConfig, {
       maxEvents: 1,
       autoConnect: isStream && audioOffset !== null,
@@ -141,6 +141,12 @@ const Juego = () => {
 
     startCamera();
 
+    setTimeout(() => {
+      console.log('print')
+      openModal(MODAL_TYPES.MINUTE_TO_MINUTE, 'data');
+    }, 3000);
+
+
     return () => {
       stream?.getTracks().forEach((track) => track.stop());
     };
@@ -187,10 +193,14 @@ const Juego = () => {
             />
           </>
         )}
-        {/*<DetectorAudio onAudioDetection={handleAudioDetection} />*/}
+        {/* Testing products, download events json, audiodetect */}
+        {/*<DetectorAudio onAudioDetection={handleAudioDetection} />
         <button className={css.cleanButton} onClick={handleProductButton}>
           Producto
         </button>
+        <button className={css.cleanButton} onClick={downloadEventsJson} style={{ top: "60px", background: "#f00" }}>
+          Desc. JSON
+        </button>*/}
         {!isTvDetected && (
           <div className={css.container}>
             <GameUI />

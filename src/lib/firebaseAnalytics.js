@@ -7,7 +7,7 @@ import {
   setUserProperties,
 } from "firebase/analytics";
 
-const firebaseConfig = {
+/* const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
@@ -16,13 +16,24 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+}; */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
+  authDomain: "tagscreenwin.firebaseapp.com",
+  databaseURL: "https://tagscreenwin-default-rtdb.firebaseio.com",
+  projectId: "tagscreenwin",
+  storageBucket: "tagscreenwin.firebasestorage.app",
+  messagingSenderId: "428382701077",
+  appId: "1:428382701077:web:a67f0e0ad89339bf91701c",
+  measurementId: "G-K0WFV4949D"
 };
 
 let appInstance = null;
 let analyticsInstance = null;
 let analyticsInitPromise = null;
 
-function getFirebaseApp() {
+export function getFirebaseApp() {
   if (appInstance) return appInstance;
   appInstance = getApps().length ? getApp() : initializeApp(firebaseConfig);
   return appInstance;
