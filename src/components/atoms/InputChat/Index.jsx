@@ -50,13 +50,13 @@ export default function InputChat({ stateComponent }) {
     >
       <div className={styles.avatarImage}>
         <img
-          src="/images/avatar/mensajero-avatar.png"
+          src="/images/icons/ico-input-chat.svg"
           alt="Mensajero Meli"
         ></img>
       </div>
       {!inputClicked && (
         <p className={styles.textInput}>
-          Soy tu mensajero ¡escríbeme tus dudas!
+          Toca aquí y resolveré tus dudas
         </p>
       )}
 
