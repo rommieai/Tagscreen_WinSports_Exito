@@ -112,7 +112,7 @@ const Juego = () => {
   useEffect(() => {
     let stream = null;
 
-    triggerNotification("firstNotification");
+    triggerNotification("initNotification");
 
     const startCamera = async () => {
       try {

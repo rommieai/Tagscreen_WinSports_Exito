@@ -13,9 +13,9 @@ export const notificationsConfig = [
   },
   {
     id: "n4",
-    text: "Toca el chat abajo y el mensajero responderá todas tus preguntas 🤪",
+    text: "Busca la camiseta de tu jugador favorito y gana descuentos únicos",
     type: "time",
-    triggerKey: "firstNotification",
+    triggerKey: "initNotification",
   },
   {
     id: "n5",
