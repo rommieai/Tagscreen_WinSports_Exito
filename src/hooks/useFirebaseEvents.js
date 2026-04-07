@@ -40,6 +40,7 @@ export function useFirebaseEvents(config, options = {}) {
   const eventBufferRef = useRef([]);
   const flushTimeoutRef = useRef(null);
   const lastTimestampRef = useRef(null);
+  const rawEventsLogRef = useRef([]); // Ref para almacenar todos los eventos que llegan para descargar
 
   const getCurrentMinuteKey = useCallback(
     (date = null) => {
@@ -57,6 +58,23 @@ export function useFirebaseEvents(config, options = {}) {
     },
     [audioOffset],
   );
+
+  const downloadEventsJson = useCallback(() => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(rawEventsLogRef.current, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", `firebase_events_${new Date().toISOString().replace(/[:.]/g, '-')}.json`);
+    document.body.appendChild(downloadAnchorNode); 
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }, []);
+
+  useEffect(() => {
+    window.downloadFirebaseEvents = downloadEventsJson;
+    return () => {
+      delete window.downloadFirebaseEvents;
+    };
+  }, [downloadEventsJson]);
 
   const flushEventBuffer = useCallback(() => {
     if (eventBufferRef.current.length === 0) return;
@@ -177,7 +195,7 @@ export function useFirebaseEvents(config, options = {}) {
 
         currentMinuteKeyRef.current = minuteKey;
 
-        const eventsPath = `program_events/${minuteKey}/events`;
+        const eventsPath = `apiopta/live_feed/5ff653se2gnpi4y9a4nus4xec`;
         const eventsRef = ref(dbRef.current, eventsPath);
         currentMinuteRef.current = eventsRef;
 
@@ -251,6 +269,11 @@ export function useFirebaseEvents(config, options = {}) {
         const listenerCallback = (snapshot) => {
           const eventKey = snapshot.key;
           const eventData = snapshot.val();
+
+          console.log("eventKey", eventKey)
+          console.log("Evento:", eventData);
+          
+          rawEventsLogRef.current.push(eventData);
 
           if (minuteKey !== currentMinuteKeyRef.current) {
             return;
@@ -403,6 +426,7 @@ export function useFirebaseEvents(config, options = {}) {
     stats,
     clearEvents,
     forceRefresh,
+    downloadEventsJson,
     getServiceStats: () => ({
       isInitialized: !!dbRef.current,
       currentMinute: currentMinuteKeyRef.current,

@@ -6,6 +6,8 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import ModalChat from "../../molecules/Modals/ModalChat/ModalChat";
 import ModalProduct from "../../molecules/Modals/ModalProduct/ModalProduct";
+import ModalTrivia from "../../molecules/Modals/ModalTrivia/Index";
+import ModalMinuteToMinute from "../../molecules/Modals/ModalMinuteToMinute/ModalMinuteToMinute";
 import { useActiveComponents } from "../../../context/ActiveChatContext";
 import { useTarget } from "../../../context/TargetContext";
 import { useEffect, useRef } from "react";
@@ -92,6 +94,10 @@ export default function CardModal() {
         return <ModalProduct data={modalData} onClose={closeModal} />;
       case MODAL_TYPES.CHAT:
         return <ModalChat data={modalData} onClose={closeModal} />;
+      case MODAL_TYPES.TRIVIA:
+        return <ModalTrivia data={modalData} onClose={closeModal} />;
+      case MODAL_TYPES.MINUTE_TO_MINUTE:
+        return <ModalMinuteToMinute data={modalData} onClose={closeModal} />;
       default:
         return null;
     }
@@ -100,6 +106,8 @@ export default function CardModal() {
   const typeClassMap = {
     [MODAL_TYPES.PRODUCT]: style.product,
     [MODAL_TYPES.CHAT]: style.chatModal,
+    [MODAL_TYPES.TRIVIA]: style.trivia,
+    [MODAL_TYPES.MINUTE_TO_MINUTE]: style.minuteToMinute,
   };
 
   const handleClick = (name) => {
