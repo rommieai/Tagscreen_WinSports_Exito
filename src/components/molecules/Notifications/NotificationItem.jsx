@@ -28,7 +28,7 @@ export default function NotificationItem({ notification }) {
               <p dangerouslySetInnerHTML={{ __html: notification }}></p>
               <div className={styles.ico_notification}>
                 <img
-                  src="/images/logos/logo-meli-notification.png"
+                  src="/images/logos/logo-notification.svg"
                   alt="Logo Mercado Libre Notifacion"
                 />
               </div>

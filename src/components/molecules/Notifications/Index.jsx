@@ -25,10 +25,6 @@ export default function Notifications() {
   useEffect(() => {
     if (!activeNotifications) return;
 
-    const timer = setTimeout(() => {
-      setTextNotification(false);
-    }, 15000);
-
     return () => clearTimeout(timer);
   }, [activeNotifications]);
 
