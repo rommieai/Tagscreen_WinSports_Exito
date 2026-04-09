@@ -19,6 +19,8 @@ export default function ModalProduct({ data, onClose }) {
       setProductoActual(productos.boxes[data.num_caja]);
     } else if (data.type === "logo" && Array.isArray(productos.logos)) {
       setProductoActual(productos.logos[data.num_logo]);
+    } else if (data.type === "jersey" && data.team && productos.jerseys?.[data.team]) {
+      setProductoActual(productos.jerseys[data.team]);
     }
   }, []);
 
@@ -28,8 +30,9 @@ export default function ModalProduct({ data, onClose }) {
     <div className={styles.modalProduct}>
       <div className={styles.containerProduct}>
         <h3 className={styles.titleProduct}>
-          ¡ENCONTRASTE UN PRODUCTO <br></br>CON {productoActual.descuento}% DE
-          DESCUENTO!
+          {data?.type === "jersey"
+            ? `¡DETECTAMOS LA CAMISETA DE ${productoActual.team?.toUpperCase()}! ${productoActual.descuento}% OFF`
+            : `¡ENCONTRASTE UN PRODUCTO CON ${productoActual.descuento}% DE DESCUENTO!`}
         </h3>
         <div className={styles.productInfo}>
           <div className={styles.productImage}>

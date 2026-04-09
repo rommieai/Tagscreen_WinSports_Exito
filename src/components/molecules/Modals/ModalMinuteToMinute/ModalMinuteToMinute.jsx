@@ -5,14 +5,14 @@ import styles from "./styles.module.css";
 import Message from "./Message";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
-  authDomain: "tagscreenwin.firebaseapp.com",
-  databaseURL: "https://tagscreenwin-default-rtdb.firebaseio.com",
-  projectId: "tagscreenwin",
-  storageBucket: "tagscreenwin.firebasestorage.app",
-  messagingSenderId: "428382701077",
-  appId: "1:428382701077:web:a67f0e0ad89339bf91701c",
-  measurementId: "G-K0WFV4949D"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "tagscreenwin.firebaseapp.com",
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL || "https://tagscreenwin-default-rtdb.firebaseio.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "tagscreenwin",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "tagscreenwin.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "428382701077",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:428382701077:web:a67f0e0ad89339bf91701c",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
 };
 const STORAGE_KEY = "match_commentary_1470618";
 
