@@ -266,6 +266,32 @@ export function useFirebaseEvents(config, options = {}) {
           }
         }
 
+        const saveCommentaryToStorage = (eventData) => {
+          if (!eventData?.current) return;
+
+          const comment = eventData.current.comment;
+          const minute = eventData.current.minute ?? "";
+
+          if (!comment) return;
+
+          try {
+            const stored = localStorage.getItem("match_comentaries");
+            const list = stored ? JSON.parse(stored) : [];
+
+            // Evitar duplicados consecutivos
+            const last = list[list.length - 1];
+            if (last && last.comment === comment) return;
+
+            list.push({ comment, minute, savedAt: Date.now() });
+            localStorage.setItem("match_comentaries", JSON.stringify(list));
+
+            // Disparar evento para que el modal lo detecte en tiempo real
+            window.dispatchEvent(new Event("match_comentaries_updated"));
+          } catch (e) {
+            console.warn("Error guardando en localStorage:", e);
+          }
+        };
+
         const listenerCallback = (snapshot) => {
           const eventKey = snapshot.key;
           const eventData = snapshot.val();
@@ -275,7 +301,11 @@ export function useFirebaseEvents(config, options = {}) {
           
           rawEventsLogRef.current.push(eventData);
 
+          // Guardar comentario en localStorage si eventData tiene .current
+          saveCommentaryToStorage(eventData);
+
           if (minuteKey !== currentMinuteKeyRef.current) {
+            console.log('is minute!!')
             return;
           }
 

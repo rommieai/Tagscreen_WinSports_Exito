@@ -141,11 +141,6 @@ const Juego = () => {
 
     startCamera();
 
-    setTimeout(() => {
-      console.log('print')
-      openModal(MODAL_TYPES.MINUTE_TO_MINUTE, 'data');
-    }, 3000);
-
 
     return () => {
       stream?.getTracks().forEach((track) => track.stop());

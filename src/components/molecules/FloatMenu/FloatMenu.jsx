@@ -3,12 +3,12 @@ import style from "./styles.module.css";
 
 const menuItems = [
   {
-    image: "icons/ico-mminute-minute.png",
+    image: "icons/ico-minute-minute.svg",
     type: "minutetominute",
     name: "Minuto a Minuto",
   },
   {
-    image: "icons/ico-shop.png",
+    image: "icons/ico-bag.svg ",
     type: "cart",
     name: "Tienda",
   },
