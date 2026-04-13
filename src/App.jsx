@@ -4,6 +4,8 @@ import { ResultadoProvider } from "./context/ResultadoContext";
 import Home from "./pages/(home)/Home";
 import Juego from "./pages/(game)/Juego";
 import Onboarding from "./pages/(onboarding)/Onboarding";
+import Mock from "./pages/(mock)/Mock";
+import Demo from "./pages/(demo)/Demo";
 import css from "@/app.module.css";
 import { ActiveComponentsProvider } from "./context/ActiveChatContext";
 import { CardModalProvider } from "./context/CardModal";
@@ -35,6 +37,8 @@ function App() {
                   <>
                     <Route path="/juego" element={<Juego />} />
                     <Route path="/onboarding" element={<Onboarding />} />
+                    <Route path="/mock" element={<Mock />} />
+                    <Route path="/demo" element={<Demo />} />
                   </>
                 )}
               </Routes>

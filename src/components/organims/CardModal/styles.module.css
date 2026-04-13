@@ -85,4 +85,5 @@
   background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
   padding: 43px 28px 28px 20px;
   height: 240px;
+  overflow-y: auto;
 }
