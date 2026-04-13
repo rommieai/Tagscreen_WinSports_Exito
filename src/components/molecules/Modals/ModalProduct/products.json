@@ -72,5 +72,51 @@
       "imagen": "/images/products/kit-natura.png",
       "link": "https://www.mercadolibre.cl/kit-kaiak-oceano-femenino-natura/up/MLCU3809386434"
     }
-  ]
+  ],
+  "jerseys": {
+    "Millonarios": {
+      "id": 0,
+      "trigger": "jersey",
+      "team": "Millonarios",
+      "nombre": "Camiseta Oficial Millonarios 2025",
+      "descuento": 25,
+      "precioSin": 189990,
+      "precioCon": 142490,
+      "imagen": "/images/products/smar-tv-qled.png",
+      "link": "https://www.mercadolibre.com.co/camiseta-millonarios"
+    },
+    "Santa Fe": {
+      "id": 1,
+      "trigger": "jersey",
+      "team": "Santa Fe",
+      "nombre": "Camiseta Oficial Santa Fe 2025",
+      "descuento": 25,
+      "precioSin": 189990,
+      "precioCon": 142490,
+      "imagen": "/images/products/zapatilla-puma.png",
+      "link": "https://www.mercadolibre.com.co/camiseta-santafe"
+    },
+    "Nacional": {
+      "id": 2,
+      "trigger": "jersey",
+      "team": "Nacional",
+      "nombre": "Camiseta Oficial Atl. Nacional 2025",
+      "descuento": 30,
+      "precioSin": 199990,
+      "precioCon": 139990,
+      "imagen": "/images/products/kit-natura.png",
+      "link": "https://www.mercadolibre.com.co/camiseta-nacional"
+    },
+    "DIM": {
+      "id": 3,
+      "trigger": "jersey",
+      "team": "DIM",
+      "nombre": "Camiseta Oficial DIM 2025",
+      "descuento": 30,
+      "precioSin": 189990,
+      "precioCon": 132990,
+      "imagen": "/images/products/audifonos-inalambricos.png",
+      "link": "https://www.mercadolibre.com.co/camiseta-dim"
+    }
+  }
 }
