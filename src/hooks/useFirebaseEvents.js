@@ -195,7 +195,8 @@ export function useFirebaseEvents(config, options = {}) {
 
         currentMinuteKeyRef.current = minuteKey;
 
-        const eventsPath = `apiopta/live_feed/5ff653se2gnpi4y9a4nus4xec`;
+        const fixtureId = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
+        const eventsPath = `apiopta/live_feed/${fixtureId}`;
         const eventsRef = ref(dbRef.current, eventsPath);
         currentMinuteRef.current = eventsRef;
 

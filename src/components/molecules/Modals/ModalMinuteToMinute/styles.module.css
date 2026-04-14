@@ -1,3 +1,11 @@
+.modalMinuteToMinute {
+  overflow-y: auto;
+  max-height: 100%;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+}
+
 .messageBurble {
   border-radius: 0 10px 10px 10px;
   display: inline-block;
