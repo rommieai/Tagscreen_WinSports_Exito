@@ -18,7 +18,7 @@ import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudi
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "tagscreenwin.firebaseapp.com",
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL || "https://tagscreenwin-default-rtdb.firebaseio.com",
+  databaseURL: "https://tagscreen-default-rtdb.firebaseio.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "tagscreenwin",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "tagscreenwin.firebasestorage.app",
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "428382701077",
@@ -156,7 +156,6 @@ const Juego = () => {
   const trackedJerseysRef = useRef(new Set());
 
   useEffect(() => {
-    console.log("Events:", events);
     if (events.length === 0) return;
 
     const ultimoEvento = events[events.length - 1];
@@ -201,10 +200,13 @@ const Juego = () => {
           setJerseyToast({ team: bestJersey.team, confidence: bestJersey.confidence });
           if (jerseyToastTimerRef.current) clearTimeout(jerseyToastTimerRef.current);
           jerseyToastTimerRef.current = setTimeout(() => setJerseyToast(null), 4000);
+
+          triggerNotification(`jersey${bestJersey.team}`);
+          openModal(MODAL_TYPES.AWARD, { type: "jersey", team: bestJersey.team });
         } else {
+          triggerNotification(`jersey${bestJersey.team}`);
+          openModal(MODAL_TYPES.AWARD, { type: "jersey", team: bestJersey.team });
           // Prod: full product modal with discount
-          triggerNotification("recogBox");
-          openModal(MODAL_TYPES.PRODUCT, { type: "jersey", team: bestJersey.team });
         }
 
         // Allow re-triggering after 30s so user can see it again
@@ -245,8 +247,11 @@ const Juego = () => {
       }
     };
 
-    startCamera();
+    //startCamera();
 
+    setTimeout(() => {
+      openModal(MODAL_TYPES.AWARD);
+    }, 3000);
 
     return () => {
       stream?.getTracks().forEach((track) => track.stop());
