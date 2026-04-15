@@ -1,21 +1,24 @@
 export const notificationsConfig = [
   {
     id: "n2",
-    text: "¡Encontraste a Pri! Toca arriba y sigue sus consejos ;)",
+    text: "¡Encontraste una camiseta de Millonarios!",
+    img: "/images/notifications/jerseyMillonarios.png",
     type: "trigger",
-    triggerKey: "priscillavargas",
+    triggerKey: "jerseyMillonarios",
   },
   {
     id: "n3",
-    text: "¡Ahí está José! Toca arriba y pregunta por la Caja Mágica 😱",
+    text: "¡Encontraste una camiseta de Independiente Medellín!",
+    img: "/images/notifications/jerseyMedellin.png",
     type: "time",
-    triggerKey: "joseluisrepentina",
+    triggerKey: "jerseyMedellin",
   },
   {
     id: "n4",
-    text: "Busca la camiseta de tu jugador favorito y gana descuentos únicos",
+    text: "¡Encontraste una camiseta de Atlético Nacional!",
+    img: "/images/notifications/jerseyNacional.png",
     type: "time",
-    triggerKey: "initNotification",
+    triggerKey: "jerseyNacional",
   },
   {
     id: "n5",
