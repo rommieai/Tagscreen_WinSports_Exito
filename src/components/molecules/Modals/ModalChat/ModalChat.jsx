@@ -13,14 +13,14 @@ const chatFlow = {
       id: "n0",
       type: "intro",
       messages: [
-        "¡Hola! Soy tu mensajero de Mercado Libre. Pronto verás las cajas y logos en pantalla, las notificaciones te avisarán cuándo escanearlos. ¡No te desconectes! 🙌",
+        "Hola, soy el narrador Éxito. A medida que avanza el partido podrás escanear las camisetas de tu equipo favorito y recibirás grandes sorpresas. ¡Mantente conectado!",
         "Toca abajo para seguir charlando 😉",
       ],
     },
     n1: {
       id: "n1",
       type: "menu",
-      messages: ["¡Hola! Soy tu mensajero 😉 ¿Qué quieres preguntarme hoy?"],
+      messages: ["¿Qué quieres saber?"],
       options: [
         { text: "¿Qué tengo que hacer?", next: "n2" },
         { text: "¿Cuáles son los premios?", next: "n3" },
@@ -31,7 +31,8 @@ const chatFlow = {
       id: "n2",
       type: "respuesta",
       messages: [
-        "Encuentra los logos y cajas de Mercado Libre, escanéalos y encuentra productos en descuento :) ¿Hay algo más que me quieras preguntar?",
+        "Escanea las camisetas de los jugadores y encuentra productos con descuentos increíbles en Éxito. 🙂",
+        "¿Hay algo más que me quieras preguntar?",
       ],
       options: [
         { text: "¿Cuáles son los premios?", next: "n3" },
@@ -43,7 +44,8 @@ const chatFlow = {
       id: "n3",
       type: "respuesta",
       messages: [
-        "¡Podrás encontrar productos con descuentos increíbles en Mercado Libre! ¿Quieres que te explique algo más? 😉",
+        "Podrás encontrar productos con descuentos increíbles en Éxito.",
+        "¿Quieres que te explique algo más? 😉",
       ],
       options: [
         { text: "¿Qué tengo que hacer?", next: "n2" },
@@ -55,7 +57,8 @@ const chatFlow = {
       id: "n4",
       type: "respuesta",
       messages: [
-        "Sigue viendo Tu Día hasta el 3 de marzo y encuentra productos increíbles 🤗 ¿Quieres que te explique algo más? 😉",
+        "Con Win y Almacenes Éxito podrás buscar ofertas en todas las fechas del torneo. No dejes de buscar tus productos favoritos. ¡Cada partido es una oportunidad!",
+        "¿Quieres que te explique algo más? 😉",
       ],
       options: [
         { text: "¿Qué tengo que hacer?", next: "n2" },
@@ -182,8 +185,8 @@ export default function ModalChat({ data, onClose }) {
                     className={styles.avatar}
                   >
                     <img
-                      src="/images/avatar/mensajero-avatar.png"
-                      alt="Mensajero"
+                      src="/icons/ico-input-chat.svg"
+                      alt="Avatar bot"
                     />
                   </motion.div>
                   <MessageBasic message={message.text} />

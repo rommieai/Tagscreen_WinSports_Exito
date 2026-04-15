@@ -1,7 +1,6 @@
 .modalChat {
-  border-radius: 10px;
   border-radius: 12px;
-  background: #ffd100;
+  background: var(--Degrade, linear-gradient(180deg, rgba(255, 230, 0, 0.30) 0%, #FFE600 100%));
   padding: 0;
   text-align: center;
   position: relative;
@@ -16,6 +15,10 @@
   padding-right: 43px;
   padding-left: 34px;
   height: 100%;
+}
+
+.chatContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .logoBrand {
@@ -59,10 +62,11 @@
   justify-content: right;
 }
 
-div.userChoice div {
+div.userChoice a {
   margin: 0 0 20px;
-  padding: 10px 20px;
   max-width: 254px;
+  font-size: 13px;
+  padding: 10px 12px;
   border-radius: 10px 0 10px 10px;
 }
 
@@ -91,7 +95,7 @@ div.userChoice div {
   font-weight: 700;
   line-height: 15px;
   border-radius: 50px;
-  background: #011c63;
+  background: #2B2B2B;
   padding: 10px;
   max-width: 254px;
   margin: 0 auto 8px;
