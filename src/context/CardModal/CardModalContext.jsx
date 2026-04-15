@@ -11,6 +11,7 @@ export const MODAL_TYPES = {
   PRODUCT: "product",
   CHAT: "chat",
   BRAND_INFO: "brandInfo",
+  AWARD: "award",
 };
 
 const CardModalContext = createContext(null);
