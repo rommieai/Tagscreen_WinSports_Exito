@@ -1,13 +1,9 @@
 .awardWrapper {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
   border-radius: 0 10px 10px 10px;
   background: url("/images/backgrounds/bg-modal-bag.jpg") no-repeat center center/cover;
-  gap: 8px;
-  padding: 24px 20px 15px;
-  box-sizing: border-box;
+  padding: 16px 20px 15px;
 }
 
 .header {
@@ -25,6 +21,30 @@
   text-transform: uppercase;
 }
 
+.awardCard {
+  height: 100%;
+  width: 110px;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userChoice {
+  display: flex;
+  justify-content: right;
+}
+
+div.userChoice a {
+  margin: 0 0 20px;
+  max-width: 254px;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 10px 0 10px 10px;
+}
+
 .headerTitle {
   color: #000;
   text-align: center;
@@ -34,25 +54,33 @@
   margin-bottom: 13px;
 }
 
-.swiper {
+.scrollContainer {
   width: 100%;
   flex: 1;
-  border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  gap: 15px;
+  scrollbar-width: none;
+  padding: 4px 7px;
 }
 
-/* ── Slide ── */
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
 .slide {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 10px 14px 24px;
   box-sizing: border-box;
   text-align: center;
-  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 5.362px 1.072px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
+  max-width: 110px;
+  height: 123px;
+  width: 100%;
 }
 
 .slideEmoji {
@@ -84,14 +112,4 @@
   color: rgba(255, 255, 255, 0.75);
   margin: 0;
   line-height: 1.4;
-}
-
-/* Swiper pagination dots */
-.swiper :global(.swiper-pagination-bullet) {
-  background: rgba(255, 255, 255, 0.4);
-  opacity: 1;
-}
-
-.swiper :global(.swiper-pagination-bullet-active) {
-  background: #ffcc00;
 }
