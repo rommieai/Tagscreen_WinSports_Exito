@@ -58,14 +58,6 @@
   padding: 45px 33px 13px;
 }
 
-.trivia {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.9) 100%
-  );
-}
-
 .goal {
   background: linear-gradient(180deg, rgba(0, 16, 99, 0.05) 0%, #001063 100%);
 }
@@ -93,6 +85,14 @@
 }
 
 .award {
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  padding: 32px 20px 16px;
+  height: 240px;
+  overflow: hidden;
+}
+
+.trivia {
   border-radius: 10px;
   background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
   padding: 32px 20px 16px;

@@ -18,13 +18,13 @@ import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudi
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "tagscreenwin.firebaseapp.com",
-  databaseURL: "https://tagscreen-default-rtdb.firebaseio.com",
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL || "https://tagscreenwin-default-rtdb.firebaseio.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "tagscreenwin",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "tagscreenwin.firebasestorage.app",
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "428382701077",
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:428382701077:web:a67f0e0ad89339bf91701c",
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
-};
+};  
 
 const isTestMode = import.meta.env.VITE_TEST_MODE === "true";
 
@@ -201,8 +201,6 @@ const Juego = () => {
           if (jerseyToastTimerRef.current) clearTimeout(jerseyToastTimerRef.current);
           jerseyToastTimerRef.current = setTimeout(() => setJerseyToast(null), 4000);
 
-          triggerNotification(`jersey${bestJersey.team}`);
-          openModal(MODAL_TYPES.AWARD, { type: "jersey", team: bestJersey.team });
         } else {
           triggerNotification(`jersey${bestJersey.team}`);
           openModal(MODAL_TYPES.AWARD, { type: "jersey", team: bestJersey.team });

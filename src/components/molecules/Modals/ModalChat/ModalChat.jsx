@@ -7,74 +7,7 @@ import { useSession } from "../../../../context/Session/SessionContext";
 import { trackEvent } from "../../../../lib/firebaseAnalytics";
 import { useCardModal } from "../../../../context/CardModal/CardModalContext";
 
-const chatFlow = {
-  nodes: {
-    n0: {
-      id: "n0",
-      type: "intro",
-      messages: [
-        "Hola, soy el narrador Éxito. A medida que avanza el partido podrás escanear las camisetas de tu equipo favorito y recibirás grandes sorpresas. ¡Mantente conectado!",
-        "Toca abajo para seguir charlando 😉",
-      ],
-    },
-    n1: {
-      id: "n1",
-      type: "menu",
-      messages: ["¿Qué quieres saber?"],
-      options: [
-        { text: "¿Qué tengo que hacer?", next: "n2" },
-        { text: "¿Cuáles son los premios?", next: "n3" },
-        { text: "¿Solo puedo ganar hoy?", next: "n4" },
-      ],
-    },
-    n2: {
-      id: "n2",
-      type: "respuesta",
-      messages: [
-        "Escanea las camisetas de los jugadores y encuentra productos con descuentos increíbles en Éxito. 🙂",
-        "¿Hay algo más que me quieras preguntar?",
-      ],
-      options: [
-        { text: "¿Cuáles son los premios?", next: "n3" },
-        { text: "¿Solo puedo ganar hoy?", next: "n4" },
-        { text: "Nada más 😉", next: "fin", end: true },
-      ],
-    },
-    n3: {
-      id: "n3",
-      type: "respuesta",
-      messages: [
-        "Podrás encontrar productos con descuentos increíbles en Éxito.",
-        "¿Quieres que te explique algo más? 😉",
-      ],
-      options: [
-        { text: "¿Qué tengo que hacer?", next: "n2" },
-        { text: "¿Solo puedo ganar hoy?", next: "n4" },
-        { text: "Nada más 😉", next: "fin", end: true },
-      ],
-    },
-    n4: {
-      id: "n4",
-      type: "respuesta",
-      messages: [
-        "Con Win y Almacenes Éxito podrás buscar ofertas en todas las fechas del torneo. No dejes de buscar tus productos favoritos. ¡Cada partido es una oportunidad!",
-        "¿Quieres que te explique algo más? 😉",
-      ],
-      options: [
-        { text: "¿Qué tengo que hacer?", next: "n2" },
-        { text: "¿Cuáles son los premios?", next: "n3" },
-        { text: "Nada más 😉", next: "fin", end: true },
-      ],
-    },
-    fin: {
-      id: "fin",
-      type: "fin",
-      messages: ["¡Genial! Aquí estaré por si me necesitas de nuevo 😉"],
-      options: [{ text: "Seguir jugando", next: "fin", end: true }],
-    },
-  },
-  start: "n0",
-};
+import chatFlow from "./data.json";
 
 export default function ModalChat({ data, onClose }) {
   const [messages, setMessages] = useState([]);
@@ -95,7 +28,7 @@ export default function ModalChat({ data, onClose }) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, options]);
 
   useEffect(() => {
     if (autoOpenRef.current) {
@@ -112,9 +45,7 @@ export default function ModalChat({ data, onClose }) {
   useEffect(() => {
     if (chatActivated && !activatedRef.current) {
       activatedRef.current = true;
-      setCurrentNode(chatFlow.nodes.n1);
-      setOptions(chatFlow.nodes.n1.options);
-      scrollToBottom();
+      loadNode("n1");
     }
   }, [chatActivated]);
 
@@ -137,6 +68,8 @@ export default function ModalChat({ data, onClose }) {
     addBotMessages(node.messages, () => {
       if (node.next) {
         setTimeout(() => loadNode(node.next), 400);
+      } else if (node.type === "fin") {
+        setTimeout(() => onClose(), 1000);
       } else if (node.options) {
         setOptions(node.options);
       }
@@ -209,9 +142,6 @@ export default function ModalChat({ data, onClose }) {
                 className={styles.choiceBtn}
                 onClick={() => {
                   handleOption(option);
-                  if (option.next === "fin") {
-                    onClose();
-                  }
                 }}
               >
                 {option.text}
