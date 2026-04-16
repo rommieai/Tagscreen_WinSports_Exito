@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onChildAdded, query, orderByChild } from "firebase/database";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import styles from "./styles.module.css";
 import Message from "./Message";
@@ -14,7 +14,7 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:428382701077:web:a67f0e0ad89339bf91701c",
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
 };
-const STORAGE_KEY = "match_commentary_1470618";
+const STORAGE_KEY = "match_commentary_1470618_v2";
 
 export default function ModalMinuteToMinute() {
   const [commentaries, setCommentaries] = useState(() => {
@@ -32,47 +32,32 @@ export default function ModalMinuteToMinute() {
   }, [commentaries]);
 
   useEffect(() => {
-    console.log("ModalMinuteToMinute realtime");
-    
-    // Yo agregaré el fixture_id luego
-    const fixture_id = "5ff653se2gnpi4y9a4nus4xec"; 
-    
-    let app;
-    if (!getApps().length) {
-      app = initializeApp(firebaseConfig);
-    } else {
-      app = getApp();
-    }
-    
+    const fixture_id = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
+
+    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
     const db = getDatabase(app);
-    const feedRef = ref(db, `apiopta/live_feed/${fixture_id}`);
+    const historyRef = query(
+      ref(db, `apiopta/live_feed/${fixture_id}/minute_by_minute/history`),
+      orderByChild("generated_at_utc"),
+    );
 
-    const unsubscribe = onValue(feedRef, (snapshot) => {
-      const data = snapshot.val();
-      
-      console.log("Toda la respuesta:", data);
-      
-      if (data) {
-        console.log("Texto en vivo:", data?.minute_by_minute?.current?.summary);
-        console.log("Evento relevante:", data?.important_event?.current);
-        console.log("Video URL:", data?.important_event?.current?.clip?.url_path);
-        console.log("Contexto general del partido:", data?.match);
+    const seen = new Set();
+    const unsubscribe = onChildAdded(historyRef, (snapshot) => {
+      const entry = snapshot.val();
+      if (!entry) return;
 
-        const summary = data?.minute_by_minute?.current?.summary;
-        const minuteText = data?.minute_by_minute?.current?.minute || '';
+      const key = snapshot.key || entry.generated_at_utc || `${entry.minute}-${entry.summary}`;
+      if (seen.has(key)) return;
+      seen.add(key);
 
-        if (summary) {
-          setCommentaries((prev) => {
-            const lastItem = prev[prev.length - 1];
+      const summary = entry.summary;
+      const minute = entry.minute ?? "";
+      if (!summary) return;
 
-            if (lastItem && lastItem.commentary === summary) {
-              return prev;
-            }
-
-            return [...prev, { commentary: summary, minute: minuteText }];
-          });
-        }
-      }
+      setCommentaries((prev) => {
+        if (prev.some((item) => item.key === key)) return prev;
+        return [...prev, { key, commentary: summary, minute: String(minute) }];
+      });
     });
 
     return () => unsubscribe();
@@ -81,7 +66,7 @@ export default function ModalMinuteToMinute() {
   return (
     <div className={styles.modalMinuteToMinute}>
       {commentaries.map((item, index) => (
-        <Message key={index} minute={item.minute} text={item.commentary} />
+        <Message key={item.key || index} minute={item.minute} text={item.commentary} />
       ))}
     </div>
   );
