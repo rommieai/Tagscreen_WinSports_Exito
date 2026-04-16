@@ -21,7 +21,7 @@ export default function FloatMenu() {
    if (type === "minutetominute") {
      openModal(MODAL_TYPES.MINUTE_TO_MINUTE, 'data');
    } else if (type === "cart") {
-     openModal(MODAL_TYPES.CART, 'data');
+     openModal(MODAL_TYPES.AWARD);
    }
  };
 
