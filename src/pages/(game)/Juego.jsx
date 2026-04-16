@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { TargetProvider } from "../../context/TargetContext";
 import css from "./juego.module.css";
 import GameUI from "../../components/organims/GameUI/Index";
@@ -15,16 +15,7 @@ import {
   MODAL_TYPES,
 } from "../../context/CardModal/CardModalContext";
 import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudio";
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "tagscreenwin.firebaseapp.com",
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL || "https://tagscreenwin-default-rtdb.firebaseio.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "tagscreenwin",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "tagscreenwin.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "428382701077",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:428382701077:web:a67f0e0ad89339bf91701c",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
-};  
+
 
 const isTestMode = import.meta.env.VITE_TEST_MODE === "true";
 
@@ -69,6 +60,17 @@ const Juego = () => {
     openModal(MODAL_TYPES.PRODUCT, data);
     productIndexRef.current = (productIndexRef.current + 1) % productSequence.length;
   };
+
+  const firebaseConfig = useMemo(() => ({
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "tagscreenwin.firebaseapp.com",
+    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL || "https://tagscreenwin-default-rtdb.firebaseio.com",
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "tagscreenwin",
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "tagscreenwin.firebasestorage.app",
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "428382701077",
+    appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:428382701077:web:a67f0e0ad89339bf91701c",
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
+  }), []);
 
   const { events, isConnected, error, stats, getServiceStats, downloadEventsJson } =
     useFirebaseEvents(firebaseConfig, {
@@ -247,10 +249,6 @@ const Juego = () => {
 
     //startCamera();
 
-    setTimeout(() => {
-      openModal(MODAL_TYPES.AWARD);
-    }, 3000);
-
     return () => {
       stream?.getTracks().forEach((track) => track.stop());
     };
@@ -301,7 +299,7 @@ const Juego = () => {
         )}
         {/* Match time display — prominent pill, top-right */}
         {events.length > 0 && events[0]?.md?.match_time && (
-          <div style={{
+          <div className="match-time" style={{
             position: "absolute",
             top: 12,
             right: 12,
