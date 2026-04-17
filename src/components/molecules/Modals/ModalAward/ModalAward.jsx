@@ -22,7 +22,7 @@ const DUMMY_SLIDES = [
 
 const DISABLED_SLIDES = Array.from({ length: 4 }).map((_, index) => ({
   id: `disabled-${index}`,
-  image: "public/images/products/disabled-product-1.png",
+  image: "/images/products/disabled-product-1.png",
   title: "Premio Bloqueado",
   locked: true,
 }));

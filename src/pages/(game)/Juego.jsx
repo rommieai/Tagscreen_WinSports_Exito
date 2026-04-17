@@ -17,7 +17,7 @@ import {
 import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudio";
 
 
-const isTestMode = import.meta.env.VITE_TEST_MODE === "true";
+const isTestMode = import.meta.env.VITE_TEST_MODE === 'true';
 
 const Juego = () => {
   const gamePageRef = useRef(null);
@@ -227,7 +227,11 @@ const Juego = () => {
       }
     };
 
-    //startCamera();
+    if (!isTestMode) {
+      startCamera();
+    }
+
+    console.log("isTestMode", isTestMode)
 
     return () => {
       stream?.getTracks().forEach((track) => track.stop());
@@ -237,6 +241,98 @@ const Juego = () => {
   return (
     <TargetProvider>
       <div className={css.game_page} ref={gamePageRef}>
+        { isTestMode && (
+          <>
+            {/* Match time display — prominent pill, top-right */}
+            {events.length > 0 && events[0]?.md?.match_time && (
+              <div className="match-time" style={{
+                position: "absolute",
+                top: 12,
+                right: 12,
+                zIndex: 9999,
+                background: "rgba(0,0,0,0.75)",
+                color: "#fff",
+                padding: "6px 14px",
+                borderRadius: 20,
+                fontSize: 18,
+                fontWeight: "bold",
+                fontFamily: "'Inter', monospace",
+                pointerEvents: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                backdropFilter: "blur(4px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}>
+                <span style={{ fontSize: 12, opacity: 0.7 }}>MIN</span>
+                <span>{events[0].md.match_time}</span>
+              </div>
+            )}
+
+            {/* Small jersey-detected toast (bottom-center, non-blocking) */}
+            {jerseyToast && (
+              <div style={{
+                position: "absolute",
+                bottom: 90,
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 9999,
+                background: "rgba(255, 209, 0, 0.95)",
+                color: "#0a0080",
+                padding: "8px 16px",
+                borderRadius: 20,
+                fontSize: 13,
+                fontWeight: 700,
+                fontFamily: "'Inter', sans-serif",
+                pointerEvents: "none",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                maxWidth: "80%",
+                whiteSpace: "nowrap",
+              }}>
+                <span>👕</span>
+                <span>{jerseyToast.team.toUpperCase()} · {Math.round(jerseyToast.confidence * 100)}%</span>
+              </div>
+            )}
+
+            {/* Debug banner: RTDB status + detections */}
+            <div style={{
+              position: "absolute",
+              top: 8,
+              left: 8,
+              zIndex: 9999,
+              background: isConnected ? "rgba(0,180,0,0.85)" : "rgba(200,0,0,0.85)",
+              color: "#fff",
+              padding: "4px 10px",
+              borderRadius: 8,
+              fontSize: 10,
+              fontFamily: "monospace",
+              pointerEvents: "none",
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}>
+              <span>{isConnected ? "RTDB OK" : "RTDB OFF"} | Ev: {stats.totalReceived}</span>
+              <span style={{ color: syncInfo ? "#7fffa1" : "#ffb37f" }}>
+                {syncInfo
+                  ? `SYNC ${syncInfo.matchTime || "?"} (+${syncInfo.offsetSec}s)`
+                  : "SYNC pending…"}
+              </span>
+              {events.length > 0 && events[0]?.md?.jerseys?.length > 0 && (
+                <span style={{ color: "#00ffcc" }}>
+                  Jersey: {events[0].md.jerseys.map(j => `${j.team}(${Math.round(j.confidence * 100)}%)`).join(", ")}
+                </span>
+              )}
+              {events.length > 0 && events[0]?.md?.objects?.length > 0 && (
+                <span style={{ color: "#ffff00" }}>
+                  {events[0].md.objects.map(o => `${o.type}(${Math.round(o.confidence * 100)}%)`).join(", ")}
+                </span>
+              )}
+            </div>
+          </>
+        ) }
         <TargetIco tvDetected={isTvDetected} audioState={audioDetected} />
         <div className={css.containerVideo}>
           <video
@@ -251,12 +347,9 @@ const Juego = () => {
             <div className={css.confidence}>Detectado: {confidence}%</div>
           )}
         </div>
+
         {(!isTvDetected || isTestMode) && (
           <>
-            {loading && !isTestMode && (
-              <div className={css.loading}>Cargando modelo de detección...</div>
-            )}
-
             {errorResponse && !isTestMode && <div className={css.error}>{errorResponse}</div>}
 
             {!isTestMode && (
@@ -272,96 +365,8 @@ const Juego = () => {
             )}
           </>
         )}
-        {/* Match time display — prominent pill, top-right */}
-        {events.length > 0 && events[0]?.md?.match_time && (
-          <div className="match-time" style={{
-            position: "absolute",
-            top: 12,
-            right: 12,
-            zIndex: 9999,
-            background: "rgba(0,0,0,0.75)",
-            color: "#fff",
-            padding: "6px 14px",
-            borderRadius: 20,
-            fontSize: 18,
-            fontWeight: "bold",
-            fontFamily: "'Inter', monospace",
-            pointerEvents: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            backdropFilter: "blur(4px)",
-            border: "1px solid rgba(255,255,255,0.2)",
-          }}>
-            <span style={{ fontSize: 12, opacity: 0.7 }}>MIN</span>
-            <span>{events[0].md.match_time}</span>
-          </div>
-        )}
 
-        {/* Small jersey-detected toast (bottom-center, non-blocking) */}
-        {jerseyToast && (
-          <div style={{
-            position: "absolute",
-            bottom: 90,
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 9999,
-            background: "rgba(255, 209, 0, 0.95)",
-            color: "#0a0080",
-            padding: "8px 16px",
-            borderRadius: 20,
-            fontSize: 13,
-            fontWeight: 700,
-            fontFamily: "'Inter', sans-serif",
-            pointerEvents: "none",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            maxWidth: "80%",
-            whiteSpace: "nowrap",
-          }}>
-            <span>👕</span>
-            <span>{jerseyToast.team.toUpperCase()} · {Math.round(jerseyToast.confidence * 100)}%</span>
-          </div>
-        )}
-
-        {/* Debug banner: RTDB status + detections */}
-        <div style={{
-          position: "absolute",
-          top: 8,
-          left: 8,
-          zIndex: 9999,
-          background: isConnected ? "rgba(0,180,0,0.85)" : "rgba(200,0,0,0.85)",
-          color: "#fff",
-          padding: "4px 10px",
-          borderRadius: 8,
-          fontSize: 10,
-          fontFamily: "monospace",
-          pointerEvents: "none",
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}>
-          <span>{isConnected ? "RTDB OK" : "RTDB OFF"} | Ev: {stats.totalReceived}</span>
-          <span style={{ color: syncInfo ? "#7fffa1" : "#ffb37f" }}>
-            {syncInfo
-              ? `SYNC ${syncInfo.matchTime || "?"} (+${syncInfo.offsetSec}s)`
-              : "SYNC pending…"}
-          </span>
-          {events.length > 0 && events[0]?.md?.jerseys?.length > 0 && (
-            <span style={{ color: "#00ffcc" }}>
-              Jersey: {events[0].md.jerseys.map(j => `${j.team}(${Math.round(j.confidence * 100)}%)`).join(", ")}
-            </span>
-          )}
-          {events.length > 0 && events[0]?.md?.objects?.length > 0 && (
-            <span style={{ color: "#ffff00" }}>
-              {events[0].md.objects.map(o => `${o.type}(${Math.round(o.confidence * 100)}%)`).join(", ")}
-            </span>
-          )}
-        </div>
-
-        {(!isTvDetected || isTestMode) && (
+        {(isTvDetected || isTestMode) && (
           <div className={css.container}>
             <GameUI />
             <GameModal />
