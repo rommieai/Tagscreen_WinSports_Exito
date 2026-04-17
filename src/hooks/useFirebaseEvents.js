@@ -9,6 +9,7 @@ import {
   query,
   orderByChild,
   startAt,
+  limitToLast,
 } from "firebase/database";
 
 export function useFirebaseEvents(config, options = {}) {
@@ -186,8 +187,6 @@ export function useFirebaseEvents(config, options = {}) {
 
       isTransitioningRef.current = true;
 
-      //console.log("📍 minuteKey a consultar:", minuteKey);
-     // console.log("📍 último minuteKey:", currentMinuteKeyRef.current);
 
       try {
         if (currentListenerRef.current && currentMinuteRef.current) {
@@ -208,7 +207,8 @@ export function useFirebaseEvents(config, options = {}) {
         const fixtureId = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
         const eventsPath = `apiopta/live_feed/${fixtureId}`;
         const eventsRef = ref(dbRef.current, eventsPath);
-        currentMinuteRef.current = eventsRef;
+        const qEventsRef = query(eventsRef, limitToLast(90));
+        currentMinuteRef.current = qEventsRef;
 
         if (!processedByMinuteRef.current.has(minuteKey)) {
           processedByMinuteRef.current.set(minuteKey, new Set());
@@ -218,7 +218,7 @@ export function useFirebaseEvents(config, options = {}) {
 
         if (skipExisting) {
           try {
-            const snapshot = await get(eventsRef);
+            const snapshot = await get(qEventsRef);
 
             if (snapshot.exists()) {
               const existingEvents = snapshot.val();
@@ -242,7 +242,7 @@ export function useFirebaseEvents(config, options = {}) {
                 startAt(lastTimestampRef.current),
               );
             } else {
-              q = eventsRef;
+              q = qEventsRef;
             }
 
             const snapshot = await get(q);
@@ -278,6 +278,7 @@ export function useFirebaseEvents(config, options = {}) {
         }
 
         const saveCommentaryToStorage = (eventData) => {
+          console.log(eventData)
           if (!eventData?.current) return;
 
           const comment = eventData.current.comment;
@@ -316,7 +317,6 @@ export function useFirebaseEvents(config, options = {}) {
           saveCommentaryToStorage(eventData);
 
           if (minuteKey !== currentMinuteKeyRef.current) {
-            console.log('is minute!!')
             return;
           }
 
@@ -336,7 +336,7 @@ export function useFirebaseEvents(config, options = {}) {
         };
 
         currentListenerRef.current = onChildAdded(
-          eventsRef,
+          qEventsRef,
           listenerCallback,
           (error) => {
             console.error("Error en listener:", error);

@@ -28,7 +28,7 @@ const Juego = () => {
   const [confidence, setConfidence] = useState(0);
   const [audioOffset, setAudioOffset] = useState(0);
   const { agregarResultado } = useResultado();
-  const { openModal, closeModal } = useCardModal();
+  const { openModal, closeModal, isOpen, modalType } = useCardModal();
   const isStream = import.meta.env.VITE_BACK_ACTIVE_STREAM === "true";
   const [boxRecognized, setIsBoxRecognized] = useState(false);
   const [audioDetected, setAudioDetected] = useState(null);
@@ -38,28 +38,6 @@ const Juego = () => {
   const [syncInfo, setSyncInfo] = useState(null); // { matchTime, matchTimeSeconds, offsetSec }
   const [jerseyToast, setJerseyToast] = useState(null); // { team, confidence }
   const jerseyToastTimerRef = useRef(null);
-
-  const productSequence = [
-    { type: "box", num: 0 },
-    { type: "box", num: 1 },
-    { type: "box", num: 2 },
-    { type: "box", num: 3 },
-    { type: "logo", num: 0 },
-    { type: "logo", num: 1 },
-    { type: "logo", num: 2 },
-  ];
-
-  const productIndexRef = useRef(0);
-
-  const handleProductButton = () => {
-    const current = productSequence[productIndexRef.current];
-    const data =
-      current.type === "box"
-        ? { type: "box", num_caja: current.num }
-        : { type: "logo", num_logo: current.num };
-    openModal(MODAL_TYPES.PRODUCT, data);
-    productIndexRef.current = (productIndexRef.current + 1) % productSequence.length;
-  };
 
   const firebaseConfig = useMemo(() => ({
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
@@ -196,26 +174,28 @@ const Juego = () => {
       );
 
       if (bestJersey && bestJersey.confidence >= 0.5 && !trackedJerseysRef.current.has(bestJersey.team)) {
-        trackedJerseysRef.current.add(bestJersey.team);
-        if (isTestMode) {
-          // Test mode: small non-blocking corner toast so the camera stays visible
-          setJerseyToast({ team: bestJersey.team, confidence: bestJersey.confidence });
-          if (jerseyToastTimerRef.current) clearTimeout(jerseyToastTimerRef.current);
-          jerseyToastTimerRef.current = setTimeout(() => setJerseyToast(null), 4000);
+        if (modalType != 'trivia') {
+          console.log('trivia')
+          trackedJerseysRef.current.add(bestJersey.team);
+          if (isTestMode) {
+            // Test mode: small non-blocking corner toast so the camera stays visible
+            setJerseyToast({ team: bestJersey.team, confidence: bestJersey.confidence });
+            if (jerseyToastTimerRef.current) clearTimeout(jerseyToastTimerRef.current);
+            jerseyToastTimerRef.current = setTimeout(() => setJerseyToast(null), 4000);
 
-        } else {
-          triggerNotification(`jersey${bestJersey.team}`);
-          openModal(MODAL_TYPES.AWARD, { type: "jersey", team: bestJersey.team });
-          // Prod: full product modal with discount
+          } else {
+            triggerNotification(`jersey${bestJersey.team}`);
+            openModal(MODAL_TYPES.TRIVIA, bestJersey.team );
+          }
+  
+          // Allow re-triggering after 30s so user can see it again
+          setTimeout(() => {
+            trackedJerseysRef.current.delete(bestJersey.team);
+          }, 30000);
         }
-
-        // Allow re-triggering after 30s so user can see it again
-        setTimeout(() => {
-          trackedJerseysRef.current.delete(bestJersey.team);
-        }, 30000);
       }
     }
-  }, [events, agregarResultado]);
+  }, [events, agregarResultado, isOpen, modalType]);
 
   useEffect(() => {
     let stream = null;
@@ -253,11 +233,6 @@ const Juego = () => {
       stream?.getTracks().forEach((track) => track.stop());
     };
   }, []);
-
-  const handleAudioDetection = (isAudioDetected, offset = 0) => {
-    setAudioDetected(isAudioDetected);
-    setAudioOffset(offset);
-  };
 
   return (
     <TargetProvider>
@@ -386,14 +361,6 @@ const Juego = () => {
           )}
         </div>
 
-        {/* Testing products, download events json, audiodetect */}
-        {/*<DetectorAudio onAudioDetection={handleAudioDetection} />
-        <button className={css.cleanButton} onClick={handleProductButton}>
-          Producto
-        </button>
-        <button className={css.cleanButton} onClick={downloadEventsJson} style={{ top: "60px", background: "#f00" }}>
-          Desc. JSON
-        </button>*/}
         {(!isTvDetected || isTestMode) && (
           <div className={css.container}>
             <GameUI />

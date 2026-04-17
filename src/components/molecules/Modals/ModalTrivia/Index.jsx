@@ -7,19 +7,25 @@ export default function ModalTrivia(equipo) {
     const [questionObj, setQuestionObj] = useState(null);
     const [selectedOptionId, setSelectedOptionId] = useState(null);
     const [showResult, setShowResult] = useState(false);
+    const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
         const teamKey = equipo.data;
 
-        if (teamKey && triviaData[teamKey]) {
-            const questions = triviaData[teamKey];
-            const randomIndex = Math.floor(Math.random() * questions.length);
+        if (teamKey) {
+            if (triviaData[teamKey]) {
+                const questions = triviaData[teamKey];
+                const randomIndex = Math.floor(Math.random() * questions.length);
 
-            setQuestionObj(questions[randomIndex]);
-            setSelectedOptionId(null);
-            setShowResult(false);
+                setQuestionObj(questions[randomIndex]);
+                setSelectedOptionId(null);
+                setShowResult(false);
+                setNotFound(false);
+            } else {
+                setNotFound(true);
+            }
         }
-    }, [equipo]);
+    }, [equipo.data]);
 
     const handleOptionClick = (optionId) => {
         if (showResult) return;
@@ -36,7 +42,7 @@ export default function ModalTrivia(equipo) {
             }
 
             let productToAdd = "";
-            if (equipo.data === 'MILL' || equipo.data === 'NAL') {
+            if (equipo.data === 'Millonarios' || equipo.data === 'Nacional') {
                 productToAdd = 'product_1';
             } else if (equipo.data === 'DIM' || equipo.data === 'SFE') {
                 productToAdd = 'product_2';
@@ -50,7 +56,7 @@ export default function ModalTrivia(equipo) {
         } catch (e) {
             console.error('Error manejando localStorage', e);
             let productToAdd = "";
-            if (equipo.data === 'MILL' || equipo.data === 'NAL') {
+            if (equipo.data === 'Millonarios' || equipo.data === 'Nacional') {
                 productToAdd = 'product_1';
             } else if (equipo.data === 'DIM' || equipo.data === 'SFE') {
                 productToAdd = 'product_2';
