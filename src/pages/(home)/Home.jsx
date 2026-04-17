@@ -19,6 +19,8 @@ export default function Home() {
     localStorage.removeItem("cajas");
     localStorage.removeItem("ObjectDetected");
     localStorage.removeItem("logos");
+    localStorage.removeItem("product");
+    localStorage.removeItem("current_match_commentary");
 
     if (!acceptedTerms) {
       e.preventDefault();

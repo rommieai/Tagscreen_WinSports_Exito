@@ -9,6 +9,7 @@ import { notificationsConfig } from "./notificationsConfig";
 export default function Notifications() {
   const { activeNotifications } = useNotifications();
   const [textNotification, setTextNotification] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (!activeNotifications) return;
@@ -20,15 +21,27 @@ export default function Notifications() {
     if (!notificationData) return;
 
     setTextNotification(notificationData?.text);
-  }, [activeNotifications]);
+    setVisible(true);
 
-  useEffect(() => {
-    if (!activeNotifications) return;
+    const timer = setTimeout(() => {
+      setVisible(false);
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, [activeNotifications]);
 
   return (
-    activeNotifications && <NotificationItem notification={textNotification} />
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          key={activeNotifications}
+          initial={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -40 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+        >
+          <NotificationItem notification={textNotification} />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
