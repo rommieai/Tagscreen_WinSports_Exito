@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { TargetProvider } from "../../context/TargetContext";
 import css from "./juego.module.css";
 import GameUI from "../../components/organims/GameUI/Index";
@@ -15,18 +15,9 @@ import {
   MODAL_TYPES,
 } from "../../context/CardModal/CardModalContext";
 import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudio";
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "tagscreenwin.firebaseapp.com",
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL || "https://tagscreenwin-default-rtdb.firebaseio.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "tagscreenwin",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "tagscreenwin.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "428382701077",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:428382701077:web:a67f0e0ad89339bf91701c",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
-};
 
-const isTestMode = import.meta.env.VITE_TEST_MODE === "true";
+
+const isTestMode = import.meta.env.VITE_TEST_MODE === 'true';
 
 const Juego = () => {
   const gamePageRef = useRef(null);
@@ -37,7 +28,7 @@ const Juego = () => {
   const [confidence, setConfidence] = useState(0);
   const [audioOffset, setAudioOffset] = useState(0);
   const { agregarResultado } = useResultado();
-  const { openModal, closeModal } = useCardModal();
+  const { openModal, closeModal, isOpen, modalType } = useCardModal();
   const isStream = import.meta.env.VITE_BACK_ACTIVE_STREAM === "true";
   const [boxRecognized, setIsBoxRecognized] = useState(false);
   const [audioDetected, setAudioDetected] = useState(null);
@@ -48,27 +39,16 @@ const Juego = () => {
   const [jerseyToast, setJerseyToast] = useState(null); // { team, confidence }
   const jerseyToastTimerRef = useRef(null);
 
-  const productSequence = [
-    { type: "box", num: 0 },
-    { type: "box", num: 1 },
-    { type: "box", num: 2 },
-    { type: "box", num: 3 },
-    { type: "logo", num: 0 },
-    { type: "logo", num: 1 },
-    { type: "logo", num: 2 },
-  ];
-
-  const productIndexRef = useRef(0);
-
-  const handleProductButton = () => {
-    const current = productSequence[productIndexRef.current];
-    const data =
-      current.type === "box"
-        ? { type: "box", num_caja: current.num }
-        : { type: "logo", num_logo: current.num };
-    openModal(MODAL_TYPES.PRODUCT, data);
-    productIndexRef.current = (productIndexRef.current + 1) % productSequence.length;
-  };
+  const firebaseConfig = useMemo(() => ({
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "tagscreenwin.firebaseapp.com",
+    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL || "https://tagscreenwin-default-rtdb.firebaseio.com",
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "tagscreenwin",
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "tagscreenwin.firebasestorage.app",
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "428382701077",
+    appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:428382701077:web:a67f0e0ad89339bf91701c",
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
+  }), []);
 
   const { events, isConnected, error, stats, getServiceStats, downloadEventsJson } =
     useFirebaseEvents(firebaseConfig, {
@@ -134,7 +114,7 @@ const Juego = () => {
             });
           }
           console.log("[sync] OK after", attempt, "attempts", data);
-          return; // stop retrying
+          return; 
         }
         console.log("[sync] attempt", attempt, "no match_time yet:", data.raw_text);
       } catch (err) {
@@ -156,7 +136,6 @@ const Juego = () => {
   const trackedJerseysRef = useRef(new Set());
 
   useEffect(() => {
-    console.log("Events:", events);
     if (events.length === 0) return;
 
     const ultimoEvento = events[events.length - 1];
@@ -195,25 +174,28 @@ const Juego = () => {
       );
 
       if (bestJersey && bestJersey.confidence >= 0.5 && !trackedJerseysRef.current.has(bestJersey.team)) {
-        trackedJerseysRef.current.add(bestJersey.team);
-        if (isTestMode) {
-          // Test mode: small non-blocking corner toast so the camera stays visible
-          setJerseyToast({ team: bestJersey.team, confidence: bestJersey.confidence });
-          if (jerseyToastTimerRef.current) clearTimeout(jerseyToastTimerRef.current);
-          jerseyToastTimerRef.current = setTimeout(() => setJerseyToast(null), 4000);
-        } else {
-          // Prod: full product modal with discount
-          triggerNotification("recogBox");
-          openModal(MODAL_TYPES.PRODUCT, { type: "jersey", team: bestJersey.team });
-        }
+        if (modalType != 'trivia') {
+          console.log('trivia')
+          trackedJerseysRef.current.add(bestJersey.team);
+          if (isTestMode) {
+            // Test mode: small non-blocking corner toast so the camera stays visible
+            setJerseyToast({ team: bestJersey.team, confidence: bestJersey.confidence });
+            if (jerseyToastTimerRef.current) clearTimeout(jerseyToastTimerRef.current);
+            jerseyToastTimerRef.current = setTimeout(() => setJerseyToast(null), 4000);
 
-        // Allow re-triggering after 30s so user can see it again
-        setTimeout(() => {
-          trackedJerseysRef.current.delete(bestJersey.team);
-        }, 30000);
+          } else {
+            triggerNotification(`jersey${bestJersey.team}`);
+            openModal(MODAL_TYPES.TRIVIA, bestJersey.team );
+          }
+  
+          // Allow re-triggering after 30s so user can see it again
+          setTimeout(() => {
+            trackedJerseysRef.current.delete(bestJersey.team);
+          }, 30000);
+        }
       }
     }
-  }, [events, agregarResultado]);
+  }, [events, agregarResultado, isOpen, modalType]);
 
   useEffect(() => {
     let stream = null;
@@ -245,27 +227,112 @@ const Juego = () => {
       }
     };
 
-    startCamera();
+    if (!isTestMode) {
+      startCamera();
+    }
 
-    setTimeout(() => {
-      console.log('print')
-      openModal(MODAL_TYPES.MINUTE_TO_MINUTE, 'data');
-    }, 3000);
-
+    console.log("isTestMode", isTestMode)
 
     return () => {
       stream?.getTracks().forEach((track) => track.stop());
     };
   }, []);
 
-  const handleAudioDetection = (isAudioDetected, offset = 0) => {
-    setAudioDetected(isAudioDetected);
-    setAudioOffset(offset);
-  };
-
   return (
     <TargetProvider>
       <div className={css.game_page} ref={gamePageRef}>
+        { isTestMode && (
+          <>
+            {/* Match time display — prominent pill, top-right */}
+            {events.length > 0 && events[0]?.md?.match_time && (
+              <div className="match-time" style={{
+                position: "absolute",
+                top: 12,
+                right: 12,
+                zIndex: 9999,
+                background: "rgba(0,0,0,0.75)",
+                color: "#fff",
+                padding: "6px 14px",
+                borderRadius: 20,
+                fontSize: 18,
+                fontWeight: "bold",
+                fontFamily: "'Inter', monospace",
+                pointerEvents: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                backdropFilter: "blur(4px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}>
+                <span style={{ fontSize: 12, opacity: 0.7 }}>MIN</span>
+                <span>{events[0].md.match_time}</span>
+              </div>
+            )}
+
+            {/* Small jersey-detected toast (bottom-center, non-blocking) */}
+            {jerseyToast && (
+              <div style={{
+                position: "absolute",
+                bottom: 90,
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 9999,
+                background: "rgba(255, 209, 0, 0.95)",
+                color: "#0a0080",
+                padding: "8px 16px",
+                borderRadius: 20,
+                fontSize: 13,
+                fontWeight: 700,
+                fontFamily: "'Inter', sans-serif",
+                pointerEvents: "none",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                maxWidth: "80%",
+                whiteSpace: "nowrap",
+              }}>
+                <span>👕</span>
+                <span>{jerseyToast.team.toUpperCase()} · {Math.round(jerseyToast.confidence * 100)}%</span>
+              </div>
+            )}
+
+            {/* Debug banner: RTDB status + detections */}
+            <div style={{
+              position: "absolute",
+              top: 8,
+              left: 8,
+              zIndex: 9999,
+              background: isConnected ? "rgba(0,180,0,0.85)" : "rgba(200,0,0,0.85)",
+              color: "#fff",
+              padding: "4px 10px",
+              borderRadius: 8,
+              fontSize: 10,
+              fontFamily: "monospace",
+              pointerEvents: "none",
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}>
+              <span>{isConnected ? "RTDB OK" : "RTDB OFF"} | Ev: {stats.totalReceived}</span>
+              <span style={{ color: syncInfo ? "#7fffa1" : "#ffb37f" }}>
+                {syncInfo
+                  ? `SYNC ${syncInfo.matchTime || "?"} (+${syncInfo.offsetSec}s)`
+                  : "SYNC pending…"}
+              </span>
+              {events.length > 0 && events[0]?.md?.jerseys?.length > 0 && (
+                <span style={{ color: "#00ffcc" }}>
+                  Jersey: {events[0].md.jerseys.map(j => `${j.team}(${Math.round(j.confidence * 100)}%)`).join(", ")}
+                </span>
+              )}
+              {events.length > 0 && events[0]?.md?.objects?.length > 0 && (
+                <span style={{ color: "#ffff00" }}>
+                  {events[0].md.objects.map(o => `${o.type}(${Math.round(o.confidence * 100)}%)`).join(", ")}
+                </span>
+              )}
+            </div>
+          </>
+        ) }
         <TargetIco tvDetected={isTvDetected} audioState={audioDetected} />
         <div className={css.containerVideo}>
           <video
@@ -280,12 +347,9 @@ const Juego = () => {
             <div className={css.confidence}>Detectado: {confidence}%</div>
           )}
         </div>
+
         {(!isTvDetected || isTestMode) && (
           <>
-            {loading && !isTestMode && (
-              <div className={css.loading}>Cargando modelo de detección...</div>
-            )}
-
             {errorResponse && !isTestMode && <div className={css.error}>{errorResponse}</div>}
 
             {!isTestMode && (
@@ -301,104 +365,8 @@ const Juego = () => {
             )}
           </>
         )}
-        {/* Match time display — prominent pill, top-right */}
-        {events.length > 0 && events[0]?.md?.match_time && (
-          <div style={{
-            position: "absolute",
-            top: 12,
-            right: 12,
-            zIndex: 9999,
-            background: "rgba(0,0,0,0.75)",
-            color: "#fff",
-            padding: "6px 14px",
-            borderRadius: 20,
-            fontSize: 18,
-            fontWeight: "bold",
-            fontFamily: "'Inter', monospace",
-            pointerEvents: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            backdropFilter: "blur(4px)",
-            border: "1px solid rgba(255,255,255,0.2)",
-          }}>
-            <span style={{ fontSize: 12, opacity: 0.7 }}>MIN</span>
-            <span>{events[0].md.match_time}</span>
-          </div>
-        )}
 
-        {/* Small jersey-detected toast (bottom-center, non-blocking) */}
-        {jerseyToast && (
-          <div style={{
-            position: "absolute",
-            bottom: 90,
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 9999,
-            background: "rgba(255, 209, 0, 0.95)",
-            color: "#0a0080",
-            padding: "8px 16px",
-            borderRadius: 20,
-            fontSize: 13,
-            fontWeight: 700,
-            fontFamily: "'Inter', sans-serif",
-            pointerEvents: "none",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            maxWidth: "80%",
-            whiteSpace: "nowrap",
-          }}>
-            <span>👕</span>
-            <span>{jerseyToast.team.toUpperCase()} · {Math.round(jerseyToast.confidence * 100)}%</span>
-          </div>
-        )}
-
-        {/* Debug banner: RTDB status + detections */}
-        <div style={{
-          position: "absolute",
-          top: 8,
-          left: 8,
-          zIndex: 9999,
-          background: isConnected ? "rgba(0,180,0,0.85)" : "rgba(200,0,0,0.85)",
-          color: "#fff",
-          padding: "4px 10px",
-          borderRadius: 8,
-          fontSize: 10,
-          fontFamily: "monospace",
-          pointerEvents: "none",
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}>
-          <span>{isConnected ? "RTDB OK" : "RTDB OFF"} | Ev: {stats.totalReceived}</span>
-          <span style={{ color: syncInfo ? "#7fffa1" : "#ffb37f" }}>
-            {syncInfo
-              ? `SYNC ${syncInfo.matchTime || "?"} (+${syncInfo.offsetSec}s)`
-              : "SYNC pending…"}
-          </span>
-          {events.length > 0 && events[0]?.md?.jerseys?.length > 0 && (
-            <span style={{ color: "#00ffcc" }}>
-              Jersey: {events[0].md.jerseys.map(j => `${j.team}(${Math.round(j.confidence * 100)}%)`).join(", ")}
-            </span>
-          )}
-          {events.length > 0 && events[0]?.md?.objects?.length > 0 && (
-            <span style={{ color: "#ffff00" }}>
-              {events[0].md.objects.map(o => `${o.type}(${Math.round(o.confidence * 100)}%)`).join(", ")}
-            </span>
-          )}
-        </div>
-
-        {/* Testing products, download events json, audiodetect */}
-        {/*<DetectorAudio onAudioDetection={handleAudioDetection} />
-        <button className={css.cleanButton} onClick={handleProductButton}>
-          Producto
-        </button>
-        <button className={css.cleanButton} onClick={downloadEventsJson} style={{ top: "60px", background: "#f00" }}>
-          Desc. JSON
-        </button>*/}
-        {(!isTvDetected || isTestMode) && (
+        {(isTvDetected || isTestMode) && (
           <div className={css.container}>
             <GameUI />
             <GameModal />

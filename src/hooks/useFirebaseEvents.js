@@ -9,15 +9,18 @@ import {
   query,
   orderByChild,
   startAt,
+  limitToLast,
 } from "firebase/database";
 
 export function useFirebaseEvents(config, options = {}) {
   const {
-    maxEvents = 100,
+    maxEvents = 5,
     autoConnect = true,
-    historyLimit = 200,
+    historyLimit = 5,
     audioOffset = 0,
   } = options;
+
+  
 
   const [events, setEvents] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
@@ -89,12 +92,18 @@ export function useFirebaseEvents(config, options = {}) {
       return combined.slice(0, maxEvents);
     });
 
-    setStats((prev) => ({
+    setStats((prev) => {
+    const newTotal = prev.totalReceived + newEvents.length;
+
+    if (newTotal === prev.totalReceived) return prev;
+
+    return {
       ...prev,
-      totalReceived: prev.totalReceived + newEvents.length,
+      totalReceived: newTotal,
       lastEventAt: new Date(),
       currentMinute: latestEvent?.minuteKey || prev.currentMinute,
-    }));
+    };
+  });
 
     if (latestEvent?.timestamp) {
       lastTimestampRef.current = latestEvent.timestamp;
@@ -111,10 +120,12 @@ export function useFirebaseEvents(config, options = {}) {
       eventBufferRef.current.push(event);
 
       if (!flushTimeoutRef.current) {
+        const FLUSH_INTERVAL = 300;
+
         flushTimeoutRef.current = setTimeout(() => {
           flushEventBuffer();
           flushTimeoutRef.current = null;
-        }, 100);
+        }, FLUSH_INTERVAL);
       }
     },
     [flushEventBuffer],
@@ -176,8 +187,6 @@ export function useFirebaseEvents(config, options = {}) {
 
       isTransitioningRef.current = true;
 
-      //console.log("📍 minuteKey a consultar:", minuteKey);
-     // console.log("📍 último minuteKey:", currentMinuteKeyRef.current);
 
       try {
         if (currentListenerRef.current && currentMinuteRef.current) {
@@ -198,7 +207,8 @@ export function useFirebaseEvents(config, options = {}) {
         const fixtureId = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
         const eventsPath = `apiopta/live_feed/${fixtureId}`;
         const eventsRef = ref(dbRef.current, eventsPath);
-        currentMinuteRef.current = eventsRef;
+        const qEventsRef = query(eventsRef, limitToLast(90));
+        currentMinuteRef.current = qEventsRef;
 
         if (!processedByMinuteRef.current.has(minuteKey)) {
           processedByMinuteRef.current.set(minuteKey, new Set());
@@ -208,7 +218,7 @@ export function useFirebaseEvents(config, options = {}) {
 
         if (skipExisting) {
           try {
-            const snapshot = await get(eventsRef);
+            const snapshot = await get(qEventsRef);
 
             if (snapshot.exists()) {
               const existingEvents = snapshot.val();
@@ -232,7 +242,7 @@ export function useFirebaseEvents(config, options = {}) {
                 startAt(lastTimestampRef.current),
               );
             } else {
-              q = eventsRef;
+              q = qEventsRef;
             }
 
             const snapshot = await get(q);
@@ -266,14 +276,14 @@ export function useFirebaseEvents(config, options = {}) {
             console.warn("Error cargando eventos del nuevo minuto:", err);
           }
         }
-
+        
         const listenerCallback = (snapshot) => {
           const eventKey = snapshot.key;
           const eventData = snapshot.val();
-
-          console.log("eventKey", eventKey)
-          console.log("Evento:", eventData);
           
+          if (rawEventsLogRef.current.length > 500) {
+            rawEventsLogRef.current.shift();
+          }
           rawEventsLogRef.current.push(eventData);
 
           if (minuteKey !== currentMinuteKeyRef.current) {
@@ -296,7 +306,7 @@ export function useFirebaseEvents(config, options = {}) {
         };
 
         currentListenerRef.current = onChildAdded(
-          eventsRef,
+          qEventsRef,
           listenerCallback,
           (error) => {
             console.error("Error en listener:", error);

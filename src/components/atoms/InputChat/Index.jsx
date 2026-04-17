@@ -50,7 +50,7 @@ export default function InputChat({ stateComponent }) {
     >
       <div className={styles.avatarImage}>
         <img
-          src="/images/icons/ico-input-chat.svg"
+          src="/icons/ico-input-chat.svg"
           alt="Mensajero Meli"
         ></img>
       </div>

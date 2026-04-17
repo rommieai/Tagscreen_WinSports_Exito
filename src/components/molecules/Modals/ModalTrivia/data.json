@@ -1,0 +1,610 @@
+{
+ "Millonarios": [
+  {
+   "id": "M1",
+   "question": "¿Quién es el máximo goleador histórico de Millonarios?",
+   "options": [
+    {
+     "id": "M1_A",
+     "text": "Alfredo Di Stéfano"
+    },
+    {
+     "id": "M1_B",
+     "text": "Arnoldo Iguarán"
+    }
+   ],
+   "correctOptionId": "M1_A"
+  },
+  {
+   "id": "M2",
+   "question": "¿Quién fue el DT del título 2017?",
+   "options": [
+    {
+     "id": "M2_A",
+     "text": "Miguel Russo"
+    },
+    {
+     "id": "M2_B",
+     "text": "Alberto Gamero"
+    }
+   ],
+   "correctOptionId": "M2_A"
+  },
+  {
+   "id": "M3",
+   "question": "¿Qué equipo fue el rival en la Final 2017-II?",
+   "options": [
+    {
+     "id": "M3_A",
+     "text": "Santa Fe"
+    },
+    {
+     "id": "M3_B",
+     "text": "Junior"
+    }
+   ],
+   "correctOptionId": "M3_B"
+  },
+  {
+   "id": "M4",
+   "question": "¿Qué ídolo es apodado “El Tigre”?",
+   "options": [
+    {
+     "id": "M4_A",
+     "text": "Falcao García"
+    },
+    {
+     "id": "M4_B",
+     "text": "Willington Ortiz"
+    }
+   ],
+   "correctOptionId": "M4_A"
+  },
+  {
+   "id": "M5",
+   "question": "¿En qué año Millonarios ganó la 1a estrella?",
+   "options": [
+    {
+     "id": "M5_A",
+     "text": "1949"
+    },
+    {
+     "id": "M5_B",
+     "text": "1951"
+    }
+   ],
+   "correctOptionId": "M5_A"
+  },
+  {
+   "id": "M6",
+   "question": "¿Qué arquero fue campeón en 2023-I?",
+   "options": [
+    {
+     "id": "M6_A",
+     "text": "Álvaro Montero"
+    },
+    {
+     "id": "M6_B",
+     "text": "Wuilker Faríñez"
+    }
+   ],
+   "correctOptionId": "M6_A"
+  },
+  {
+   "id": "M7",
+   "question": "¿Qué club es reconocido como El Dorado?",
+   "options": [
+    {
+     "id": "M7_A",
+     "text": "Millonarios"
+    },
+    {
+     "id": "M7_B",
+     "text": "Santa Fe"
+    }
+   ],
+   "correctOptionId": "M7_A"
+  },
+  {
+   "id": "M8",
+   "question": "¿Dónde es la sede deportiva de Millonarios?",
+   "options": [
+    {
+     "id": "M8_A",
+     "text": "Tenjo"
+    },
+    {
+     "id": "M8_B",
+     "text": "Zipaquirá"
+    }
+   ],
+   "correctOptionId": "M8_A"
+  },
+  {
+   "id": "M9",
+   "question": "¿Quién fue el DT campeón 2023-I?",
+   "options": [
+    {
+     "id": "M9_A",
+     "text": "Gamero"
+    },
+    {
+     "id": "M9_B",
+     "text": "Comesaña"
+    }
+   ],
+   "correctOptionId": "M9_A"
+  },
+  {
+   "id": "M10",
+   "question": "¿Qué equipo fue el rival en la Final 2023-I?",
+   "options": [
+    {
+     "id": "M10_A",
+     "text": "Nacional"
+    },
+    {
+     "id": "M10_B",
+     "text": "Medellín"
+    }
+   ],
+   "correctOptionId": "M10_B"
+  }
+ ],
+ "SFE": [
+  {
+   "id": "S1",
+   "question": "¿Qué equipo fue el rival en la Final Sudamericana 2015?",
+   "options": [
+    {
+     "id": "S1_A",
+     "text": "Huracán"
+    },
+    {
+     "id": "S1_B",
+     "text": "River Plate"
+    }
+   ],
+   "correctOptionId": "S1_A"
+  },
+  {
+   "id": "S2",
+   "question": "¿Quién fue el DT campeón Sudamericana 2015?",
+   "options": [
+    {
+     "id": "S2_A",
+     "text": "Costas"
+    },
+    {
+     "id": "S2_B",
+     "text": "Osorio"
+    }
+   ],
+   "correctOptionId": "S2_A"
+  },
+  {
+   "id": "S3",
+   "question": "¿Quién fue el arquero figura 2015?",
+   "options": [
+    {
+     "id": "S3_A",
+     "text": "Robinson Zapata"
+    },
+    {
+     "id": "S3_B",
+     "text": "Camilo Vargas"
+    }
+   ],
+   "correctOptionId": "S3_A"
+  },
+  {
+   "id": "S4",
+   "question": "¿En qué año Santa Fe obtuvo el primer título liga?",
+   "options": [
+    {
+     "id": "S4_A",
+     "text": "1948"
+    },
+    {
+     "id": "S4_B",
+     "text": "1950"
+    }
+   ],
+   "correctOptionId": "S4_A"
+  },
+  {
+   "id": "S5",
+   "question": "¿Apodo de Omar Pérez?",
+   "options": [
+    {
+     "id": "S5_A",
+     "text": "10 Cardenal"
+    },
+    {
+     "id": "S5_B",
+     "text": "El Maestro"
+    }
+   ],
+   "correctOptionId": "S5_A"
+  },
+  {
+   "id": "S6",
+   "question": "¿Rival clásico capitalino?",
+   "options": [
+    {
+     "id": "S6_A",
+     "text": "Millonarios"
+    },
+    {
+     "id": "S6_B",
+     "text": "La Equidad"
+    }
+   ],
+   "correctOptionId": "S6_A"
+  },
+  {
+   "id": "S7",
+   "question": "¿Cuál es el estadio local de Santa Fe?",
+   "options": [
+    {
+     "id": "S7_A",
+     "text": "El Campín"
+    },
+    {
+     "id": "S7_B",
+     "text": "Techo"
+    }
+   ],
+   "correctOptionId": "S7_A"
+  },
+  {
+   "id": "S8",
+   "question": "¿Quién fue el DT campeón 2016-II?",
+   "options": [
+    {
+     "id": "S8_A",
+     "text": "Gustavo Costas"
+    },
+    {
+     "id": "S8_B",
+     "text": "Alexis García"
+    }
+   ],
+   "correctOptionId": "S8_A"
+  },
+  {
+   "id": "S9",
+   "question": "¿Ídolo argentino histórico de Santa Fe?",
+   "options": [
+    {
+     "id": "S9_A",
+     "text": "Omar Pérez"
+    },
+    {
+     "id": "S9_B",
+     "text": "Néstor Gorosito"
+    }
+   ],
+   "correctOptionId": "S9_A"
+  },
+  {
+   "id": "S10",
+   "question": "¿De qué color es la camiseta de visitante de Santa Fe?",
+   "options": [
+    {
+     "id": "S10_A",
+     "text": "Blanco"
+    },
+    {
+     "id": "S10_B",
+     "text": "Azul"
+    }
+   ],
+   "correctOptionId": "S10_A"
+  }
+ ],
+ "DIM": [
+  {
+   "id": "D1",
+   "question": "¿Qué equipo fue el rival en la final 2002-II?",
+   "options": [
+    {
+     "id": "D1_A",
+     "text": "Nacional"
+    },
+    {
+     "id": "D1_B",
+     "text": "Pasto"
+    }
+   ],
+   "correctOptionId": "D1_B"
+  },
+  {
+   "id": "D2",
+   "question": "¿Quién fue el DT campeón 2002-II?",
+   "options": [
+    {
+     "id": "D2_A",
+     "text": "Víctor Luna"
+    },
+    {
+     "id": "D2_B",
+     "text": "Reinaldo Rueda"
+    }
+   ],
+   "correctOptionId": "D2_A"
+  },
+  {
+   "id": "D3",
+   "question": "¿Cómo se apoda al DIM del club?",
+   "options": [
+    {
+     "id": "D3_A",
+     "text": "Poderoso"
+    },
+    {
+     "id": "D3_B",
+     "text": "Verdolaga"
+    }
+   ],
+   "correctOptionId": "D3_A"
+  },
+  {
+   "id": "D4",
+   "question": "El nombre de el ídolo “El Chonto” es:",
+   "options": [
+    {
+     "id": "D4_A",
+     "text": "Víctor Aristizábal"
+    },
+    {
+     "id": "D4_B",
+     "text": "Mauricio Molina"
+    }
+   ],
+   "correctOptionId": "D4_B"
+  },
+  {
+   "id": "D5",
+   "question": "¿Cuál es el Estadio local del DIM?",
+   "options": [
+    {
+     "id": "D5_A",
+     "text": "Atanasio"
+    },
+    {
+     "id": "D5_B",
+     "text": "Metropolitano"
+    }
+   ],
+   "correctOptionId": "D5_A"
+  },
+  {
+   "id": "D6",
+   "question": "¿Cuál es el color principal del DIM?",
+   "options": [
+    {
+     "id": "D6_A",
+     "text": "Rojo"
+    },
+    {
+     "id": "D6_B",
+     "text": "Azul"
+    }
+   ],
+   "correctOptionId": "D6_A"
+  },
+  {
+   "id": "D7",
+   "question": "¿En qué año se fundó el DIM?",
+   "options": [
+    {
+     "id": "D7_A",
+     "text": "1913"
+    },
+    {
+     "id": "D7_B",
+     "text": "1926"
+    }
+   ],
+   "correctOptionId": "D7_A"
+  },
+  {
+   "id": "D8",
+   "question": "¿Qué equipo es el rival de patio del DIM?",
+   "options": [
+    {
+     "id": "D8_A",
+     "text": "Nacional"
+    },
+    {
+     "id": "D8_B",
+     "text": "Envigado"
+    }
+   ],
+   "correctOptionId": "D8_A"
+  },
+  {
+   "id": "D9",
+   "question": "¿El DIM fue Finalista en la Sudamericana de 2016?",
+   "options": [
+    {
+     "id": "D9_A",
+     "text": "Sí"
+    },
+    {
+     "id": "D9_B",
+     "text": "No"
+    }
+   ],
+   "correctOptionId": "D9_B"
+  },
+  {
+   "id": "D10",
+   "question": "¿Quién es el arquero histórico del DIM?",
+   "options": [
+    {
+     "id": "D10_A",
+     "text": "Higuita"
+    },
+    {
+     "id": "D10_B",
+     "text": "Aldo Bobadilla"
+    }
+   ],
+   "correctOptionId": "D10_B"
+  }
+ ],
+ "Nacional": [
+  {
+   "id": "N1",
+   "question": "¿Quién fue el DT durante la Libertadores 2016?",
+   "options": [
+    {
+     "id": "N1_A",
+     "text": "Rueda"
+    },
+    {
+     "id": "N1_B",
+     "text": "Osorio"
+    }
+   ],
+   "correctOptionId": "N1_A"
+  },
+  {
+   "id": "N2",
+   "question": "¿Qué equipo fue el rival en la final de la Libertadores 1989?",
+   "options": [
+    {
+     "id": "N2_A",
+     "text": "Olimpia"
+    },
+    {
+     "id": "N2_B",
+     "text": "Peñarol"
+    }
+   ],
+   "correctOptionId": "N2_A"
+  },
+  {
+   "id": "N3",
+   "question": "¿Quién fue el Capitán durante 2016?",
+   "options": [
+    {
+     "id": "N3_A",
+     "text": "Macnelly Torres"
+    },
+    {
+     "id": "N3_B",
+     "text": "Alexis Henríquez"
+    }
+   ],
+   "correctOptionId": "N3_B"
+  },
+  {
+   "id": "N4",
+   "question": "¿Quién es el máximo goleador histórico de Nacional?",
+   "options": [
+    {
+     "id": "N4_A",
+     "text": "Víctor Aristizábal"
+    },
+    {
+     "id": "N4_B",
+     "text": "Dayro Moreno"
+    }
+   ],
+   "correctOptionId": "N4_A"
+  },
+  {
+   "id": "N5",
+   "question": "¿Quién fue el arquero en la final de la Libertadores 1989?",
+   "options": [
+    {
+     "id": "N5_A",
+     "text": "René Higuita"
+    },
+    {
+     "id": "N5_B",
+     "text": "Franco Armani"
+    }
+   ],
+   "correctOptionId": "N5_A"
+  },
+  {
+   "id": "N6",
+   "question": "¿Rival clásico paisa?",
+   "options": [
+    {
+     "id": "N6_A",
+     "text": "DIM"
+    },
+    {
+     "id": "N6_B",
+     "text": "Once Caldas"
+    }
+   ],
+   "correctOptionId": "N6_A"
+  },
+  {
+   "id": "N7",
+   "question": "¿En qué año se fundó Nacional?",
+   "options": [
+    {
+     "id": "N7_A",
+     "text": "1947"
+    },
+    {
+     "id": "N7_B",
+     "text": "1950"
+    }
+   ],
+   "correctOptionId": "N7_A"
+  },
+  {
+   "id": "N8",
+   "question": "¿Cuál es el color tradicional de Nacional?",
+   "options": [
+    {
+     "id": "N8_A",
+     "text": "Verde"
+    },
+    {
+     "id": "N8_B",
+     "text": "Blanco"
+    }
+   ],
+   "correctOptionId": "N8_A"
+  },
+  {
+   "id": "N9",
+   "question": "¿Nacional ha ganado más torneos locales que el DIM?",
+   "options": [
+    {
+     "id": "N9_A",
+     "text": "Sí"
+    },
+    {
+     "id": "N9_B",
+     "text": "No"
+    }
+   ],
+   "correctOptionId": "N9_A"
+  },
+  {
+   "id": "N10",
+   "question": "¿Dónde queda la sede deportiva de Nacional?",
+   "options": [
+    {
+     "id": "N10_A",
+     "text": "Guarne"
+    },
+    {
+     "id": "N10_B",
+     "text": "Rionegro"
+    }
+   ],
+   "correctOptionId": "N10_A"
+  }
+ ]
+}

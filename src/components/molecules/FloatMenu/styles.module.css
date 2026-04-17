@@ -7,14 +7,9 @@
 }
 
 .itemMenu {
-  width: 47px;
+  width: 38px;
   margin-bottom: 12px;
-  height: 47px;
-  background-color: #FFE600;
+  height: 38px;
   border-radius: 50%;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #FFE600;
 }

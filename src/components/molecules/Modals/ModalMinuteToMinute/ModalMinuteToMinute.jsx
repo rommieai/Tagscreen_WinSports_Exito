@@ -1,8 +1,26 @@
-import { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { getDatabase, ref, onChildAdded, query, orderByChild } from "firebase/database";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import styles from "./styles.module.css";
 import Message from "./Message";
+
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+    y: -32,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 260,
+      damping: 22,
+      delay: 0.15,
+    },
+  },
+};
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
@@ -14,7 +32,19 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:428382701077:web:a67f0e0ad89339bf91701c",
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
 };
-const STORAGE_KEY = "match_commentary_1470618";
+
+const STORAGE_KEY = "current_match_commentary";
+const COMENTARIES_KEY = "match_comentaries";
+
+const readCommentariesFromStorage = () => {
+  try {
+    const saved = localStorage.getItem(COMENTARIES_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch (e) {
+    console.error("Error leyendo match_comentaries:", e);
+    return [];
+  }
+};
 
 export default function ModalMinuteToMinute() {
   const [commentaries, setCommentaries] = useState(() => {
@@ -27,62 +57,100 @@ export default function ModalMinuteToMinute() {
     }
   });
 
+  // Comentarios provenientes de useFirebaseEvents via localStorage
+  const [liveCommentaries, setLiveCommentaries] = useState(() =>
+    readCommentariesFromStorage()
+  );
+
+  const bottomRef = useRef(null);
+
+  // Persiste en localStorage
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(commentaries));
   }, [commentaries]);
 
+  // Escuchar nuevos eventos guardados por useFirebaseEvents en tiempo real
   useEffect(() => {
-    console.log("ModalMinuteToMinute realtime");
-    
-    // Yo agregaré el fixture_id luego
-    const fixture_id = "5ff653se2gnpi4y9a4nus4xec"; 
-    
-    let app;
-    if (!getApps().length) {
-      app = initializeApp(firebaseConfig);
-    } else {
-      app = getApp();
-    }
-    
+    const handleStorageUpdate = () => {
+      setLiveCommentaries(readCommentariesFromStorage());
+    };
+
+    // Escuchar evento custom disparado desde el hook
+    window.addEventListener("match_comentaries_updated", handleStorageUpdate);
+
+    // También escuchar el evento nativo de storage (para otras pestañas)
+    const handleNativeStorage = (e) => {
+      if (e.key === COMENTARIES_KEY) handleStorageUpdate();
+    };
+    window.addEventListener("storage", handleNativeStorage);
+
+    return () => {
+      window.removeEventListener("match_comentaries_updated", handleStorageUpdate);
+      window.removeEventListener("storage", handleNativeStorage);
+    };
+  }, []);
+
+  // Scroll suave al bottom cada vez que llega un comentario nuevo
+  useEffect(() => {
+    if (liveCommentaries.length === 0) return;
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [liveCommentaries]);
+
+  useEffect(() => {
+    if (commentaries.length === 0) return;
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [commentaries]);
+
+  useEffect(() => {
+    const fixture_id = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
+
+    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
     const db = getDatabase(app);
-    const feedRef = ref(db, `apiopta/live_feed/${fixture_id}`);
+    const historyRef = query(
+      ref(db, `apiopta/live_feed/${fixture_id}/minute_by_minute/history`),
+      orderByChild("generated_at_utc"),
+    );
 
-    const unsubscribe = onValue(feedRef, (snapshot) => {
-      const data = snapshot.val();
-      
-      console.log("Toda la respuesta:", data);
-      
-      if (data) {
-        console.log("Texto en vivo:", data?.minute_by_minute?.current?.summary);
-        console.log("Evento relevante:", data?.important_event?.current);
-        console.log("Video URL:", data?.important_event?.current?.clip?.url_path);
-        console.log("Contexto general del partido:", data?.match);
+    const seen = new Set();
+    const unsubscribe = onChildAdded(historyRef, (snapshot) => {
+      const entry = snapshot.val();
+      if (!entry) return;
 
-        const summary = data?.minute_by_minute?.current?.summary;
-        const minuteText = data?.minute_by_minute?.current?.minute || '';
+      const key = snapshot.key || entry.generated_at_utc || `${entry.minute}-${entry.summary}`;
+      if (seen.has(key)) return;
+      seen.add(key);
 
-        if (summary) {
-          setCommentaries((prev) => {
-            const lastItem = prev[prev.length - 1];
+      const summary = entry.summary;
+      const minute = entry.minute ?? "";
+      if (!summary) return;
 
-            if (lastItem && lastItem.commentary === summary) {
-              return prev;
-            }
-
-            return [...prev, { commentary: summary, minute: minuteText }];
-          });
-        }
-      }
+      setCommentaries((prev) => {
+        if (prev.some((item) => item.key === key)) return prev;
+        return [...prev, { key, commentary: summary, minute: String(minute) }];
+      });
     });
 
     return () => unsubscribe();
   }, []);
 
+  // Combinar ambas fuentes: los del feed directo y los de useFirebaseEvents
+  const allCommentaries = [
+    ...commentaries.map((c) => ({ commentary: c.commentary, minute: c.minute })),
+    ...liveCommentaries.map((c) => ({ commentary: c.comment, minute: c.minute })),
+  ];
+
   return (
-    <div className={styles.modalMinuteToMinute}>
+    <motion.div
+      className={styles.modalMinuteToMinute}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {commentaries.map((item, index) => (
-        <Message key={index} minute={item.minute} text={item.commentary} />
+        <Message key={item.key || index} minute={item.minute} text={item.commentary} />
       ))}
-    </div>
+      {/* Hook scroll automático */}
+      <div ref={bottomRef} />
+    </motion.div>
   );
 }
