@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onChildAdded, query, orderByChild } from "firebase/database";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import styles from "./styles.module.css";
 import Message from "./Message";
@@ -33,7 +34,7 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
 };
 
-const STORAGE_KEY = "match_commentary_1470618";
+const STORAGE_KEY = "match_commentary_1470618_v2";
 const COMENTARIES_KEY = "match_comentaries";
 
 const readCommentariesFromStorage = () => {
@@ -102,47 +103,32 @@ export default function ModalMinuteToMinute() {
   }, [commentaries]);
 
   useEffect(() => {
-    console.log("ModalMinuteToMinute realtime");
+    const fixture_id = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
 
-    const fixture_id = "4832hb22zm42exhgp1fh2n384";
-
-    let app;
-    if (!getApps().length) {
-      app = initializeApp(firebaseConfig);
-    } else {
-      app = getApp();
-    }
-
+    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
     const db = getDatabase(app);
-    const feedRef = ref(db, `apiopta/live_feed/${fixture_id}`);
+    const historyRef = query(
+      ref(db, `apiopta/live_feed/${fixture_id}/minute_by_minute/history`),
+      orderByChild("generated_at_utc"),
+    );
 
-    console.log("feedRef", feedRef);
-    const unsubscribe = onValue(feedRef, (snapshot) => {
-      const data = snapshot.val();
+    const seen = new Set();
+    const unsubscribe = onChildAdded(historyRef, (snapshot) => {
+      const entry = snapshot.val();
+      if (!entry) return;
 
-      console.log("Toda la respuesta:", data);
+      const key = snapshot.key || entry.generated_at_utc || `${entry.minute}-${entry.summary}`;
+      if (seen.has(key)) return;
+      seen.add(key);
 
-      if (data) {
-        console.log("Texto en vivo:", data?.minute_by_minute?.current?.summary);
-        console.log("Evento relevante:", data?.important_event?.current);
-        console.log("Video URL:", data?.important_event?.current?.clip?.url_path);
-        console.log("Contexto general del partido:", data?.match);
+      const summary = entry.summary;
+      const minute = entry.minute ?? "";
+      if (!summary) return;
 
-        const summary = data?.minute_by_minute?.current?.comment;
-        const minuteText = data?.minute_by_minute?.current?.minute || "";
-
-        if (summary) {
-          setCommentaries((prev) => {
-            const lastItem = prev[prev.length - 1];
-
-            if (lastItem && lastItem.commentary === summary) {
-              return prev;
-            }
-
-            return [...prev, { commentary: summary, minute: minuteText }];
-          });
-        }
-      }
+      setCommentaries((prev) => {
+        if (prev.some((item) => item.key === key)) return prev;
+        return [...prev, { key, commentary: summary, minute: String(minute) }];
+      });
     });
 
     return () => unsubscribe();
@@ -161,14 +147,8 @@ export default function ModalMinuteToMinute() {
       initial="hidden"
       animate="visible"
     >
-      {allCommentaries.map((item, index) => (
-        <Message
-          key={index}
-          minute={item.minute}
-          text={item.commentary}
-          //teamHome={teamHome}
-          //teamAway={teamAway}
-        />
+      {commentaries.map((item, index) => (
+        <Message key={item.key || index} minute={item.minute} text={item.commentary} />
       ))}
       {/* Hook scroll automático */}
       <div ref={bottomRef} />
