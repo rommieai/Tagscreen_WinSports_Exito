@@ -114,7 +114,7 @@ const Juego = () => {
             });
           }
           console.log("[sync] OK after", attempt, "attempts", data);
-          return; // stop retrying
+          return; 
         }
         console.log("[sync] attempt", attempt, "no match_time yet:", data.raw_text);
       } catch (err) {

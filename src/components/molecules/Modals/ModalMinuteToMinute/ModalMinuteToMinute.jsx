@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { getDatabase, ref, onValue } from "firebase/database";
 import { getDatabase, ref, onChildAdded, query, orderByChild } from "firebase/database";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import styles from "./styles.module.css";
@@ -34,7 +33,7 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
 };
 
-const STORAGE_KEY = "match_commentary_1470618_v2";
+const STORAGE_KEY = "current_match_commentary";
 const COMENTARIES_KEY = "match_comentaries";
 
 const readCommentariesFromStorage = () => {
