@@ -64,7 +64,7 @@ const Juego = () => {
     let timer = null;
     let attempt = 0;
 
-    const tick = async () => {
+    /*const tick = async () => {
       if (cancelled || hasSyncedRef.current) return;
       attempt++;
 
@@ -124,7 +124,7 @@ const Juego = () => {
       if (!cancelled) timer = setTimeout(tick, 1000);
     };
 
-    tick();
+    tick();*/
 
     return () => {
       cancelled = true;
