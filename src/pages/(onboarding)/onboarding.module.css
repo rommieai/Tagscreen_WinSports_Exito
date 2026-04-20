@@ -50,6 +50,10 @@
   padding-bottom: 27px;
 }
 
+.swiper :global(.swiper-wrapper) {
+  padding-bottom: 34px;
+}
+
 .swiper :global(.swiper-pagination-bullet) {
   background: transparent;
   border: solid 1px #333333;
