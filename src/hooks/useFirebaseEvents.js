@@ -12,12 +12,16 @@ import {
   limitToLast,
 } from "firebase/database";
 
+const BACKLOG_MS = 5000;
+
 export function useFirebaseEvents(config, options = {}) {
   const {
     maxEvents = 5,
     autoConnect = true,
     historyLimit = 5,
     audioOffset = 0,
+    feedPath = null,
+    syncInfo = null,
   } = options;
 
   
@@ -44,6 +48,8 @@ export function useFirebaseEvents(config, options = {}) {
   const flushTimeoutRef = useRef(null);
   const lastTimestampRef = useRef(null);
   const rawEventsLogRef = useRef([]); // Ref para almacenar todos los eventos que llegan para descargar
+  const scheduledTimeoutsRef = useRef(new Set());
+  const syncInfoRef = useRef(null);
 
   const getCurrentMinuteKey = useCallback(
     (date = null) => {
@@ -131,6 +137,37 @@ export function useFirebaseEvents(config, options = {}) {
     [flushEventBuffer],
   );
 
+  useEffect(() => {
+    syncInfoRef.current = syncInfo;
+  }, [syncInfo]);
+
+  const emitScheduled = useCallback(
+    (event) => {
+      const sync = syncInfoRef.current;
+      const mts = event?.md?.match_time_seconds;
+
+      if (!sync || typeof mts !== "number" || typeof sync.matchTimeSeconds !== "number" || typeof sync.syncedAtMs !== "number") {
+        handleNewEvent(event);
+        return;
+      }
+
+      const displayAtMs = sync.syncedAtMs + (mts - sync.matchTimeSeconds) * 1000;
+      const delay = displayAtMs - Date.now();
+
+      if (delay > 0) {
+        const t = setTimeout(() => {
+          scheduledTimeoutsRef.current.delete(t);
+          handleNewEvent(event);
+        }, delay);
+        scheduledTimeoutsRef.current.add(t);
+      } else if (delay > -BACKLOG_MS) {
+        handleNewEvent(event);
+      }
+      // else: evento demasiado viejo respecto al match_time del usuario, descartar
+    },
+    [handleNewEvent],
+  );
+
   const scheduleNextMinuteCheck = useCallback(() => {
     if (scheduleTimeoutRef.current) {
       clearTimeout(scheduleTimeoutRef.current);
@@ -205,7 +242,7 @@ export function useFirebaseEvents(config, options = {}) {
         currentMinuteKeyRef.current = minuteKey;
 
         const fixtureId = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
-        const eventsPath = `apiopta/live_feed/${fixtureId}`;
+        const eventsPath = feedPath || `apiopta/live_feed/${fixtureId}`;
         const eventsRef = ref(dbRef.current, eventsPath);
         const qEventsRef = query(eventsRef, limitToLast(90));
         currentMinuteRef.current = qEventsRef;
@@ -215,8 +252,36 @@ export function useFirebaseEvents(config, options = {}) {
         }
 
         const processedSet = processedByMinuteRef.current.get(minuteKey);
+        const useSyncSchedule = Boolean(feedPath && syncInfoRef.current);
 
-        if (skipExisting) {
+        if (useSyncSchedule) {
+          try {
+            const syncMts = syncInfoRef.current.matchTimeSeconds;
+            const q = query(
+              eventsRef,
+              orderByChild("md/match_time_seconds"),
+              startAt(syncMts - BACKLOG_MS / 1000),
+            );
+            const snapshot = await get(q);
+
+            if (snapshot.exists()) {
+              const existing = snapshot.val();
+              Object.entries(existing).forEach(([key, value]) => {
+                if (processedSet.has(key)) return;
+                processedSet.add(key);
+                emitScheduled({
+                  minuteKey,
+                  eventKey: key,
+                  ...value,
+                  receivedAt: Date.now(),
+                  isExisting: true,
+                });
+              });
+            }
+          } catch (err) {
+            console.warn("Error cargando eventos sincronizados:", err);
+          }
+        } else if (skipExisting) {
           try {
             const snapshot = await get(qEventsRef);
 
@@ -296,13 +361,19 @@ export function useFirebaseEvents(config, options = {}) {
 
           processedSet.add(eventKey);
 
-          handleNewEvent({
+          const baseEvent = {
             minuteKey,
             eventKey,
             ...eventData,
             receivedAt: Date.now(),
             isExisting: false,
-          });
+          };
+
+          if (feedPath && syncInfoRef.current) {
+            emitScheduled(baseEvent);
+          } else {
+            handleNewEvent(baseEvent);
+          }
         };
 
         currentListenerRef.current = onChildAdded(
@@ -327,7 +398,7 @@ export function useFirebaseEvents(config, options = {}) {
         isTransitioningRef.current = false;
       }
     },
-    [handleNewEvent, cleanupOldProcessedEvents, historyLimit],
+    [handleNewEvent, cleanupOldProcessedEvents, historyLimit, feedPath, emitScheduled],
   );
 
   useEffect(() => {
@@ -367,7 +438,11 @@ export function useFirebaseEvents(config, options = {}) {
         setIsConnected(true);
         setError(null);
 
-        scheduleNextMinuteCheck();
+        // Para feedPath (SAM3), el path es plano — no rotar listener por minuto.
+        // Rotación solo aplica al path legacy program_events/{minuteKey}/events.
+        if (!feedPath) {
+          scheduleNextMinuteCheck();
+        }
       } catch (err) {
         console.error("Error en inicialización:", err);
         if (isActive) {
@@ -411,8 +486,11 @@ export function useFirebaseEvents(config, options = {}) {
       eventBufferRef.current = [];
       lastTimestampRef.current = null;
       isInitializedRef.current = false;
+
+      scheduledTimeoutsRef.current.forEach((t) => clearTimeout(t));
+      scheduledTimeoutsRef.current.clear();
     };
-  }, [getCurrentMinuteKey, startListeningToMinute, scheduleNextMinuteCheck]);
+  }, [getCurrentMinuteKey, startListeningToMinute, scheduleNextMinuteCheck, feedPath]);
 
   const clearEvents = useCallback(() => {
     setEvents([]);
