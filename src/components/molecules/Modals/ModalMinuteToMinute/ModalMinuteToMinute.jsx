@@ -108,7 +108,7 @@ export default function ModalMinuteToMinute() {
     const db = getDatabase(app);
     const historyRef = query(
       ref(db, `apiopta/live_feed/${fixture_id}/minute_by_minute/history`),
-      orderByChild("generated_at_utc"),
+      orderByChild("match_seconds"),
     );
 
     const seen = new Set();
