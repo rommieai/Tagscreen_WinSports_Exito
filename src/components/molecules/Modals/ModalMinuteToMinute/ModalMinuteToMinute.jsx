@@ -33,7 +33,18 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
 };
 
-const STORAGE_KEY = "match_commentary_1470618_v2";
+const STORAGE_KEY = "current_match_commentary";
+const COMENTARIES_KEY = "match_comentaries";
+
+const readCommentariesFromStorage = () => {
+  try {
+    const saved = localStorage.getItem(COMENTARIES_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch (e) {
+    console.error("Error leyendo match_comentaries:", e);
+    return [];
+  }
+};
 
 export default function ModalMinuteToMinute() {
   const [commentaries, setCommentaries] = useState(() => {
@@ -46,11 +57,44 @@ export default function ModalMinuteToMinute() {
     }
   });
 
+  // Comentarios provenientes de useFirebaseEvents via localStorage
+  const [liveCommentaries, setLiveCommentaries] = useState(() =>
+    readCommentariesFromStorage()
+  );
+
   const bottomRef = useRef(null);
 
+  // Persiste en localStorage
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(commentaries));
   }, [commentaries]);
+
+  // Escuchar nuevos eventos guardados por useFirebaseEvents en tiempo real
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      setLiveCommentaries(readCommentariesFromStorage());
+    };
+
+    // Escuchar evento custom disparado desde el hook
+    window.addEventListener("match_comentaries_updated", handleStorageUpdate);
+
+    // También escuchar el evento nativo de storage (para otras pestañas)
+    const handleNativeStorage = (e) => {
+      if (e.key === COMENTARIES_KEY) handleStorageUpdate();
+    };
+    window.addEventListener("storage", handleNativeStorage);
+
+    return () => {
+      window.removeEventListener("match_comentaries_updated", handleStorageUpdate);
+      window.removeEventListener("storage", handleNativeStorage);
+    };
+  }, []);
+
+  // Scroll suave al bottom cada vez que llega un comentario nuevo
+  useEffect(() => {
+    if (liveCommentaries.length === 0) return;
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [liveCommentaries]);
 
   useEffect(() => {
     if (commentaries.length === 0) return;
@@ -89,6 +133,12 @@ export default function ModalMinuteToMinute() {
     return () => unsubscribe();
   }, []);
 
+  // Combinar ambas fuentes: los del feed directo y los de useFirebaseEvents
+  const allCommentaries = [
+    ...commentaries.map((c) => ({ commentary: c.commentary, minute: c.minute })),
+    ...liveCommentaries.map((c) => ({ commentary: c.comment, minute: c.minute })),
+  ];
+
   return (
     <motion.div
       className={styles.modalMinuteToMinute}
@@ -99,6 +149,7 @@ export default function ModalMinuteToMinute() {
       {commentaries.map((item, index) => (
         <Message key={item.key || index} minute={item.minute} text={item.commentary} />
       ))}
+      {/* Hook scroll automático */}
       <div ref={bottomRef} />
     </motion.div>
   );

@@ -41,7 +41,7 @@ export default defineConfig({
               ["style", "script", "image", "font"].includes(
                 request.destination
               ),
-            //urlPattern: /^https:\/\/clip\.mocksoccer\.tagscreen\.ai\/.*$/,
+            //urlPattern: /^https:\/\/clip\.tricarro\.info\/.*$/,
             handler: "CacheFirst",
             options: {
               cacheName: "static-assets",

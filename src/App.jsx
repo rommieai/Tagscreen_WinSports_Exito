@@ -6,7 +6,6 @@ import Juego from "./pages/(game)/Juego";
 import Onboarding from "./pages/(onboarding)/Onboarding";
 import Mock from "./pages/(mock)/Mock";
 import Demo from "./pages/(demo)/Demo";
-import Sam3 from "./pages/(sam3)/Sam3";
 import css from "@/app.module.css";
 import { ActiveComponentsProvider } from "./context/ActiveChatContext";
 import { CardModalProvider } from "./context/CardModal";
@@ -40,7 +39,6 @@ function App() {
                     <Route path="/onboarding" element={<Onboarding />} />
                     <Route path="/mock" element={<Mock />} />
                     <Route path="/demo" element={<Demo />} />
-                    <Route path="/sam3" element={<Sam3 />} />
                   </>
                 )}
               </Routes>

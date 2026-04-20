@@ -8,7 +8,6 @@ import { useResultado } from "../../context/ResultadoContext";
 import TargetIco from "../../components/atoms/TargetIco";
 import CameraView from "../../components/CameraView";
 import useFirebaseEvents from "../../hooks/useFirebaseEvents";
-import useMatchClock from "../../hooks/useMatchClock";
 import InputChat from "../../components/atoms/InputChat/Index";
 import { useNotifications } from "../../context/Notifications/NotificationsContext";
 import {
@@ -51,19 +50,12 @@ const Juego = () => {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-K0WFV4949D",
   }), []);
 
-  const agentFixtureId = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
-  const agentFeedRoot = import.meta.env.VITE_FIREBASE_AGENT_FEED_ROOT || "apiopta/live_feed_agent";
-  const agentFeedPath = `${agentFeedRoot}/${agentFixtureId}`;
-
   const { events, isConnected, error, stats, getServiceStats, downloadEventsJson } =
     useFirebaseEvents(firebaseConfig, {
       maxEvents: 1,
       autoConnect: isStream && audioOffset !== null,
       audioOffset: syncInfo?.offsetSec || 0,
-      feedPath: agentFeedPath,
     });
-
-  const matchClock = useMatchClock({ syncInfo });
 
   // Cloud Vision sync: retry every 1s until the OCR reads a real match_time.
   // Until then the UI keeps rendering whatever the RTDB already has (stale or not).
@@ -372,31 +364,6 @@ const Juego = () => {
               />
             )}
           </>
-        )}
-        {/* Match time display — prominent pill, top-right */}
-        {matchClock && (
-          <div style={{
-            position: "absolute",
-            top: 12,
-            right: 12,
-            zIndex: 9999,
-            background: "rgba(0,0,0,0.75)",
-            color: "#fff",
-            padding: "6px 14px",
-            borderRadius: 20,
-            fontSize: 18,
-            fontWeight: "bold",
-            fontFamily: "'Inter', monospace",
-            pointerEvents: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            backdropFilter: "blur(4px)",
-            border: "1px solid rgba(255,255,255,0.2)",
-          }}>
-            <span style={{ fontSize: 12, opacity: 0.7 }}>MIN</span>
-            <span>{matchClock}</span>
-          </div>
         )}
 
         {(isTvDetected || isTestMode) && (

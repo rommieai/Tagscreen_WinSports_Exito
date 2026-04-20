@@ -4,7 +4,6 @@ import { useActiveComponents } from "../ActiveChatContext";
 // Modal types enabled
 export const MODAL_TYPES = {
   MINUTE_TO_MINUTE: "minuteToMinute",
-  MINUTE_TO_MINUTE_SAM3: "minuteToMinuteSam3",
   BOX_INFO: "boxInfo",
   PLAYER_PICK: "playerPick",
   PLAYER_INFO: "playerInfo",
