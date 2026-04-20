@@ -47,27 +47,27 @@ const readCommentariesFromStorage = () => {
 };
 
 export default function ModalMinuteToMinute() {
-  const [commentaries, setCommentaries] = useState(() => {
-    try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      return savedData ? JSON.parse(savedData) : [];
-    } catch (error) {
-      console.error("Error reading localStorage:", error);
-      return [];
-    }
-  });
+  const [commentaries, setCommentaries] = useState([]);
 
   // Comentarios provenientes de useFirebaseEvents via localStorage
   const [liveCommentaries, setLiveCommentaries] = useState(() =>
     readCommentariesFromStorage()
   );
 
+  const containerRef = useRef(null);
   const bottomRef = useRef(null);
 
-  // Persiste en localStorage
+  // Previous mounts persisted commentaries to localStorage, which caused future
+  // events (e.g. 90+3) from an earlier play to leak to the top of the list on
+  // the next mount. Firebase history is the source of truth now — drop the
+  // stale cache so we start clean.
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(commentaries));
-  }, [commentaries]);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   // Escuchar nuevos eventos guardados por useFirebaseEvents en tiempo real
   useEffect(() => {
@@ -90,16 +90,19 @@ export default function ModalMinuteToMinute() {
     };
   }, []);
 
-  // Scroll suave al bottom cada vez que llega un comentario nuevo
+  // Auto-scroll al final cuando llega un comentario nuevo. Usar solo
+  // scrollIntoView con smooth se interrumpe si llegan eventos en ráfaga, así
+  // que forzamos scrollTop del contenedor scrolleable (CardModal .minuteToMinute)
+  // y complementamos con scrollIntoView.
   useEffect(() => {
-    if (liveCommentaries.length === 0) return;
+    if (commentaries.length === 0 && liveCommentaries.length === 0) return;
+    const el = containerRef.current;
+    const scrollable = el?.closest('[class*="minuteToMinute"]') ?? el?.parentElement;
+    if (scrollable) {
+      scrollable.scrollTop = scrollable.scrollHeight;
+    }
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [liveCommentaries]);
-
-  useEffect(() => {
-    if (commentaries.length === 0) return;
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [commentaries]);
+  }, [commentaries, liveCommentaries]);
 
   useEffect(() => {
     const fixture_id = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
@@ -133,14 +136,9 @@ export default function ModalMinuteToMinute() {
     return () => unsubscribe();
   }, []);
 
-  // Combinar ambas fuentes: los del feed directo y los de useFirebaseEvents
-  const allCommentaries = [
-    ...commentaries.map((c) => ({ commentary: c.commentary, minute: c.minute })),
-    ...liveCommentaries.map((c) => ({ commentary: c.comment, minute: c.minute })),
-  ];
-
   return (
     <motion.div
+      ref={containerRef}
       className={styles.modalMinuteToMinute}
       variants={containerVariants}
       initial="hidden"
