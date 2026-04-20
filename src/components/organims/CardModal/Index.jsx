@@ -9,6 +9,7 @@ import ModalProduct from "../../molecules/Modals/ModalProduct/ModalProduct";
 import ModalTrivia from "../../molecules/Modals/ModalTrivia/Index";
 import ModalMinuteToMinute from "../../molecules/Modals/ModalMinuteToMinute/ModalMinuteToMinute";
 import ModalAward from "../../molecules/Modals/ModalAward/ModalAward";
+import ModalMinuteToMinuteSam3 from "../../molecules/Modals/ModalMinuteToMinuteSam3/ModalMinuteToMinuteSam3";
 import { useActiveComponents } from "../../../context/ActiveChatContext";
 import { useTarget } from "../../../context/TargetContext";
 import { useEffect, useRef } from "react";
@@ -101,6 +102,8 @@ export default function CardModal() {
         return <ModalMinuteToMinute data={modalData} onClose={closeModal} />;
       case MODAL_TYPES.AWARD:
         return <ModalAward data={modalData} onClose={closeModal} />;
+      case MODAL_TYPES.MINUTE_TO_MINUTE_SAM3:
+        return <ModalMinuteToMinuteSam3 data={modalData} onClose={closeModal} />;
       default:
         return null;
     }
@@ -112,6 +115,7 @@ export default function CardModal() {
     [MODAL_TYPES.TRIVIA]: style.trivia,
     [MODAL_TYPES.MINUTE_TO_MINUTE]: style.minuteToMinute,
     [MODAL_TYPES.AWARD]: style.award,
+    [MODAL_TYPES.MINUTE_TO_MINUTE_SAM3]: style.minuteToMinute,
   };
 
   const handleClick = (name) => {
