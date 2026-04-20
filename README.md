@@ -116,7 +116,7 @@ Firebase RTDB
 
 | Variable | Descripcion | Default |
 |----------|-------------|---------|
-| `VITE_API_MAIN_URL` | URL base del backend API | `https://tricarro.info/api/` |
+| `VITE_API_MAIN_URL` | URL base del backend API | `https://mocksoccer.tagscreen.ai/api/` |
 | `VITE_BACK_ACTIVE_STREAM` | Activa la conexion a RTDB | `true` |
 | `VITE_TEST_MODE` | Modo test: jerseys como toast en vez de modal fullscreen | `true` |
 | `VITE_FIREBASE_FIXTURE_ID` | ID del fixture en RTDB | `5ff653se2gnpi4y9a4nus4xec` |
