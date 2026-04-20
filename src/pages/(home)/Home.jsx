@@ -16,11 +16,9 @@ export default function Home() {
   const handleTermsLinkClick = () => {};
 
   const handleContinueClick = (e) => {
-    localStorage.removeItem("cajas");
-    localStorage.removeItem("ObjectDetected");
-    localStorage.removeItem("logos");
     localStorage.removeItem("product");
     localStorage.removeItem("current_match_commentary");
+    localStorage.removeItem("match_comentaries");
 
     if (!acceptedTerms) {
       e.preventDefault();
