@@ -44,4 +44,40 @@ export const notificationsConfig = [
     type: "time",
     triggerKey: "recogLogo",
   },
+  {
+    id: "n9",
+    text: "¡Arquero en pantalla!",
+    type: "trigger",
+    triggerKey: "sam3_goalkeeper",
+  },
+  {
+    id: "n10",
+    text: "¡Árbitro en pantalla!",
+    type: "trigger",
+    triggerKey: "sam3_referee",
+  },
+  {
+    id: "n11",
+    text: "¡Juez de línea con banderín!",
+    type: "trigger",
+    triggerKey: "sam3_linesman",
+  },
+  {
+    id: "n12",
+    text: "¡Banca de suplentes!",
+    type: "trigger",
+    triggerKey: "sam3_bench",
+  },
+  {
+    id: "n13",
+    text: "¡Camilla en campo!",
+    type: "trigger",
+    triggerKey: "sam3_stretcher",
+  },
+  {
+    id: "n14",
+    text: "¡Brazalete de capitán!",
+    type: "trigger",
+    triggerKey: "sam3_armband",
+  },
 ];

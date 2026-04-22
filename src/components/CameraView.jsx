@@ -80,7 +80,7 @@ export default function ReconJson({ zoom }) {
       formData.append("confidence", "0.25");
 
       try {
-        const apiUrl = `${import.meta.env.VITE_API_MAIN_URL}agent/process`;
+        const apiUrl = `${import.meta.env.VITE_API_MAIN_URL}sam3/process`;
         const res = await fetch(apiUrl, {
           method: "POST",
           body: formData,

@@ -38,7 +38,7 @@ const Sam3 = () => {
   const [confidence, setConfidence] = useState(0);
   const [audioOffset, setAudioOffset] = useState(0);
   const { agregarResultado } = useResultado();
-  const { openModal, closeModal } = useCardModal();
+  const { openModal, closeModal, modalType } = useCardModal();
   const isStream = import.meta.env.VITE_BACK_ACTIVE_STREAM === "true";
   const { triggerNotification } = useNotifications();
   const trackedLogosRef = useRef(new Set());
@@ -54,7 +54,7 @@ const Sam3 = () => {
 
   const { events, isConnected, stats } = useFirebaseEvents(firebaseConfig, {
     maxEvents: 1,
-    autoConnect: isStream && audioOffset !== null && !!syncInfo,
+    autoConnect: isStream && audioOffset !== null,
     audioOffset: syncInfo?.offsetSec || 0,
     feedPath: sam3FeedPath,
     syncInfo: syncInfo
@@ -178,7 +178,14 @@ const Sam3 = () => {
     }
 
     if (metadata?.jerseys?.length > 0) {
-      const bestJersey = metadata.jerseys.reduce(
+      const teamJerseys = metadata.jerseys.filter(
+        (j) => !j.category || j.category === "team",
+      );
+      const nonTeamDetections = metadata.jerseys.filter(
+        (j) => j.category && j.category !== "team",
+      );
+
+      const bestJersey = teamJerseys.reduce(
         (best, j) => (j.confidence > (best?.confidence || 0) ? j : best),
         null,
       );
@@ -188,22 +195,28 @@ const Sam3 = () => {
         bestJersey.confidence >= 0.5 &&
         !trackedJerseysRef.current.has(bestJersey.team)
       ) {
-        trackedJerseysRef.current.add(bestJersey.team);
-        if (isTestMode) {
-          setJerseyToast({ team: bestJersey.team, confidence: bestJersey.confidence });
-          if (jerseyToastTimerRef.current) clearTimeout(jerseyToastTimerRef.current);
-          jerseyToastTimerRef.current = setTimeout(() => setJerseyToast(null), 4000);
-        } else {
-          triggerNotification("recogBox");
-          openModal(MODAL_TYPES.PRODUCT, { type: "jersey", team: bestJersey.team });
-        }
+        if (modalType !== "trivia") {
+          trackedJerseysRef.current.add(bestJersey.team);
+          if (isTestMode) {
+            setJerseyToast({ team: bestJersey.team, confidence: bestJersey.confidence });
+            if (jerseyToastTimerRef.current) clearTimeout(jerseyToastTimerRef.current);
+            jerseyToastTimerRef.current = setTimeout(() => setJerseyToast(null), 4000);
+          } else {
+            triggerNotification(`jersey${bestJersey.team}`);
+            openModal(MODAL_TYPES.TRIVIA, bestJersey.team);
+          }
 
-        setTimeout(() => {
-          trackedJerseysRef.current.delete(bestJersey.team);
-        }, 30000);
+          setTimeout(() => {
+            trackedJerseysRef.current.delete(bestJersey.team);
+          }, 30000);
+        }
+      }
+
+      for (const det of nonTeamDetections) {
+        triggerNotification(`sam3_${det.category}`);
       }
     }
-  }, [events, agregarResultado]);
+  }, [events, agregarResultado, modalType]);
 
   // ── Camera boot (same as /juego) ─────────────────────────────────────────
   useEffect(() => {
@@ -238,7 +251,7 @@ const Sam3 = () => {
     startCamera();
 
     setTimeout(() => {
-      openModal(MODAL_TYPES.MINUTE_TO_MINUTE_SAM3, "data");
+      openModal(MODAL_TYPES.MINUTE_TO_MINUTE, "data");
     }, 3000);
 
     return () => {

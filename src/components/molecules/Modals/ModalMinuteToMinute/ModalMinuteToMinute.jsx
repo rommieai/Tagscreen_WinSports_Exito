@@ -36,24 +36,33 @@ const firebaseConfig = {
 const STORAGE_KEY = "match_commentary_1470618_v2";
 
 export default function ModalMinuteToMinute() {
-  const [commentaries, setCommentaries] = useState(() => {
-    try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      return savedData ? JSON.parse(savedData) : [];
-    } catch (error) {
-      console.error("Error reading localStorage:", error);
-      return [];
-    }
-  });
+  const [commentaries, setCommentaries] = useState([]);
 
+  const containerRef = useRef(null);
   const bottomRef = useRef(null);
 
+  // Old sessions persisted commentaries to localStorage, which caused future
+  // events (e.g. 90+3) from a previous play to leak to the top of the list on
+  // the next mount. Firebase history is the source of truth now — clear any
+  // stale cache on mount.
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(commentaries));
-  }, [commentaries]);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   useEffect(() => {
     if (commentaries.length === 0) return;
+    // Scroll the nearest overflow-y parent (CardModal's .minuteToMinute wrapper)
+    // straight to bottom. scrollIntoView with smooth behavior gets interrupted
+    // when events arrive back-to-back, so we pin scrollTop to scrollHeight.
+    const el = containerRef.current;
+    const scrollable = el?.closest('[class*="minuteToMinute"]') ?? el?.parentElement;
+    if (scrollable) {
+      scrollable.scrollTop = scrollable.scrollHeight;
+    }
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [commentaries]);
 
@@ -91,6 +100,7 @@ export default function ModalMinuteToMinute() {
 
   return (
     <motion.div
+      ref={containerRef}
       className={styles.modalMinuteToMinute}
       variants={containerVariants}
       initial="hidden"

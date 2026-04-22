@@ -2,7 +2,6 @@ import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes } from "react-router";
 import { ResultadoProvider } from "./context/ResultadoContext";
 import Home from "./pages/(home)/Home";
-import Juego from "./pages/(game)/Juego";
 import Onboarding from "./pages/(onboarding)/Onboarding";
 import Mock from "./pages/(mock)/Mock";
 import Demo from "./pages/(demo)/Demo";
@@ -36,11 +35,10 @@ function App() {
                 <Route path="/" element={<Home />} />
                 {import.meta.env.VITE_APP_OFF !== "true" && (
                   <>
-                    <Route path="/juego" element={<Juego />} />
+                    <Route path="/juego" element={<Sam3 />} />
                     <Route path="/onboarding" element={<Onboarding />} />
                     <Route path="/mock" element={<Mock />} />
                     <Route path="/demo" element={<Demo />} />
-                    <Route path="/sam3" element={<Sam3 />} />
                   </>
                 )}
               </Routes>
