@@ -141,6 +141,7 @@ const Juego = () => {
     const ultimoEvento = events[events.length - 1];
     const metadata = ultimoEvento?.md;
 
+    console.log(metadata)
     // --- Box / Logo detections (from YOLO objects) ---
     if (metadata?.objects?.length > 0) {
       const boxDetection = metadata.objects.find(
@@ -195,6 +196,11 @@ const Juego = () => {
         }
       }
     }
+
+    // --- Arbitro detections ---
+    if (metadata?.arbitro?.length > 0) {
+      openModal(MODAL_TYPES.REFEREE)
+    }
   }, [events, agregarResultado, isOpen, modalType]);
 
   useEffect(() => {
@@ -230,8 +236,6 @@ const Juego = () => {
     if (!isTestMode) {
       startCamera();
     }
-
-    console.log("isTestMode", isTestMode)
 
     return () => {
       stream?.getTracks().forEach((track) => track.stop());

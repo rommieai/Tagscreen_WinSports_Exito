@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import triviaData from './data.json';
 import styles from './styles.module.css';
-import MessageBasic from '../../../MessageBasic/MessageBasic';
 
 export default function ModalTrivia(equipo) {
     const [questionObj, setQuestionObj] = useState(null);
@@ -81,7 +80,7 @@ export default function ModalTrivia(equipo) {
             {showResult ? (
                 <div className={styles.resultContainer}>
                     {isCorrect ? (
-                        <p className={styles.winText}>¡CORRECTO!<br></br>ERES UN GRAN HINCHA</p>
+                        <p className={styles.winText}>¡CORRECTO!<br />ERES UN GRAN HINCHA</p>
                     ) : (
                         <p className={styles.loseText}>
                             ¡CASI!, LA RESPUESTA CORRECTA ES:<br />
@@ -92,23 +91,20 @@ export default function ModalTrivia(equipo) {
                 </div>
             ) : (
                 <>
-                    <MessageBasic message={question} />
+                    <p className={styles.questionText}>{question}</p>
                     <div className={styles.optionsContainer}>
-                        {options.map((option) => {
-
-                                return (
-                                    <button
-                                        key={option.id}
-                                        className={styles.optionButton}
-                                        onClick={() => handleOptionClick(option.id)}
-                                        disabled={showResult}
-                                    >
-                                        {option.text}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                        </>
+                        {options.map((option) => (
+                            <button
+                                key={option.id}
+                                className={styles.optionButton}
+                                onClick={() => handleOptionClick(option.id)}
+                                disabled={showResult}
+                            >
+                                {option.text}
+                            </button>
+                        ))}
+                    </div>
+                </>
             )}
         </div>
     );
