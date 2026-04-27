@@ -14,6 +14,7 @@ export default function ModalChat({ data, onClose }) {
   const [currentNode, setCurrentNode] = useState(null);
   const [options, setOptions] = useState([]);
   const chatEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const idCounter = useRef(1);
   const activatedRef = useRef(false);
   const autoOpenRef = useRef(data?.autoOpen === true);
@@ -23,12 +24,10 @@ export default function ModalChat({ data, onClose }) {
   const nextId = () => idCounter.current++;
 
   const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = chatContainerRef.current;
+    if (!container) return;
+    container.scrollBy({ top: container.clientHeight * 0.2, behavior: "smooth" });
   };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, options]);
 
   useEffect(() => {
     if (autoOpenRef.current) {
@@ -38,9 +37,7 @@ export default function ModalChat({ data, onClose }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (chatScrollTrigger > 0) scrollToBottom();
-  }, [chatScrollTrigger]);
+  
 
   useEffect(() => {
     if (chatActivated && !activatedRef.current) {
@@ -94,11 +91,15 @@ export default function ModalChat({ data, onClose }) {
     setTimeout(() => {
       loadNode(option.next);
     }, 300);
+
+    setTimeout(() => {
+      scrollToBottom();
+    }, 2000);
   };
 
   return (
     <div className={styles.modalChat}>
-      <div className={styles.chatContainer}>
+      <div className={styles.chatContainer} ref={chatContainerRef}>
         <>
           {messages.map((message) => (
             <div

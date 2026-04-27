@@ -12,6 +12,7 @@ export const MODAL_TYPES = {
   CHAT: "chat",
   BRAND_INFO: "brandInfo",
   AWARD: "award",
+  REFEREE: "referee",
 };
 
 const CardModalContext = createContext(null);
