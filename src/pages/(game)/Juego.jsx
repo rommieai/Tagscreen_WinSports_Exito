@@ -39,7 +39,7 @@ const Juego = () => {
   const [syncInfo, setSyncInfo] = useState(null); // { matchTime, matchTimeSeconds, offsetSec }
   const [jerseyToast, setJerseyToast] = useState(null); // { team, confidence }
   const jerseyToastTimerRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const firebaseConfig = useMemo(() => ({
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
@@ -161,7 +161,7 @@ const Juego = () => {
       }
     };
 
-    checkVideoStatus();
+    //checkVideoStatus();
 
     return () => clearTimeout(timeoutId);
   }, []);
@@ -175,9 +175,21 @@ const Juego = () => {
       const secs = seconds % 60;
       const minutekey = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 
+      console.log(minutekey)
       const entry = eventsData.eventos.find((e) => e.minutekey === minutekey);
       if (entry) {
         console.log("[DEMO EVENT]", entry);
+        if (entry.event === "referee") {
+          triggerNotification("referee");
+          setTimeout(() => openModal(MODAL_TYPES.REFEREE), 1500);
+        } else if (entry.event === "goal") {
+          triggerNotification("goal");
+          setTimeout(() => openModal(MODAL_TYPES.GOAL), 1500);
+        } else if (entry.event === "jersey") {
+          const teamJersey = entry.teamJersey;
+          triggerNotification(`jersey${teamJersey}`);
+          setTimeout(() => openModal(MODAL_TYPES.TRIVIA, teamJersey), 1500);
+        }
       }
 
       seconds++;
@@ -196,7 +208,6 @@ const Juego = () => {
     const ultimoEvento = events[events.length - 1];
     const metadata = ultimoEvento?.md;
 
-    // --- Box / Logo detections (from YOLO objects) ---
     if (metadata?.objects?.length > 0) {
       const boxDetection = metadata.objects.find(
         (obj) => obj.type === "caja" && obj.confidence >= 0.5,
@@ -222,7 +233,6 @@ const Juego = () => {
       }
     }
 
-    // --- Jersey detections (from jersey models) ---
     if (metadata?.jerseys?.length > 0) {
       const bestJersey = metadata.jerseys.reduce((best, j) =>
         j.confidence > (best?.confidence || 0) ? j : best, null
@@ -230,7 +240,6 @@ const Juego = () => {
 
       if (bestJersey && bestJersey.confidence >= 0.5 && !trackedJerseysRef.current.has(bestJersey.team)) {
         if (modalType != 'trivia') {
-          console.log('trivia')
           trackedJerseysRef.current.add(bestJersey.team);
           if (isTestMode) {
             // Test mode: small non-blocking corner toast so the camera stays visible
@@ -251,7 +260,6 @@ const Juego = () => {
       }
     }
 
-    // --- Arbitro detections ---
     if (metadata?.arbitro?.length > 0) {
       openModal(MODAL_TYPES.REFEREE)
     }
@@ -261,10 +269,6 @@ const Juego = () => {
     let stream = null;
 
     triggerNotification("initNotification");
-
-    setTimeout(() => {
-      openModal(MODAL_TYPES.GOAL);
-    }, 5000);
 
     const startCamera = async () => {
       try {
@@ -290,8 +294,6 @@ const Juego = () => {
         setLoading(false);
       }
     };
-
-    
 
     if (!isTestMode) {
       startCamera();
