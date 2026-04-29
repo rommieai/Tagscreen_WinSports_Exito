@@ -39,7 +39,7 @@ const Juego = () => {
   const [syncInfo, setSyncInfo] = useState(null); // { matchTime, matchTimeSeconds, offsetSec }
   const [jerseyToast, setJerseyToast] = useState(null); // { team, confidence }
   const jerseyToastTimerRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const firebaseConfig = useMemo(() => ({
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
@@ -144,7 +144,7 @@ const Juego = () => {
 
     const checkVideoStatus = async () => {
       try {
-        const videoId = "world-cup";
+        const videoId = "win";
         const response = await fetch(`https://api.webplayer.tagscreen.ai/video/status/${videoId}`);
         const data = await response.json();
         console.log("Status del video:", data);
@@ -161,7 +161,7 @@ const Juego = () => {
       }
     };
 
-    //checkVideoStatus();
+    checkVideoStatus();
 
     return () => clearTimeout(timeoutId);
   }, []);
