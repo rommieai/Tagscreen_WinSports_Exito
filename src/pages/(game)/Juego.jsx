@@ -15,9 +15,10 @@ import {
   MODAL_TYPES,
 } from "../../context/CardModal/CardModalContext";
 import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudio";
-
+import eventsData from "./events.json";
 
 const isTestMode = import.meta.env.VITE_TEST_MODE === 'true';
+const isDemo = import.meta.env.VITE_DEMO === 'true';
 
 const Juego = () => {
   const gamePageRef = useRef(null);
@@ -38,6 +39,7 @@ const Juego = () => {
   const [syncInfo, setSyncInfo] = useState(null); // { matchTime, matchTimeSeconds, offsetSec }
   const [jerseyToast, setJerseyToast] = useState(null); // { team, confidence }
   const jerseyToastTimerRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const firebaseConfig = useMemo(() => ({
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
@@ -53,7 +55,7 @@ const Juego = () => {
   const { events, isConnected, error, stats, getServiceStats, downloadEventsJson } =
     useFirebaseEvents(firebaseConfig, {
       maxEvents: 1,
-      autoConnect: isStream && audioOffset !== null,
+      autoConnect: !isDemo && isStream && audioOffset !== null,
       audioOffset: syncInfo?.offsetSec || 0,
     });
 
@@ -136,12 +138,64 @@ const Juego = () => {
   const trackedJerseysRef = useRef(new Set());
 
   useEffect(() => {
-    if (events.length === 0) return;
+    if (!isDemo) return;
+
+    let timeoutId;
+
+    const checkVideoStatus = async () => {
+      try {
+        const videoId = "world-cup";
+        const response = await fetch(`https://api.webplayer.tagscreen.ai/video/status/${videoId}`);
+        const data = await response.json();
+        console.log("Status del video:", data);
+
+        if (!data.played) {
+          timeoutId = setTimeout(checkVideoStatus, 500);
+        } else {
+          console.log("El video ya fue reproducido, detenemos las consultas.");
+          setIsPlaying(true);
+        }
+      } catch (err) {
+        console.warn("[DEMO] Error polling video status:", err);
+        timeoutId = setTimeout(checkVideoStatus, 500);
+      }
+    };
+
+    checkVideoStatus();
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  useEffect(() => {
+    if (!isDemo || !isPlaying) return;
+
+    let seconds = 0;
+    const interval = setInterval(() => {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      const minutekey = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+
+      const entry = eventsData.eventos.find((e) => e.minutekey === minutekey);
+      if (entry) {
+        console.log("[DEMO EVENT]", entry);
+      }
+
+      seconds++;
+      if (seconds > 101) {
+        clearInterval(interval);
+        console.log("[DEMO] Fin del video, lectura detenida.");
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (isDemo || events.length === 0) return;
 
     const ultimoEvento = events[events.length - 1];
     const metadata = ultimoEvento?.md;
 
-    console.log(metadata)
     // --- Box / Logo detections (from YOLO objects) ---
     if (metadata?.objects?.length > 0) {
       const boxDetection = metadata.objects.find(
@@ -208,6 +262,10 @@ const Juego = () => {
 
     triggerNotification("initNotification");
 
+    setTimeout(() => {
+      openModal(MODAL_TYPES.GOAL);
+    }, 5000);
+
     const startCamera = async () => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
@@ -232,6 +290,8 @@ const Juego = () => {
         setLoading(false);
       }
     };
+
+    
 
     if (!isTestMode) {
       startCamera();
