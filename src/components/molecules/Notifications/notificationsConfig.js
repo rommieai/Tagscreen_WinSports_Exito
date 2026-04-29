@@ -23,6 +23,7 @@ export const notificationsConfig = [
   {
     id: "n5",
     text: "¡Escaneaste un Gol!",
+    img: "/images/notifications/jerseyMillonarios.png",
     type: "trigger",
     triggerKey: "goal",
   },
