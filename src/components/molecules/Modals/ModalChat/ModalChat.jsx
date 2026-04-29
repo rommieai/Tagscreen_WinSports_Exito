@@ -31,7 +31,11 @@ export default function ModalChat({ data, onClose }) {
       `[data-msg-id="${scrollTargetIdRef.current}"]`
     );
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const container = chatContainerRef.current;
+      container.scrollTo({
+        top: container.scrollTop + target.getBoundingClientRect().top - container.getBoundingClientRect().top,
+        behavior: "smooth",
+      });
       scrollTargetIdRef.current = null;
     }
   }, [messages]);
