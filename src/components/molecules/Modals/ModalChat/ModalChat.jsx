@@ -23,11 +23,18 @@ export default function ModalChat({ data, onClose }) {
 
   const nextId = () => idCounter.current++;
 
-  const scrollToBottom = () => {
-    const container = chatContainerRef.current;
-    if (!container) return;
-    container.scrollBy({ top: container.clientHeight * 0.2, behavior: "smooth" });
-  };
+  const scrollTargetIdRef = useRef(null);
+
+  useEffect(() => {
+    if (!scrollTargetIdRef.current) return;
+    const target = chatContainerRef.current?.querySelector(
+      `[data-msg-id="${scrollTargetIdRef.current}"]`
+    );
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollTargetIdRef.current = null;
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (autoOpenRef.current) {
@@ -86,15 +93,12 @@ export default function ModalChat({ data, onClose }) {
       ...prev,
       { id: nextId(), text: option.text, isBot: false },
     ]);
+    scrollTargetIdRef.current = idCounter.current;
     setOptions([]);
 
     setTimeout(() => {
       loadNode(option.next);
     }, 300);
-
-    setTimeout(() => {
-      scrollToBottom();
-    }, 2000);
   };
 
   return (
@@ -104,6 +108,7 @@ export default function ModalChat({ data, onClose }) {
           {messages.map((message) => (
             <div
               key={message.id}
+              data-msg-id={message.isBot ? message.id : undefined}
               className={
                 message.isBot
                   ? styles.messageWrapper
