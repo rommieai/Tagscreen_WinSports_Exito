@@ -262,6 +262,10 @@ const Juego = () => {
 
     triggerNotification("initNotification");
 
+    setTimeout(() => {
+      openModal(MODAL_TYPES.GOAL);
+    }, 5000);
+
     const startCamera = async () => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
@@ -286,6 +290,8 @@ const Juego = () => {
         setLoading(false);
       }
     };
+
+    
 
     if (!isTestMode) {
       startCamera();
