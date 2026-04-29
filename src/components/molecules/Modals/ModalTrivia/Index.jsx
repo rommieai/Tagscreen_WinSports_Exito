@@ -7,10 +7,11 @@ export default function ModalTrivia(equipo) {
     const [selectedOptionId, setSelectedOptionId] = useState(null);
     const [showResult, setShowResult] = useState(false);
     const [notFound, setNotFound] = useState(false);
-
+    
     useEffect(() => {
         const teamKey = equipo.data;
-
+        
+        console.log(teamKey)
         if (teamKey) {
             if (triviaData[teamKey]) {
                 const questions = triviaData[teamKey];

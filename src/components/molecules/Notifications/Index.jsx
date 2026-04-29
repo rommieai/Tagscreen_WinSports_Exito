@@ -25,7 +25,7 @@ export default function Notifications() {
 
     const timer = setTimeout(() => {
       setVisible(false);
-    }, 10000);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, [activeNotifications]);

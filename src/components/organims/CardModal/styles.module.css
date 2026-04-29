@@ -62,8 +62,9 @@
   border-radius: 10px;
   height: 240px;
   overflow: hidden;
-  padding: 0;
-  background: transparent;
+  padding: 18px 25px 17px 21px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 230, 0, 0.30) 0%, #FFE600 100%);
 }
 
 .product {

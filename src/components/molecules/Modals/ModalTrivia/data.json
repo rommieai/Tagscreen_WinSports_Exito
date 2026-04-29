@@ -1,5 +1,5 @@
 {
- "Millonarios": [
+ "millonarios": [
   {
    "id": "M1",
    "question": "¿Quién es el máximo goleador histórico de Millonarios?",
@@ -455,7 +455,7 @@
    "correctOptionId": "D10_B"
   }
  ],
- "Nacional": [
+ "nacional": [
   {
    "id": "N1",
    "question": "¿Quién fue el DT durante la Libertadores 2016?",
