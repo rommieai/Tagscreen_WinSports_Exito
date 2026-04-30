@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './styles.module.css';
+import clips from '../ModalGallery/clips.json';
 
-const REPLAY_URL = 'https://replay.tagscreen.ai/world-cup/goal';
+const goalClip = clips.find((c) => c.type === 'goal');
+const REPLAY_URL = goalClip?.videoUrl ?? null;
 
 const WhatsAppIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
@@ -34,8 +36,15 @@ export default function ModalGoal() {
   }, [milloScore]);
 
   const handleShare = () => {
-    const waUrl = `https://wa.me/?text=${encodeURIComponent(REPLAY_URL)}`;
-    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    const text = goalClip
+      ? `|${goalClip.minute}' ${goalClip.title} — ${goalClip.player}`
+      : '¡GOL!';
+    const url = REPLAY_URL || window.location.href;
+    if (navigator.share) {
+      navigator.share({ title: goalClip?.title ?? '¡GOL!', text, url }).catch(() => {});
+    } else {
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -99,10 +108,10 @@ export default function ModalGoal() {
             <video
               className={styles.videoThumb}
               src={REPLAY_URL}
-              autoPlay
-              muted
+              poster={goalClip?.thumbnail ?? undefined}
+              controls
               playsInline
-              loop
+              preload="metadata"
             />
             <p className={styles.replayText}>¡GOL! Celebra y compártelo con tus amigos</p>
             <button className={styles.shareBtn} onClick={handleShare}>

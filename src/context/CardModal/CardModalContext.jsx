@@ -14,6 +14,7 @@ export const MODAL_TYPES = {
   AWARD: "award",
   REFEREE: "referee",
   GOAL: "goal",
+  GALLERY: "gallery",
 };
 
 const CardModalContext = createContext(null);
