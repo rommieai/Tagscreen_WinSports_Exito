@@ -169,6 +169,8 @@ export default function CardModal() {
     </svg>
   );
 
+  console.log(modalType)
+
   const overlayVariants = {
     hidden: {
       opacity: 0,
@@ -176,7 +178,7 @@ export default function CardModal() {
     },
     visible: {
       opacity: 1,
-      bottom: "75px",
+      bottom: modalType === 'chat' ? "118px" : "75px",
       transition: {
         duration: 0.5,
         ease: "easeOut",
@@ -186,7 +188,7 @@ export default function CardModal() {
 
   return (
     <motion.div
-      className={style.cardModalOverlay}
+      className={[style.cardModalOverlay].filter(Boolean).join(" ")}
       variants={overlayVariants}
       initial="hidden"
       animate="visible"
