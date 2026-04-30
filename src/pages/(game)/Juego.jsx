@@ -39,6 +39,7 @@ const Juego = () => {
   const { triggerNotification } = useNotifications();
   const trackedLogosRef = useRef(new Set());
   const hasSyncedRef = useRef(false);
+  const lastGoalAtRef = useRef(-60); // seconds of last goal; starts at -60 to allow first goal immediately
   const [syncInfo, setSyncInfo] = useState(null); // { matchTime, matchTimeSeconds, offsetSec }
   const [jerseyToast, setJerseyToast] = useState(null); // { team, confidence }
   const jerseyToastTimerRef = useRef(null);
@@ -186,9 +187,13 @@ const Juego = () => {
           triggerNotification("referee");
           setTimeout(() => openModal(MODAL_TYPES.REFEREE), 1500);
         } else if (entry.event === "goal") {
-          triggerNotification("goal");
-          addGoal('mil');
-          setTimeout(() => openModal(MODAL_TYPES.GOAL), 1500);
+          const GOAL_COOLDOWN = 30; // seconds — absorbs consecutive detections of the same goal
+          if (seconds - lastGoalAtRef.current >= GOAL_COOLDOWN) {
+            lastGoalAtRef.current = seconds;
+            triggerNotification("goal");
+            addGoal('mil');
+            setTimeout(() => openModal(MODAL_TYPES.GOAL), 1500);
+          }
         } else if (entry.event === "jersey") {
           const teamJersey = entry.teamJersey;
           triggerNotification(`jersey${teamJersey}`);
