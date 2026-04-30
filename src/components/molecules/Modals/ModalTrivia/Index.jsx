@@ -3,7 +3,7 @@ import triviaData from './data.json';
 import styles from './styles.module.css';
 
 const PRODUCT_MAP = {
-    1: { name: 'Gaseosa POSTOBON Duo',      oldPrice: '$12.000',  newPrice: '$6.000',    img: '/images/products/img-gaseosa-postobon.png' },
+    1: { name: 'Gaseosa POSTOBON',      oldPrice: '$12.000',  newPrice: '$6.000',    img: '/images/products/img-gaseosa-postobon.png' },
     2: { name: 'Six Pack Cerveza Andina',    oldPrice: '$50.000',  newPrice: '$25.000',   img: '/images/products/img-cerveza-andina.png' },
     3: { name: 'Balon Nike Pitch Training',  oldPrice: '$100.000', newPrice: '$50.000',   img: '/images/products/img-nike-balon.png' },
     4: { name: 'Zapatillas Adidas',          oldPrice: '$300.000', newPrice: '$165.000',  img: '/images/products/img-product-adidas.png' },
@@ -57,7 +57,10 @@ export default function ModalTrivia(equipo) {
 
         const teamProducts = TEAM_PRODUCTS[equipo.data];
         if (teamProducts) {
-            const nextIndex = teamProducts[productData.products.length % teamProducts.length];
+            const teamIds = teamProducts.map(i => `product_${i}`);
+            const lastShown = [...productData.products].reverse().find(p => teamIds.includes(p));
+            const lastPos = lastShown ? teamIds.indexOf(lastShown) : -1;
+            const nextIndex = teamProducts[(lastPos + 1) % teamProducts.length];
             setSelectedProduct(PRODUCT_MAP[nextIndex]);
             productData.products.push(`product_${nextIndex}`);
 
