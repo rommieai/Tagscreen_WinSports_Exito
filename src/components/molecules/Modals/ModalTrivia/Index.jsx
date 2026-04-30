@@ -21,8 +21,6 @@ export default function ModalTrivia(equipo) {
 
         console.log(teamKey)
         if (teamKey) {
-            setSelectedProduct(getNextProduct(teamKey));
-
             if (triviaData[teamKey]) {
                 const questions = triviaData[teamKey];
                 const randomIndex = Math.floor(Math.random() * questions.length);
