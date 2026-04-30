@@ -26,7 +26,7 @@ export default function ModalChat({ data, onClose }) {
   const scrollTargetIdRef = useRef(null);
 
   useEffect(() => {
-    if (!scrollTargetIdRef.current) return;
+    if (!scrollTargetIdRef.current || options.length === 0) return;
     const target = chatContainerRef.current?.querySelector(
       `[data-msg-id="${scrollTargetIdRef.current}"]`
     );
@@ -34,7 +34,7 @@ export default function ModalChat({ data, onClose }) {
       chatContainerRef.current.scrollTo({ top: target.offsetTop, behavior: "smooth" });
       scrollTargetIdRef.current = null;
     }
-  }, [messages]);
+  }, [options]);
 
   useEffect(() => {
     if (autoOpenRef.current) {
