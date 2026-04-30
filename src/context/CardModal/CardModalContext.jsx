@@ -14,6 +14,7 @@ export const MODAL_TYPES = {
   AWARD: "award",
   REFEREE: "referee",
   GOAL: "goal",
+  GALLERY: "gallery",
 };
 
 const CardModalContext = createContext(null);
@@ -26,6 +27,7 @@ export const CardModalProvider = ({ children }) => {
   const [goalData, setGoalData] = useState(null);
   const [chatActivated, setChatActivated] = useState(false);
   const [chatScrollTrigger, setChatScrollTrigger] = useState(0);
+  const [chatSelectedOption, setChatSelectedOption] = useState(null);
 
   const {
     setModelChat,
@@ -55,8 +57,9 @@ export const CardModalProvider = ({ children }) => {
     ],
   );
 
-  const activateChat = useCallback(() => {
+  const activateChat = useCallback((option = null) => {
     setChatActivated(true);
+    if (option) setChatSelectedOption(option);
   }, []);
 
   const triggerChatScroll = useCallback(() => {
@@ -69,6 +72,7 @@ export const CardModalProvider = ({ children }) => {
     setModalType(null);
     setModalData(null);
     setChatActivated(false);
+    setChatSelectedOption(null);
   }, []);
 
   return (
@@ -84,6 +88,7 @@ export const CardModalProvider = ({ children }) => {
         goalData,
         setGoalData,
         chatActivated,
+        chatSelectedOption,
         activateChat,
         chatScrollTrigger,
         triggerChatScroll,

@@ -58,11 +58,24 @@
   padding: 45px 33px 13px;
 }
 
+.mainContainerGoal {
+  top: 0 !important;
+}
+
 .goal {
   border-radius: 10px;
   height: 240px;
   overflow: hidden;
   padding: 18px 25px 17px 21px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 230, 0, 0.30) 0%, #FFE600 100%);
+}
+
+.chatModal {
+  border-radius: 10px;
+  height: 321px;
+  overflow: hidden;
+  padding: 23px 19px;
   border-radius: 12px;
   background: linear-gradient(180deg, rgba(255, 230, 0, 0.30) 0%, #FFE600 100%);
 }
@@ -112,4 +125,14 @@
   padding: 32px 20px 16px;
   height: 240px;
   overflow: hidden;
+}
+
+.gallery {
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 230, 0, 0.3) 0%, #ffe600 100%);
+  padding: 30px 11px 11px;
+  height: 240px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }

@@ -12,6 +12,11 @@ const menuItems = [
     type: "cart",
     name: "Tienda",
   },
+  {
+    image: "icons/ico-clips.svg",
+    type: "gallery",
+    name: "Clips",
+  },
 ];
 
 export default function FloatMenu() {
@@ -22,6 +27,8 @@ export default function FloatMenu() {
      openModal(MODAL_TYPES.MINUTE_TO_MINUTE, 'data');
    } else if (type === "cart") {
      openModal(MODAL_TYPES.AWARD);
+   } else if (type === "gallery") {
+     openModal(MODAL_TYPES.GALLERY);
    }
  };
 

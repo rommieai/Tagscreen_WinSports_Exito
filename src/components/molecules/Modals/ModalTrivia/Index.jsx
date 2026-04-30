@@ -14,12 +14,15 @@ export default function ModalTrivia(equipo) {
     const [selectedOptionId, setSelectedOptionId] = useState(null);
     const [showResult, setShowResult] = useState(false);
     const [notFound, setNotFound] = useState(false);
-    
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
     useEffect(() => {
         const teamKey = equipo.data;
-        
+
         console.log(teamKey)
         if (teamKey) {
+            setSelectedProduct(getNextProduct(teamKey));
+
             if (triviaData[teamKey]) {
                 const questions = triviaData[teamKey];
                 const randomIndex = Math.floor(Math.random() * questions.length);
@@ -70,10 +73,9 @@ export default function ModalTrivia(equipo) {
     const isCorrect = selectedOptionId === correctOptionId;
     const correctOptionText = options.find((o) => o.id === correctOptionId)?.text;
 
-    return (
-        <div className={styles.modalContainer}>
-            {showResult ? (
-                <div className={styles.resultContainer}>
+    if (showResult) {
+        return (
+                <div className={styles.resultCard}>
                     {isCorrect ? (
                         <p className={styles.winText}>¡CORRECTO!<br />ERES UN GRAN HINCHA</p>
                     ) : (
@@ -82,25 +84,45 @@ export default function ModalTrivia(equipo) {
                             <strong>{correctOptionText}</strong>
                         </p>
                     )}
-                    <img className={styles.imgAward} src="/images/products/img-award.png" alt="Imagen premio" />
+                    {selectedProduct && (
+                        <div className={styles.resultRow}>
+                            <img
+                                className={styles.productImg}
+                                src={selectedProduct.img}
+                                alt={selectedProduct.name}
+                            />
+                            <div className={styles.productInfo}>
+                                <div className={styles.productTexts}>
+                                    <p className={styles.productName}>{selectedProduct.name}</p>
+                                    <p className={styles.productPrice}>
+                                        <span className={styles.priceOld}>{selectedProduct.oldPrice}</span>
+                                        {' '}
+                                        <span className={styles.priceNew}>{selectedProduct.newPrice}</span>
+                                    </p>
+                                </div>
+                                <button className={styles.buyButton}>Comprar</button>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            ) : (
-                <>
-                    <p className={styles.questionText}>{question}</p>
-                    <div className={styles.optionsContainer}>
-                        {options.map((option) => (
-                            <button
-                                key={option.id}
-                                className={styles.optionButton}
-                                onClick={() => handleOptionClick(option.id)}
-                                disabled={showResult}
-                            >
-                                {option.text}
-                            </button>
-                        ))}
-                    </div>
-                </>
-            )}
+        );
+    }
+
+    return (
+        <div className={styles.modalContainer}>
+            <p className={styles.questionText}>{question}</p>
+            <div className={styles.optionsContainer}>
+                {options.map((option) => (
+                    <button
+                        key={option.id}
+                        className={styles.optionButton}
+                        onClick={() => handleOptionClick(option.id)}
+                        disabled={showResult}
+                    >
+                        {option.text}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 }

@@ -86,26 +86,27 @@
   left: 50%;
   transform: translate(-50%, 0px);
   display: flex;
-  top: -37px;
+  gap: 8px;
+  top: -50px;
   align-items: center;
   z-index: 5;
-  padding-bottom: 5px;
-  overflow-x: scroll;
+  width: max-content;
 }
 
 .itemMenu {
   border-radius: 7px;
-  background: #32347a;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  background: #2B2B2B;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.30);
   color: #fff;
   text-align: center;
   font-family: "Inter";
   font-size: 10px;
   font-weight: 700;
-  padding: 4px 8px 3px;
-  margin-left: 8px;
+  padding: 6px 12px;
   flex: 0 0 auto;
-  min-width: 160px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .icoSend {

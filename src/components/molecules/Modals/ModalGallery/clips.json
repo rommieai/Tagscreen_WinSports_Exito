@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "minute": "15",
+    "title": "Gol de Millonarios",
+    "player": "Rodrigo Contreras",
+    "duration": "0:08",
+    "thumbnail": "/icons/gol.png",
+    "videoUrl": "https://res.cloudinary.com/dv5j3exqi/video/upload/v1777512795/demo-win-recap-gol_zkpi6j.mp4",
+    "type": "goal"
+  },
+  {
+    "id": 2,
+    "minute": "13",
+    "title": "Penalti de Nacional",
+    "player": "Alfredo Morelos",
+    "duration": "0:19",
+    "thumbnail": "/icons/penalti.png",
+    "videoUrl": "https://res.cloudinary.com/dv5j3exqi/video/upload/v1777512801/demo-win-recap-penalti_eh1jso.mp4",
+    "type": "penalty"
+  },
+  {
+    "id": 3,
+    "minute": "10",
+    "title": "Tarjeta Amarilla para Nacional",
+    "player": "Rodrigo Ureña",
+    "duration": "0:06",
+    "thumbnail": "/icons/tarjeta.png",
+    "videoUrl": "https://res.cloudinary.com/dv5j3exqi/video/upload/v1777512801/demo-win-recap-penalti_eh1jso.mp4",
+    "type": "yellow_card"
+  },
+  {
+    "id": 4,
+    "minute": "44",
+    "title": "Tiro de Esquina de Nacional",
+    "player": "Andrés Sarmiento",
+    "duration": "0:15",
+    "thumbnail": "/icons/tiro.png",
+    "videoUrl": "https://res.cloudinary.com/dv5j3exqi/video/upload/v1777512799/demo-win-recap-tiro-esquina_nqdqmn.mp4",
+    "type": "corner"
+  }
+]
