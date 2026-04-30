@@ -295,10 +295,6 @@ const Juego = () => {
       }
     };
 
-    setTimeout(()=> {
-      openModal(MODAL_TYPES.TRIVIA, 'nacional')
-    }, 5000);
-
     if (!isTestMode) {
       startCamera();
     }
