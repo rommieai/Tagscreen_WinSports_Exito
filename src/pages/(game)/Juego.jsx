@@ -42,7 +42,7 @@ const Juego = () => {
   const [syncInfo, setSyncInfo] = useState(null); // { matchTime, matchTimeSeconds, offsetSec }
   const [jerseyToast, setJerseyToast] = useState(null); // { team, confidence }
   const jerseyToastTimerRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const firebaseConfig = useMemo(() => ({
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB7rkLT_XZjhhMAfdTSVuXzeYyAJJ9umvk",
