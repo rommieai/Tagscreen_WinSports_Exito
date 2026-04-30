@@ -16,6 +16,7 @@ import { useEffect, useRef } from "react";
 import { useSession } from "../../../context/Session/SessionContext";
 import { trackEvent } from "../../../lib/firebaseAnalytics";
 import ModalReferee from "../../molecules/Modals/ModalReferee/ModalReferee";
+import ModalGallery from "../../molecules/Modals/ModalGallery/ModalGallery";
 function getPopupGroup(modalType, modalData) {
   if (modalData?.name === "meli") return "logos";
   if (modalType === MODAL_TYPES.PRODUCT) {
@@ -107,6 +108,8 @@ export default function CardModal() {
         return <ModalReferee data={modalData} onClose={closeModal} />;
       case MODAL_TYPES.GOAL:
         return <ModalGoal />;
+      case MODAL_TYPES.GALLERY:
+        return <ModalGallery />;
       default:
         return null;
     }
@@ -120,6 +123,7 @@ export default function CardModal() {
     [MODAL_TYPES.AWARD]: style.award,
     [MODAL_TYPES.REFEREE]: style.referee,
     [MODAL_TYPES.GOAL]: style.goal,
+    [MODAL_TYPES.GALLERY]: style.gallery,
   };
 
   const handleClick = (name) => {
