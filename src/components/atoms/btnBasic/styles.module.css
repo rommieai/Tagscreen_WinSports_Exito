@@ -11,3 +11,7 @@
   transition: all 0.2s ease-in-out;
   width: 172px;
 }
+
+.btnBasic:hover {
+  color: #fff;
+}
