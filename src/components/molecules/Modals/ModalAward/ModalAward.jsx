@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 import AwardItem from "./AwardItem";
 
 const PRODUCT_MAP = {
-  product_1: { image: "/images/products/img-gaseosa-postobon.png", name: "Gaseosa POSTOBON Duo",     oldPrice: "$12.000", newPrice: "$6.000",    discount: "-50" },
+  product_1: { image: "/images/products/img-gaseosa-postobon.png", name: "Gaseosa POSTOBON",     oldPrice: "$12.000", newPrice: "$6.000",    discount: "-50" },
   product_2: { image: "/images/products/img-cerveza-andina.png",   name: "Six Pack Cerveza Andina", oldPrice: "$50.000", newPrice: "$25.000",   discount: "-50" },
   product_3: { image: "/images/products/img-nike-balon.png",       name: "Balón Nike Pitch",        oldPrice: "$100.000",newPrice: "$50.000",   discount: "-50" },
   product_4: { image: "/images/products/img-product-adidas.png",   name: "Zapatillas Adidas",       oldPrice: "$300.000",newPrice: "$165.000",  discount: "-45" },
