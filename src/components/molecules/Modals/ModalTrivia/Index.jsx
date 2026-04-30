@@ -9,6 +9,11 @@ const PRODUCT_MAP = {
     4: { name: 'Zapatillas Adidas',          oldPrice: '$300.000', newPrice: '$165.000',  img: '/images/products/img-product-adidas.png' },
 };
 
+const TEAM_PRODUCTS = {
+    nacional:    [1, 3],
+    millonarios: [2, 4],
+};
+
 export default function ModalTrivia(equipo) {
     const [questionObj, setQuestionObj] = useState(null);
     const [selectedOptionId, setSelectedOptionId] = useState(null);
@@ -50,8 +55,9 @@ export default function ModalTrivia(equipo) {
             productData = { products: [] };
         }
 
-        if (equipo.data === 'millonarios' || equipo.data === 'nacional') {
-            const nextIndex = (productData.products.length % 4) + 1;
+        const teamProducts = TEAM_PRODUCTS[equipo.data];
+        if (teamProducts) {
+            const nextIndex = teamProducts[productData.products.length % teamProducts.length];
             setSelectedProduct(PRODUCT_MAP[nextIndex]);
             productData.products.push(`product_${nextIndex}`);
 
