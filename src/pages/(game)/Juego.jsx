@@ -16,6 +16,8 @@ import {
 } from "../../context/CardModal/CardModalContext";
 import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudio";
 import eventsData from "./events.json";
+import { useScoreboard } from "../../context/Scoreboard/ScoreboardContext";
+import Marcador from "../../components/atoms/Marcador/Marcador";
 
 const isTestMode = import.meta.env.VITE_TEST_MODE === 'true';
 const isDemo = import.meta.env.VITE_DEMO === 'true';
@@ -30,6 +32,7 @@ const Juego = () => {
   const [audioOffset, setAudioOffset] = useState(0);
   const { agregarResultado } = useResultado();
   const { openModal, closeModal, isOpen, modalType } = useCardModal();
+  const { addGoal } = useScoreboard();
   const isStream = import.meta.env.VITE_BACK_ACTIVE_STREAM === "true";
   const [boxRecognized, setIsBoxRecognized] = useState(false);
   const [audioDetected, setAudioDetected] = useState(null);
@@ -184,6 +187,7 @@ const Juego = () => {
           setTimeout(() => openModal(MODAL_TYPES.REFEREE), 1500);
         } else if (entry.event === "goal") {
           triggerNotification("goal");
+          addGoal('mil');
           setTimeout(() => openModal(MODAL_TYPES.GOAL), 1500);
         } else if (entry.event === "jersey") {
           const teamJersey = entry.teamJersey;
@@ -434,6 +438,7 @@ const Juego = () => {
 
         {(isTvDetected || isTestMode) && (
           <div className={css.container}>
+            <Marcador />
             <GameUI />
             <GameModal />
             <InputChat />
