@@ -79,8 +79,8 @@
 }
 
 .nextBtn:hover {
-  background-color: #ffffff;
-  color: #383838;
+  background-color: #333;
+  color: #fff;
 }
 
 .skipBtn {
