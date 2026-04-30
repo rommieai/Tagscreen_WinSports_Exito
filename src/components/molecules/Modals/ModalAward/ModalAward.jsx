@@ -2,23 +2,12 @@ import React, { useState, useEffect } from "react";
 import styles from "./styles.module.css";
 import AwardItem from "./AwardItem";
 
-const DUMMY_SLIDES = [
-  {
-    id: 1,
-    image: "https://www.andina.com.co/sites/default/files/sixpack_0.png",
-    title: "Six Pack Andina",
-  },
-  {
-    id: 2,
-    image: "https://www.andina.com.co/sites/default/files/sixpack_0.png",
-    title: "Camiseta WinSports",
-  },
-  {
-    id: 3,
-    image: "https://www.andina.com.co/sites/default/files/sixpack_0.png",
-    title: "Pack Combo Fan",
-  },
-];
+const PRODUCT_MAP = {
+  product_1: { image: "/images/products/img-gaseosa-postobon.png", name: "Gaseosa POSTOBON Duo",     oldPrice: "$12.000", newPrice: "$6.000",    discount: "-50" },
+  product_2: { image: "/images/products/img-cerveza-andina.png",   name: "Six Pack Cerveza Andina", oldPrice: "$50.000", newPrice: "$25.000",   discount: "-50" },
+  product_3: { image: "/images/products/img-nike-balon.png",       name: "Balón Nike Pitch",        oldPrice: "$100.000",newPrice: "$50.000",   discount: "-50" },
+  product_4: { image: "/images/products/img-product-adidas.png",   name: "Zapatillas Adidas",       oldPrice: "$300.000",newPrice: "$165.000",  discount: "-45" },
+};
 
 const DISABLED_SLIDES = Array.from({ length: 4 }).map((_, index) => ({
   id: `disabled-${index}`,
@@ -49,13 +38,17 @@ export default function ModalAward({ data, onClose }) {
     }
   }, []);
 
-  const activeSlides = productsArray.length > 0
-    ? productsArray.map((prod, i) => ({
-        id: `prod-${i}`,
-        image: prod === 'product_1' ? '/images/products/product-andina.png' : '/images/products/product-adidas.png',
-        title: prod === 'product_1' ? 'Producto Andina' : 'Producto Adidas'
-    }))
-    : data?.items ?? DUMMY_SLIDES;
+  const activeSlides = productsArray.map((prod, i) => {
+    const info = PRODUCT_MAP[prod];
+    return {
+      id: `prod-${i}`,
+      image: info?.image ?? "/images/products/disabled-product-1.png",
+      name: info?.name ?? prod,
+      oldPrice: info?.oldPrice,
+      newPrice: info?.newPrice,
+      discount: info?.discount,
+    };
+  });
 
   const slides = currentAwwards ? activeSlides : DISABLED_SLIDES;
 
