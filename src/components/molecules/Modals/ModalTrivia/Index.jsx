@@ -2,36 +2,12 @@ import React, { useState, useEffect } from 'react';
 import triviaData from './data.json';
 import styles from './styles.module.css';
 
-const PRODUCTS = {
-    nacional: [
-        { name: 'Zapatillas Adidas', oldPrice: '$300.000', newPrice: '$165.000', img: '/images/products/img-product-adidas.png' },
-        { name: 'Six Pack Cerveza Andina', oldPrice: '$50.000', newPrice: '$25.000', img: '/images/products/img-cerveza-andina.png' },
-    ],
-    millonarios: [
-        { name: 'Gaseosa POSTOBON Duo', oldPrice: '$12.000', newPrice: '$6.000', img: '/images/products/img-gaseosa-postobon.png' },
-        { name: 'Balon Nike Pitch Training', oldPrice: '$100.000', newPrice: '$50.000', img: '/images/products/img-nike-balon.png' },
-    ],
+const PRODUCT_MAP = {
+    1: { name: 'Gaseosa POSTOBON Duo',      oldPrice: '$12.000',  newPrice: '$6.000',    img: '/images/products/img-gaseosa-postobon.png' },
+    2: { name: 'Six Pack Cerveza Andina',    oldPrice: '$50.000',  newPrice: '$25.000',   img: '/images/products/img-cerveza-andina.png' },
+    3: { name: 'Balon Nike Pitch Training',  oldPrice: '$100.000', newPrice: '$50.000',   img: '/images/products/img-nike-balon.png' },
+    4: { name: 'Zapatillas Adidas',          oldPrice: '$300.000', newPrice: '$165.000',  img: '/images/products/img-product-adidas.png' },
 };
-
-// Persists across remounts — tracks which product indices were already shown per team
-const shownProductsMap = {};
-
-function getNextProduct(teamKey) {
-    const key = teamKey?.toLowerCase();
-    const products = PRODUCTS[key];
-    if (!products) return null;
-
-    if (!shownProductsMap[key]) shownProductsMap[key] = new Set();
-    const shown = shownProductsMap[key];
-
-    if (shown.size >= products.length) shown.clear();
-
-    const available = products.map((_, i) => i).filter(i => !shown.has(i));
-    const pick = available[Math.floor(Math.random() * available.length)];
-    shown.add(pick);
-
-    return products[pick];
-}
 
 export default function ModalTrivia(equipo) {
     const [questionObj, setQuestionObj] = useState(null);
@@ -67,38 +43,25 @@ export default function ModalTrivia(equipo) {
         setSelectedOptionId(optionId);
         setShowResult(true);
 
+        let productData = { products: [] };
         try {
             const existingProduct = localStorage.getItem('product');
-            let productData = existingProduct ? JSON.parse(existingProduct) : { products: [] };
-
-            if (!Array.isArray(productData.products)) {
-                productData.products = [];
-            }
-
-            let productToAdd = "";
-            if (equipo.data === 'Millonarios' || equipo.data === 'Nacional') {
-                productToAdd = 'product_1';
-            } else if (equipo.data === 'DIM' || equipo.data === 'SFE') {
-                productToAdd = 'product_2';
-            }
-
-            if (productToAdd !== "") {
-                productData.products.push(productToAdd);
-            }
-
-            localStorage.setItem('product', JSON.stringify(productData));
+            productData = existingProduct ? JSON.parse(existingProduct) : { products: [] };
+            if (!Array.isArray(productData.products)) productData.products = [];
         } catch (e) {
-            console.error('Error manejando localStorage', e);
-            let productToAdd = "";
-            if (equipo.data === 'Millonarios' || equipo.data === 'Nacional') {
-                productToAdd = 'product_1';
-            } else if (equipo.data === 'DIM' || equipo.data === 'SFE') {
-                productToAdd = 'product_2';
+            productData = { products: [] };
+        }
+
+        if (equipo.data === 'millonarios' || equipo.data === 'nacional') {
+            const nextIndex = (productData.products.length % 4) + 1;
+            setSelectedProduct(PRODUCT_MAP[nextIndex]);
+            productData.products.push(`product_${nextIndex}`);
+
+            try {
+                localStorage.setItem('product', JSON.stringify(productData));
+            } catch (e) {
+                console.error('Error guardando en localStorage', e);
             }
-            localStorage.setItem(
-                'product',
-                JSON.stringify({ products: productToAdd ? [productToAdd] : [] })
-            );
         }
     };
 
