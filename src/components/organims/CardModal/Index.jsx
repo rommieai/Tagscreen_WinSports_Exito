@@ -9,13 +9,13 @@ import ModalProduct from "../../molecules/Modals/ModalProduct/ModalProduct";
 import ModalTrivia from "../../molecules/Modals/ModalTrivia/Index";
 import ModalMinuteToMinute from "../../molecules/Modals/ModalMinuteToMinute/ModalMinuteToMinute";
 import ModalAward from "../../molecules/Modals/ModalAward/ModalAward";
+import ModalReferee from "../../molecules/Modals/ModalReferee/ModalReferee";
 import ModalGoal from "../../molecules/Modals/ModalGoal/ModalGoal";
 import { useActiveComponents } from "../../../context/ActiveChatContext";
 import { useTarget } from "../../../context/TargetContext";
 import { useEffect, useRef } from "react";
 import { useSession } from "../../../context/Session/SessionContext";
 import { trackEvent } from "../../../lib/firebaseAnalytics";
-import ModalReferee from "../../molecules/Modals/ModalReferee/ModalReferee";
 import ModalGallery from "../../molecules/Modals/ModalGallery/ModalGallery";
 function getPopupGroup(modalType, modalData) {
   if (modalData?.name === "meli") return "logos";
