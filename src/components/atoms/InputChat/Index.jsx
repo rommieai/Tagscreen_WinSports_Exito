@@ -8,9 +8,15 @@ import {
 } from "../../../context/CardModal/CardModalContext";
 import { useNotifications } from "../../../context/Notifications/NotificationsContext";
 
+const SUGGESTIONS = [
+  { text: "¿Qué tengo que hacer?", next: "n2" },
+  { text: "¿Cuáles son los premios?", next: "n3" },
+];
+
 export default function InputChat({ stateComponent }) {
   const [showMenu, setShowMenu] = useState(false);
   const [inputClicked, setInputClicked] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const { openModal, modalData, activateChat, triggerChatScroll } = useCardModal();
 
   useEffect(() => {
@@ -26,14 +32,17 @@ export default function InputChat({ stateComponent }) {
       if (showMenu) {
         setShowMenu(false);
         setInputClicked(false);
+        setShowSuggestions(false);
       }
     }
   }, [modalData]);
 
   const handleClickInput = () => {
-    setInputClicked(true);
+    if (!inputClicked) {
+      setInputClicked(true);
+      setShowSuggestions(true);
+    }
     if (showMenu) {
-      activateChat();
       triggerChatScroll();
     } else {
       setShowMenu(true);
@@ -41,25 +50,36 @@ export default function InputChat({ stateComponent }) {
     }
   };
 
+  const handleSuggestionClick = (e, option) => {
+    e.stopPropagation();
+    setShowSuggestions(false);
+    activateChat(option);
+    triggerChatScroll();
+  };
+
   return (
-    <div
-      className={styles.containerInput}
-      onClick={() => {
-        handleClickInput();
-      }}
-    >
+    <div className={styles.containerInput} onClick={handleClickInput}>
+      {showSuggestions && (
+        <div className={styles.subMenu}>
+          {SUGGESTIONS.map((option, i) => (
+            <button
+              key={i}
+              className={styles.itemMenu}
+              onClick={(e) => handleSuggestionClick(e, option)}
+            >
+              {option.text}
+            </button>
+          ))}
+        </div>
+      )}
       <div className={styles.avatarImage}>
-        <img
-          src="/icons/ico-input-chat.svg"
-          alt="Mensajero Meli"
-        ></img>
+        <img src="/icons/ico-input-chat.svg" alt="Mensajero Meli" />
       </div>
       {!inputClicked && (
         <p className={styles.textInput}>
           Toca aquí y resolveré tus dudas
         </p>
       )}
-
       <motion.img
         src="/images/arrow-send.svg"
         alt="Ico Send"

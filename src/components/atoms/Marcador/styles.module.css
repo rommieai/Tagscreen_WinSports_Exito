@@ -1,0 +1,92 @@
+/* Absolute position on the game screen */
+.wrapper {
+  position: absolute;
+  left: 9px;
+  top: 56px;
+  width: 49px;
+  height: 122px;
+  z-index: 10;
+}
+
+/* Gradient vertical bar — sits behind logo and labels */
+.bar {
+  position: absolute;
+  left: 7px;
+  top: 13px;
+  width: 35px;
+  height: 109px;
+  border-radius: 60px;
+  background: linear-gradient(180deg, #ffffff 0%, #a7a7a7 100%);
+}
+
+/* Éxito logo circle — sits on top of bar */
+.logo {
+  position: absolute;
+  left: -3.7px;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 25%;
+  object-fit: contain;
+}
+
+/* Team labels */
+.labelMil {
+  position: absolute;
+  left: 50%;
+  top: 52px;
+  transform: translateX(-50%);
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.labelNac {
+  position: absolute;
+  left: 50%;
+  top: 84px;
+  transform: translateX(-50%);
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Score bubbles — positioned on the bar */
+.bubble {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #2b2b2b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bubbleMil {
+  left: 17px;
+  top: 65px;
+}
+
+.bubbleNac {
+  left: 17px;
+  top: 98px;
+}
+
+.bubbleScore {
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  display: block;
+}

@@ -9,6 +9,7 @@ import { notificationsConfig } from "./notificationsConfig";
 export default function Notifications() {
   const { activeNotifications } = useNotifications();
   const [textNotification, setTextNotification] = useState(false);
+  const [imgNotification, setImgNotification] = useState(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -21,11 +22,12 @@ export default function Notifications() {
     if (!notificationData) return;
 
     setTextNotification(notificationData?.text);
+    setImgNotification(notificationData?.img || null);
     setVisible(true);
 
     const timer = setTimeout(() => {
       setVisible(false);
-    }, 10000);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, [activeNotifications]);
@@ -39,7 +41,7 @@ export default function Notifications() {
           exit={{ opacity: 0, y: -40 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-          <NotificationItem notification={textNotification} />
+          <NotificationItem notification={textNotification} img={imgNotification} />
         </motion.div>
       )}
     </AnimatePresence>

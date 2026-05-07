@@ -1,0 +1,158 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/* ── GOOOOOOOL panel ───────────────────────────── */
+.golPanel {
+  width: 100%;
+  height: 148px;
+  position: relative;
+  border-radius: 18px;
+  background: linear-gradient(179.61deg, #ffffff 49.998%, #c1c1c1 99.327%);
+  overflow: hidden;
+  margin-top: 46px;
+}
+
+.text {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 70px;
+  line-height: 1;
+  color: #2b2b2b;
+  animation: scrollLeft 2.8s linear infinite;
+}
+
+@keyframes scrollLeft {
+  0%   { transform: translateY(-50%) translateX(110vw); }
+  100% { transform: translateY(-50%) translateX(-110%); }
+}
+
+.scorePanel {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  gap: 5px;
+}
+
+.scoreCard {
+  width: 149px;
+  height: 184px;
+  border-radius: 17px;
+  background: linear-gradient(179.03deg, #ffffff 49.998%, #c1c1c1 99.327%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 18px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.teamName {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 12px;
+  color: #000;
+  text-align: center;
+  margin: 0;
+}
+
+.scoreBox {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.scoreNum {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 128px;
+  line-height: 1;
+  color: #000;
+  text-align: center;
+  display: block;
+  position: absolute;
+}
+
+/* ── Replay card ───────────────────────────────── */
+.replayCard {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  padding: 8px 18px;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.videoThumb {
+  width: 100%;
+  height: 113px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #111;
+  flex-shrink: 0;
+  display: block;
+}
+
+.replayText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 11px;
+  line-height: normal;
+  color: #2b2b2b;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+.shareBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 15px;
+  border-radius: 25px;
+  background: #2b2b2b;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.shareBtnLabel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 12px;
+  color: #fff;
+  white-space: nowrap;
+}

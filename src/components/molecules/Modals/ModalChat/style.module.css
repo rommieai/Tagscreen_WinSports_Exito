@@ -1,19 +1,15 @@
 .modalChat {
-  border-radius: 12px;
-  background: var(--Degrade, linear-gradient(180deg, rgba(255, 230, 0, 0.30) 0%, #FFE600 100%));
   padding: 0;
   text-align: center;
   position: relative;
   height: 100%;
-  max-height: 240px;
-  padding-bottom: 10px;
 }
 
 .chatContainer {
   overflow-y: scroll;
   padding-top: 26px;
-  padding-right: 43px;
-  padding-left: 34px;
+  padding-right: 5px;
+  padding-left: 18px;
   height: 100%;
 }
 

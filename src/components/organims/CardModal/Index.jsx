@@ -10,11 +10,13 @@ import ModalTrivia from "../../molecules/Modals/ModalTrivia/Index";
 import ModalMinuteToMinute from "../../molecules/Modals/ModalMinuteToMinute/ModalMinuteToMinute";
 import ModalAward from "../../molecules/Modals/ModalAward/ModalAward";
 import ModalReferee from "../../molecules/Modals/ModalReferee/ModalReferee";
+import ModalGoal from "../../molecules/Modals/ModalGoal/ModalGoal";
 import { useActiveComponents } from "../../../context/ActiveChatContext";
 import { useTarget } from "../../../context/TargetContext";
 import { useEffect, useRef } from "react";
 import { useSession } from "../../../context/Session/SessionContext";
 import { trackEvent } from "../../../lib/firebaseAnalytics";
+import ModalGallery from "../../molecules/Modals/ModalGallery/ModalGallery";
 function getPopupGroup(modalType, modalData) {
   if (modalData?.name === "meli") return "logos";
   if (modalType === MODAL_TYPES.PRODUCT) {
@@ -104,6 +106,10 @@ export default function CardModal() {
         return <ModalAward data={modalData} onClose={closeModal} />;
       case MODAL_TYPES.REFEREE:
         return <ModalReferee data={modalData} onClose={closeModal} />;
+      case MODAL_TYPES.GOAL:
+        return <ModalGoal />;
+      case MODAL_TYPES.GALLERY:
+        return <ModalGallery />;
       default:
         return null;
     }
@@ -116,6 +122,8 @@ export default function CardModal() {
     [MODAL_TYPES.MINUTE_TO_MINUTE]: style.minuteToMinute,
     [MODAL_TYPES.AWARD]: style.award,
     [MODAL_TYPES.REFEREE]: style.referee,
+    [MODAL_TYPES.GOAL]: style.goal,
+    [MODAL_TYPES.GALLERY]: style.gallery,
   };
 
   const handleClick = (name) => {
@@ -161,6 +169,8 @@ export default function CardModal() {
     </svg>
   );
 
+  console.log(modalType)
+
   const overlayVariants = {
     hidden: {
       opacity: 0,
@@ -168,7 +178,7 @@ export default function CardModal() {
     },
     visible: {
       opacity: 1,
-      bottom: "75px",
+      bottom: modalType === 'chat' ? "118px" : "75px",
       transition: {
         duration: 0.5,
         ease: "easeOut",
@@ -178,7 +188,7 @@ export default function CardModal() {
 
   return (
     <motion.div
-      className={style.cardModalOverlay}
+      className={[style.cardModalOverlay].filter(Boolean).join(" ")}
       variants={overlayVariants}
       initial="hidden"
       animate="visible"

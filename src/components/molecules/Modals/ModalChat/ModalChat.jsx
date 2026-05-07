@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./style.module.css";
 import MessageBasic from "../../../MessageBasic/MessageBasic";
 import BntBasic from "../../../atoms/btnBasic/btnBasic";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "../../../../context/Session/SessionContext";
 import { trackEvent } from "../../../../lib/firebaseAnalytics";
 import { useCardModal } from "../../../../context/CardModal/CardModalContext";
+import ContentChat from "../../MainDataChat/ContentChat";
 
 import chatFlow from "./data.json";
 
@@ -19,32 +20,39 @@ export default function ModalChat({ data, onClose }) {
   const activatedRef = useRef(false);
   const autoOpenRef = useRef(data?.autoOpen === true);
   const { sessionId } = useSession();
-  const { chatActivated, chatScrollTrigger } = useCardModal();
+  const { chatActivated, chatSelectedOption, chatScrollTrigger } = useCardModal();
 
   const nextId = () => idCounter.current++;
+  const scrollTargetIdRef = useRef(null);
 
-  const scrollToBottom = () => {
-    const container = chatContainerRef.current;
-    if (!container) return;
-    container.scrollBy({ top: container.clientHeight * 0.2, behavior: "smooth" });
-  };
+  useEffect(() => {
+    if (!scrollTargetIdRef.current || options.length === 0) return;
+    const target = chatContainerRef.current?.querySelector(
+      `[data-msg-id="${scrollTargetIdRef.current}"]`
+    );
+    if (target) {
+      chatContainerRef.current.scrollTo({ top: target.offsetTop, behavior: "smooth" });
+      scrollTargetIdRef.current = null;
+    }
+  }, [options]);
 
   useEffect(() => {
     if (autoOpenRef.current) {
       loadNode("n0");
-    } else {
-      loadNode("n1");
     }
   }, []);
-
-  
 
   useEffect(() => {
     if (chatActivated && !activatedRef.current) {
       activatedRef.current = true;
-      loadNode("n1");
+      if (chatSelectedOption) {
+        setMessages([{ id: nextId(), text: chatSelectedOption.text, isBot: false }]);
+        setTimeout(() => loadNode(chatSelectedOption.next), 300);
+      } else if (!autoOpenRef.current) {
+        loadNode("n1");
+      }
     }
-  }, [chatActivated]);
+  }, [chatActivated, chatSelectedOption]);
 
   const addBotMessages = (nodeMessages, callback) => {
     nodeMessages.forEach((text, i) => {
@@ -86,71 +94,86 @@ export default function ModalChat({ data, onClose }) {
       ...prev,
       { id: nextId(), text: option.text, isBot: false },
     ]);
+    scrollTargetIdRef.current = idCounter.current;
     setOptions([]);
 
     setTimeout(() => {
       loadNode(option.next);
     }, 300);
-
-    setTimeout(() => {
-      scrollToBottom();
-    }, 2000);
   };
 
   return (
     <div className={styles.modalChat}>
-      <div className={styles.chatContainer} ref={chatContainerRef}>
-        <>
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={
-                message.isBot
-                  ? styles.messageWrapper
-                  : styles.userMessageWrapper
-              }
-            >
-              {message.isBot ? (
-                <>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
-                    className={styles.avatar}
-                  >
-                    <img
-                      src="/icons/ico-input-chat.svg"
-                      alt="Avatar bot"
-                    />
-                  </motion.div>
-                  <MessageBasic message={message.text} />
-                </>
-              ) : (
-                <div className={styles.userChoice}>
-                  <BntBasic text={message.text} />
-                </div>
-              )}
-            </div>
-          ))}
-          <div ref={chatEndRef} />
-        </>
+      <AnimatePresence>
+        {!chatActivated && (
+          <motion.div
+            key="content"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ContentChat />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        {options.length > 0 && (
-          <div className={styles.optionsContainer}>
-            {options.map((option, index) => (
+      <AnimatePresence>
+        {chatActivated && (
+          <motion.div
+            key="chat"
+            className={styles.chatContainer}
+            ref={chatContainerRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            {messages.map((message) => (
               <div
-                key={index}
-                className={styles.choiceBtn}
-                onClick={() => {
-                  handleOption(option);
-                }}
+                key={message.id}
+                data-msg-id={message.isBot ? message.id : undefined}
+                className={
+                  message.isBot
+                    ? styles.messageWrapper
+                    : styles.userMessageWrapper
+                }
               >
-                {option.text}
+                {message.isBot ? (
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
+                      className={styles.avatar}
+                    >
+                      <img src="/icons/ico-input-chat.svg" alt="Avatar bot" />
+                    </motion.div>
+                    <MessageBasic message={message.text} />
+                  </>
+                ) : (
+                  <div className={styles.userChoice}>
+                    <BntBasic text={message.text} />
+                  </div>
+                )}
               </div>
             ))}
-          </div>
+            <div ref={chatEndRef} />
+
+            {options.length > 0 && (
+              <div className={styles.optionsContainer}>
+                {options.map((option, index) => (
+                  <div
+                    key={index}
+                    className={styles.choiceBtn}
+                    onClick={() => handleOption(option)}
+                  >
+                    {option.text}
+                  </div>
+                ))}
+              </div>
+            )}
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 }

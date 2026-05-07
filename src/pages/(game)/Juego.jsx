@@ -16,6 +16,8 @@ import {
 } from "../../context/CardModal/CardModalContext";
 import DetectorAudio from "../../components/molecules/DetectorAudio/DetectorAudio";
 import eventsData from "./events.json";
+import { useScoreboard } from "../../context/Scoreboard/ScoreboardContext";
+import Marcador from "../../components/atoms/Marcador/Marcador";
 
 const isTestMode = import.meta.env.VITE_TEST_MODE === 'true';
 const isDemo = import.meta.env.VITE_DEMO === 'true';
@@ -30,12 +32,14 @@ const Juego = () => {
   const [audioOffset, setAudioOffset] = useState(0);
   const { agregarResultado } = useResultado();
   const { openModal, closeModal, isOpen, modalType } = useCardModal();
+  const { addGoal } = useScoreboard();
   const isStream = import.meta.env.VITE_BACK_ACTIVE_STREAM === "true";
   const [boxRecognized, setIsBoxRecognized] = useState(false);
   const [audioDetected, setAudioDetected] = useState(null);
   const { triggerNotification } = useNotifications();
   const trackedLogosRef = useRef(new Set());
   const hasSyncedRef = useRef(false);
+  const lastGoalAtRef = useRef(-60); // seconds of last goal; starts at -60 to allow first goal immediately
   const [syncInfo, setSyncInfo] = useState(null); // { matchTime, matchTimeSeconds, offsetSec }
   const [jerseyToast, setJerseyToast] = useState(null); // { team, confidence }
   const jerseyToastTimerRef = useRef(null);
@@ -144,7 +148,7 @@ const Juego = () => {
 
     const checkVideoStatus = async () => {
       try {
-        const videoId = "world-cup";
+        const videoId = "win";
         const response = await fetch(`https://api.webplayer.tagscreen.ai/video/status/${videoId}`);
         const data = await response.json();
         console.log("Status del video:", data);
@@ -175,9 +179,26 @@ const Juego = () => {
       const secs = seconds % 60;
       const minutekey = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 
+      console.log(minutekey)
       const entry = eventsData.eventos.find((e) => e.minutekey === minutekey);
       if (entry) {
         console.log("[DEMO EVENT]", entry);
+        if (entry.event === "referee") {
+          triggerNotification("referee");
+          setTimeout(() => openModal(MODAL_TYPES.REFEREE), 1500);
+        } else if (entry.event === "goal") {
+          const GOAL_COOLDOWN = 30; // seconds — absorbs consecutive detections of the same goal
+          if (seconds - lastGoalAtRef.current >= GOAL_COOLDOWN) {
+            lastGoalAtRef.current = seconds;
+            triggerNotification("goal");
+            addGoal('mil');
+            setTimeout(() => openModal(MODAL_TYPES.GOAL), 1500);
+          }
+        } else if (entry.event === "jersey") {
+          const teamJersey = entry.teamJersey;
+          triggerNotification(`jersey${teamJersey}`);
+          setTimeout(() => openModal(MODAL_TYPES.TRIVIA, teamJersey), 1500);
+        }
       }
 
       seconds++;
@@ -196,7 +217,6 @@ const Juego = () => {
     const ultimoEvento = events[events.length - 1];
     const metadata = ultimoEvento?.md;
 
-    // --- Box / Logo detections (from YOLO objects) ---
     if (metadata?.objects?.length > 0) {
       const boxDetection = metadata.objects.find(
         (obj) => obj.type === "caja" && obj.confidence >= 0.5,
@@ -222,7 +242,6 @@ const Juego = () => {
       }
     }
 
-    // --- Jersey detections (from jersey models) ---
     if (metadata?.jerseys?.length > 0) {
       const bestJersey = metadata.jerseys.reduce((best, j) =>
         j.confidence > (best?.confidence || 0) ? j : best, null
@@ -230,7 +249,6 @@ const Juego = () => {
 
       if (bestJersey && bestJersey.confidence >= 0.5 && !trackedJerseysRef.current.has(bestJersey.team)) {
         if (modalType != 'trivia') {
-          console.log('trivia')
           trackedJerseysRef.current.add(bestJersey.team);
           if (isTestMode) {
             // Test mode: small non-blocking corner toast so the camera stays visible
@@ -251,7 +269,6 @@ const Juego = () => {
       }
     }
 
-    // --- Arbitro detections ---
     if (metadata?.arbitro?.length > 0) {
       openModal(MODAL_TYPES.REFEREE)
     }
@@ -426,6 +443,7 @@ const Juego = () => {
 
         {(isTvDetected || isTestMode) && (
           <div className={css.container}>
+            <Marcador />
             <GameUI />
             <GameModal />
             <InputChat />

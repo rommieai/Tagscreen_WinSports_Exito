@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNotifications } from "../../../context/Notifications/NotificationsContext";
 import styles from "./style.module.css";
 
-export default function NotificationItem({ notification }) {
+export default function NotificationItem({ notification, img }) {
   const { closeNotification } = useNotifications();
 
   const handleClick = () => {
@@ -22,16 +22,19 @@ export default function NotificationItem({ notification }) {
             transition={{ duration: 0.5 }}
           >
             <div
-              className={`${styles.container_message} ${styles.bell_animate}`}
+              className={`${styles.container_message} ${styles.bell_animate} ${img ? styles.container_message_bg : ""}`}
+              style={img ? { backgroundImage: `url(${img})` } : undefined}
               onClick={() => handleClick()}
             >
               <p dangerouslySetInnerHTML={{ __html: notification }}></p>
-              <div className={styles.ico_notification}>
-                <img
-                  src="/images/logos/logo-notification.svg"
-                  alt="Logo Mercado Libre Notifacion"
-                />
-              </div>
+              {!img && (
+                <div className={styles.ico_notification}>
+                  <img
+                    src="/images/logos/logo-notification.svg"
+                    alt="Logo Mercado Libre Notifacion"
+                  />
+                </div>
+              )}
             </div>
           </motion.div>
         )}
