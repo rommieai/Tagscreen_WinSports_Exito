@@ -9,7 +9,7 @@ import ModalProduct from "../../molecules/Modals/ModalProduct/ModalProduct";
 import ModalTrivia from "../../molecules/Modals/ModalTrivia/Index";
 import ModalMinuteToMinute from "../../molecules/Modals/ModalMinuteToMinute/ModalMinuteToMinute";
 import ModalAward from "../../molecules/Modals/ModalAward/ModalAward";
-import ModalReferee from "../../molecules/Modals/ModalReferee";
+import ModalReferee from "../../molecules/Modals/ModalReferee/ModalReferee";
 import { useActiveComponents } from "../../../context/ActiveChatContext";
 import { useTarget } from "../../../context/TargetContext";
 import { useEffect, useRef } from "react";
