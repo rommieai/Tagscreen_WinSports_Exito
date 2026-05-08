@@ -33,4 +33,16 @@ export const notificationsConfig = [
     type: "trigger",
     triggerKey: "referee",
   },
+  {
+    id: "n7",
+    text: "¡Encontraste la banca del equipo!",
+    type: "trigger",
+    triggerKey: "bench",
+  },
+  {
+    id: "n8",
+    text: "¡Encontraste a Brian Gutiérrez!",
+    type: "trigger",
+    triggerKey: "briangutierrez",
+  },
 ];

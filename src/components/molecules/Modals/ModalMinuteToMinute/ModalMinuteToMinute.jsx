@@ -46,7 +46,7 @@ const readCommentariesFromStorage = () => {
   }
 };
 
-export default function ModalMinuteToMinute() {
+export default function ModalMinuteToMinute({ data }) {
   const [commentaries, setCommentaries] = useState([]);
 
   // Comentarios provenientes de useFirebaseEvents via localStorage
@@ -105,7 +105,10 @@ export default function ModalMinuteToMinute() {
   }, [commentaries, liveCommentaries]);
 
   useEffect(() => {
-    const fixture_id = import.meta.env.VITE_FIREBASE_FIXTURE_ID || "5ff653se2gnpi4y9a4nus4xec";
+    const fixture_id =
+      data?.fixtureId ||
+      import.meta.env.VITE_FIREBASE_FIXTURE_ID ||
+      "5ff653se2gnpi4y9a4nus4xec";
 
     const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
     const db = getDatabase(app);

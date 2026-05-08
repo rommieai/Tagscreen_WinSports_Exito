@@ -31,6 +31,8 @@ export default defineConfig(({ mode }) => {
         ],
       },
       workbox: {
+        // Prevent the SW from intercepting navigation to /dashboard/ (served separately by nginx)
+        navigateFallbackDenylist: [/^\/dashboard\//],
         runtimeCaching: [
           {
             urlPattern: ({ request }) =>

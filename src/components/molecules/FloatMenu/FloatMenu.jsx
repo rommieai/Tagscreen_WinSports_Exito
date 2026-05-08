@@ -1,4 +1,5 @@
 import { useCardModal, MODAL_TYPES } from "../../../context/CardModal";
+import { useVodContext } from "../../../context/VodContext";
 import style from "./styles.module.css";
 
 const menuItems = [
@@ -21,10 +22,11 @@ const menuItems = [
 
 export default function FloatMenu() {
  const { openModal } = useCardModal();
+ const { fixtureId } = useVodContext();
 
  const handleItemClick = (type) => {
    if (type === "minutetominute") {
-     openModal(MODAL_TYPES.MINUTE_TO_MINUTE, 'data');
+     openModal(MODAL_TYPES.MINUTE_TO_MINUTE, fixtureId ? { fixtureId } : 'data');
    } else if (type === "cart") {
      openModal(MODAL_TYPES.AWARD);
    } else if (type === "gallery") {
