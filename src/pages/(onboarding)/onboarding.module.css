@@ -2,7 +2,7 @@
   position: relative;
   height: 100dvh;
   overflow: hidden;
-  background: #FFE600;
+  background: #ff5501;
   width: 100%;
   display: grid;
   align-content: center;
@@ -12,7 +12,7 @@
 .title {
   color: #333;
   text-align: center;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -92,7 +92,7 @@
   display: flex;
   width: 77px;
   height: 25px;
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
   border-radius: 20px;
   padding: 8px 12px;
   justify-content: center;
@@ -101,7 +101,7 @@
 }
 
 .skipBtn span {
-  color: #5E5E5E;
+  color: #5e5e5e;
   text-align: right;
   font-family: "Inter";
   font-size: 13px;

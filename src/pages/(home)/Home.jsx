@@ -44,11 +44,15 @@ export default function Home() {
         <img
           src="/images/logos/logo-main-home.svg"
           alt="Permisos"
-          style={{ width: "177px", height: "70px" }}
+          style={{ width: "194px", height: "110px" }}
           className={styles.logoMain}
         />
         {import.meta.env.VITE_APP_OFF !== "true" && (
-          <BtnBasic text="Comenzar" link="/onboarding" onClick={handleContinueClick} />
+          <BtnBasic
+            text="Comenzar"
+            link="/onboarding"
+            onClick={handleContinueClick}
+          />
           //${styles.btnMain} ${!acceptedTerms ? styles.disabled : ""}
         )}
 
@@ -62,21 +66,12 @@ export default function Home() {
             />
           </label>
           <p>
-            {!showError ? "He leído y acepto" : "Acepta"} los{' '}
-            <a
-              href="#"
-              target="_blank"
-              onClick={handleTermsLinkClick}
-            >
+            {!showError ? "He leído y acepto" : "Acepta"} los{" "}
+            <a href="#" target="_blank" onClick={handleTermsLinkClick}>
               Términos y Condiciones
             </a>
-            <br></br>
-            y la{' '} 
-            <a
-              href="#"
-              target="_blank"
-              onClick={handleTermsLinkClick}
-            >
+            <br></br>y la{" "}
+            <a href="#" target="_blank" onClick={handleTermsLinkClick}>
               Política de Privacidad.
             </a>
           </p>
