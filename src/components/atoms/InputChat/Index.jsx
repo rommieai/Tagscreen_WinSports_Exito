@@ -23,7 +23,7 @@ export default function InputChat({ stateComponent }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowMenu(true);
-      openModal(MODAL_TYPES.GOAL, { autoOpen: true });
+      openModal(MODAL_TYPES.TRIVIA, "millonarios", { autoOpen: true });
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
