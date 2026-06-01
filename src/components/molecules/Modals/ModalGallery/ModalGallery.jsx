@@ -11,15 +11,19 @@ const TYPE_ICON = {
 };
 
 const MINUTE_COLOR = {
-  goal: "#3f195d",
-  penalty: "#4285f4",
-  yellow_card: "#3f195d",
-  corner: "#3f195d",
+  goal: "#CB39FF",
+  penalty: "#4285F4",
+  yellow_card: "#F4D437",
+  corner: "#00FF8C",
 };
 
 const fadeUp = {
   hidden: { opacity: 0, y: -10 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 260, damping: 22, delay: 0.06 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 260, damping: 22, delay: 0.06 },
+  },
 };
 
 function DurationBadge({ duration }) {
@@ -37,16 +41,23 @@ function ClipCard({ clip, onClick }) {
   return (
     <div className={styles.clipCard} onClick={() => onClick(clip)}>
       <div className={styles.thumbWrap}>
-        {clip.thumbnail
-          ? <img src={clip.thumbnail} alt={clip.title} className={styles.thumbImg} />
-          : <div className={styles.thumbPlaceholder} />}
+        {clip.thumbnail ? (
+          <img
+            src={clip.thumbnail}
+            alt={clip.title}
+            className={styles.thumbImg}
+          />
+        ) : (
+          <div className={styles.thumbPlaceholder} />
+        )}
         <DurationBadge duration={clip.duration} />
       </div>
 
-      <div className={styles.divider} />
-
       <div className={styles.clipInfo}>
-        <span className={styles.minute} style={{ color: MINUTE_COLOR[clip.type] }}>
+        <span
+          className={styles.minute}
+          style={{ color: MINUTE_COLOR[clip.type] }}
+        >
           |{clip.minute}&apos;
         </span>
         <p className={styles.clipTitle}>{clip.title}</p>
@@ -74,25 +85,49 @@ function ClipDetail({ clip, onBack }) {
   const handleShare = () => {
     const text = `|${clip.minute}' ${clip.title} — ${clip.player}`;
     if (navigator.share) {
-      navigator.share({ title: clip.title, text, url: clip.videoUrl || window.location.href }).catch(() => {});
+      navigator
+        .share({
+          title: clip.title,
+          text,
+          url: clip.videoUrl || window.location.href,
+        })
+        .catch(() => {});
     } else {
       window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
     }
   };
 
   return (
-    <motion.div className={styles.detailContainer} variants={fadeUp} initial="hidden" animate="visible">
+    <motion.div
+      className={styles.detailContainer}
+      variants={fadeUp}
+      initial="hidden"
+      animate="visible"
+    >
       <div className={styles.detailInnerArea}>
         <div className={styles.detailHeader}>
-          <button className={styles.backBtn} onClick={onBack} aria-label="Volver">
+          <button
+            className={styles.backBtn}
+            onClick={onBack}
+            aria-label="Volver"
+          >
             <svg width="20" height="16" viewBox="0 0 22 18" fill="none">
-              <path d="M9 1L1 9l8 8M1 9h20" stroke="#2b2b2b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M9 1L1 9l8 8M1 9h20"
+                stroke="#2b2b2b"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
 
           <div className={styles.detailDivider} />
 
-          <span className={styles.detailMinute} style={{ color: MINUTE_COLOR[clip.type] }}>
+          <span
+            className={styles.detailMinute}
+            style={{ color: MINUTE_COLOR[clip.type] }}
+          >
             |{clip.minute}&apos;
           </span>
 
@@ -113,10 +148,10 @@ function ClipDetail({ clip, onBack }) {
           />
         </div>
 
-        <button className={styles.shareBtn} onClick={handleShare}>
+        {/*<button className={styles.shareBtn} onClick={handleShare}>
           Compartir
           <IcoWhatsapp />
-        </button>
+        </button>*/}
       </div>
     </motion.div>
   );
@@ -130,7 +165,12 @@ export default function ModalGallery() {
   }
 
   return (
-    <motion.div className={styles.galleryContainer} variants={fadeUp} initial="hidden" animate="visible">
+    <motion.div
+      className={styles.galleryContainer}
+      variants={fadeUp}
+      initial="hidden"
+      animate="visible"
+    >
       <div className={styles.innerArea}>
         <h2 className={styles.galleryTitle}>Momentos Clave del Partido</h2>
         <div className={styles.clipsScrollArea}>
