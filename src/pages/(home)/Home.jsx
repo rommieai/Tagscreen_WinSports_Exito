@@ -50,7 +50,7 @@ export default function Home() {
         {import.meta.env.VITE_APP_OFF !== "true" && (
           <BtnBasic
             text="Comenzar"
-            link="/onboarding"
+            link="/juego"
             onClick={handleContinueClick}
           />
           //${styles.btnMain} ${!acceptedTerms ? styles.disabled : ""}
