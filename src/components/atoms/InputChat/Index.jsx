@@ -17,12 +17,13 @@ export default function InputChat({ stateComponent }) {
   const [showMenu, setShowMenu] = useState(false);
   const [inputClicked, setInputClicked] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const { openModal, modalData, activateChat, triggerChatScroll } = useCardModal();
+  const { openModal, modalData, activateChat, triggerChatScroll } =
+    useCardModal();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowMenu(true);
-      openModal(MODAL_TYPES.CHAT, { autoOpen: true });
+      openModal(MODAL_TYPES.GOAL, { autoOpen: true });
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
@@ -76,9 +77,7 @@ export default function InputChat({ stateComponent }) {
         <img src="/icons/ico-input-chat.svg" alt="Mensajero Meli" />
       </div>
       {!inputClicked && (
-        <p className={styles.textInput}>
-          Toca aquí y resolveré tus dudas
-        </p>
+        <p className={styles.textInput}>Toca aquí y resolveré tus dudas</p>
       )}
       <motion.img
         src="/images/arrow-send.svg"
