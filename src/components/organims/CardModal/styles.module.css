@@ -34,7 +34,7 @@
 
 .boxInfo {
   border-radius: 10px;
-  background: linear-gradient(180deg, rgba(255, 228, 0, 0.2) 0%, #ffe400 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 37px 16px 12px 25px;
   max-width: 316px;
 }
@@ -49,12 +49,12 @@
 }
 
 .brandInfo {
-  background: linear-gradient(180deg, rgba(90, 35, 137, 0.3) 0%, #a2138e 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 41px 26px 17px;
 }
 
 .playerInfo {
-  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 45px 33px 13px;
 }
 
@@ -68,7 +68,7 @@
   overflow: hidden;
   padding: 18px 25px 17px 21px;
   border-radius: 12px;
-  background: linear-gradient(180deg, rgba(255, 230, 0, 0.30) 0%, #FFE600 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
 }
 
 .chatModal {
@@ -77,22 +77,22 @@
   overflow: hidden;
   padding: 23px 19px;
   border-radius: 12px;
-  background: linear-gradient(180deg, rgba(255, 230, 0, 0.30) 0%, #FFE600 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
 }
 
 .product {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, #fff 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
 }
 
 .joseModal {
   border-radius: 10px;
-  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 45px 33px 13px;
 }
 
 .minuteToMinute {
   border-radius: 10px;
-  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 43px 28px 28px 20px;
   height: 240px;
   overflow-y: auto;
@@ -104,7 +104,7 @@
 
 .award {
   border-radius: 10px;
-  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 32px 20px 16px;
   height: 270px;
   overflow: hidden;
@@ -112,16 +112,15 @@
 
 .trivia {
   border-radius: 10px;
-  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 32px 20px 16px;
   height: 240px;
   overflow: hidden;
 }
 
-
 .referee {
   border-radius: 10px;
-  background: linear-gradient(180deg, rgba(255, 228, 0, 0.3) 0%, #ffe400 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 32px 20px 16px;
   height: 240px;
   overflow: hidden;
@@ -129,7 +128,7 @@
 
 .gallery {
   border-radius: 12px;
-  background: linear-gradient(180deg, rgba(255, 230, 0, 0.3) 0%, #ffe600 100%);
+  background: linear-gradient(180deg, rgba(255, 85, 1, 0.3) 0%, #ff5501 100%);
   padding: 30px 11px 11px;
   height: 240px;
   overflow: hidden;

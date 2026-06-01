@@ -1,178 +1,183 @@
 .modalContainer {
-    background: #fff;
-    border-radius: 12px;
-    padding: 15px 22px 14px;
-    width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px 22px 14px;
+  width: 100%;
 }
 
 .questionText {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 16px;
-    color: #2b2b2b;
-    text-align: center;
-    margin: 0 0 22px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b2b2b;
+  text-align: center;
+  margin: 0 0 22px;
 }
 
-
 .sliderArea {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .sliderInput {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 28px; /* matches thumb height to avoid clipping */
-    background: transparent;
-    outline: none;
-    cursor: pointer;
-    border: none;
-    padding: 0;
-    margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px; /* matches thumb height to avoid clipping */
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 /* Chrome / Safari track */
 .sliderInput::-webkit-slider-runnable-track {
-    height: 22px;
-    border-radius: 11px;
-    background: linear-gradient(
-        to right,
-        #ffe600 var(--fill-percent, 0%),
-        rgba(255, 230, 0, 0.3) var(--fill-percent, 0%)
-    );
+  height: 22px;
+  border-radius: 11px;
+  background: linear-gradient(
+    to right,
+    #ff5501 var(--fill-percent, 0%),
+    rgba(255, 230, 0, 0.3) var(--fill-percent, 0%)
+  );
 }
 
 /* Chrome / Safari thumb */
 .sliderInput::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    margin-top: -3px; /* (22px track − 28px thumb) / 2 */
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  margin-top: -3px; /* (22px track − 28px thumb) / 2 */
 }
 
 /* Firefox track */
 .sliderInput::-moz-range-track {
-    height: 22px;
-    border-radius: 11px;
-    background: rgba(255, 230, 0, 0.3);
+  height: 22px;
+  border-radius: 11px;
+  background: rgba(255, 230, 0, 0.3);
 }
 
 /* Firefox filled portion */
 .sliderInput::-moz-range-progress {
-    height: 22px;
-    border-radius: 11px;
-    background: #ffe600;
+  height: 22px;
+  border-radius: 11px;
+  background: #ff5501;
 }
 
 /* Firefox thumb */
 .sliderInput::-moz-range-thumb {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  border: none;
 }
 
 /* ── Tick marks ──────────────────────────────────────── */
 
 .ticksRow {
-    display: flex;
-    justify-content: space-between;
-    padding: 3px 14px 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 14px 0;
 }
 
 .tick {
-    display: block;
-    width: 1.5px;
-    height: 5px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 1px;
+  display: block;
+  width: 1.5px;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1px;
 }
 
 /* ── Step labels ─────────────────────────────────────── */
 
 .labelsRow {
-    display: flex;
-    justify-content: space-between;
-    padding: 2px 11px 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 11px 0;
 }
 
 .labelStep {
-    display: block;
-    width: 14px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: normal;
-    color: #000;
-    text-align: center;
+  display: block;
+  width: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: normal;
+  color: #000;
+  text-align: center;
 }
 
 /* ── Result ──────────────────────────────────────────── */
 
 .resultText {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 12px;
-    line-height: normal;
-    color: #2b2b2b;
-    text-align: center;
-    margin: 10px 0 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 900;
+  font-size: 12px;
+  line-height: normal;
+  color: #2b2b2b;
+  text-align: center;
+  margin: 10px 0 0;
 }
 
 .resultContainer {
-    text-align: center;
-    border-radius: 12px;
-    background: #FFF;
-    padding: 12px;
-    animation: fadeIn 0.5s ease;
+  text-align: center;
+  border-radius: 12px;
+  background: #fff;
+  padding: 12px;
+  animation: fadeIn 0.5s ease;
 }
 
 .winText {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 18px;
-    color: #2b2b2b;
-    margin: 0 0 8px;
-    text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  color: #2b2b2b;
+  margin: 0 0 8px;
+  text-align: center;
 }
 
 .imgAward {
-    max-width: 230px;
-    width: 100%;
-    margin: 8px auto 0;
-    display: block;
+  max-width: 230px;
+  width: 100%;
+  margin: 8px auto 0;
+  display: block;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .button {
-    display: flex;
-    width: 147px;
-    height: 34px;
-    padding: 10px;
-    margin: 11px auto 0;
-    border-radius: 25px;
-    background: #2B2B2B;
-    color: #FFF;
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  width: 147px;
+  height: 34px;
+  padding: 10px;
+  margin: 11px auto 0;
+  border-radius: 25px;
+  background: #2b2b2b;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

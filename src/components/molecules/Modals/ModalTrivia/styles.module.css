@@ -1,181 +1,181 @@
 .modalContainer {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    padding: 13px 12px 12px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 13px 12px 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .questionText {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 18px;
-    color: #2b2b2b;
-    text-align: center;
-    margin: 0 0 19px 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  color: #2b2b2b;
+  text-align: center;
+  margin: 0 0 19px 0;
 }
 
 .optionsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 11px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 100%;
 }
 
 .optionButton {
-    width: 100%;
-    height: 40px;
-    background: #f78524;
-    border: none;
-    border-radius: 25px;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 24px;
-    text-align: center;
-    cursor: pointer;
-    padding: 0 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.15s ease;
+  width: 100%;
+  height: 40px;
+  background: #ff5501;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease;
 }
 
 .optionButton:disabled {
-    cursor: default;
-    opacity: 0.75;
+  cursor: default;
+  opacity: 0.75;
 }
 
 .resultWrapper {
-    background: linear-gradient(to bottom, rgba(255, 230, 0, 0.3), #ffe600);
-    border-radius: 12px;
-    padding: 24px 12px 12px;
-    width: 100%;
-    animation: fadeIn 0.5s ease;
+  background: linear-gradient(to bottom, rgba(255, 230, 0, 0.3), #ff5501);
+  border-radius: 12px;
+  padding: 24px 12px 12px;
+  width: 100%;
+  animation: fadeIn 0.5s ease;
 }
 
 .resultCard {
-    background: #fff;
-    border-radius: 12px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-    width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
 }
 
 .winText {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
-    color: #000;
-    margin: 0;
-    text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  margin: 0;
+  text-align: center;
 }
 
 .loseText {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 17px;
-    color: #2b2b2b;
-    margin: 0;
-    text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 17px;
+  color: #2b2b2b;
+  margin: 0;
+  text-align: center;
 }
 
 .resultRow {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
 }
 
 .productImg {
-    width: 105px;
-    height: 120px;
-    object-fit: contain;
-    border-radius: 4px;
-    flex-shrink: 0;
+  width: 105px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
 }
 
 .productInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
 }
 
 .productTexts {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .productName {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 11px;
-    color: #2b2b2b;
-    margin: 0;
-    text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 11px;
+  color: #2b2b2b;
+  margin: 0;
+  text-align: center;
 }
 
 .productPrice {
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    margin: 0;
-    text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  margin: 0;
+  text-align: center;
 }
 
 .priceOld {
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 16px;
-    color: #7e7e7e;
-    text-decoration: line-through;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
+  color: #7e7e7e;
+  text-decoration: line-through;
 }
 
 .priceNew {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 20px;
-    color: #2b2b2b;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  color: #2b2b2b;
 }
 
 .buyButton {
-    background: #f78524;
-    border: none;
-    border-radius: 200px;
-    height: 32px;
-    width: 100%;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 14px;
-    text-align: center;
-    cursor: pointer;
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: #ff5501;
+  border: none;
+  border-radius: 200px;
+  height: 32px;
+  width: 100%;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

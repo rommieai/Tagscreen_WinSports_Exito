@@ -1,7 +1,7 @@
 /* ── shared inner area ── */
 .innerArea {
   flex: 1;
-  background: #e7ffa5;
+  background: #fff;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -26,7 +26,7 @@
   font-size: 14px;
   font-style: italic;
   font-weight: 800;
-  color: #3f195d;
+  color: #0d222e;
   text-align: center;
   flex-shrink: 0;
   line-height: 1;
@@ -53,10 +53,13 @@
   align-items: center;
   background: white;
   border-radius: 5px;
+  border: 1px solid #0d222e;
+  border-radius: 5px;
   height: 74px;
   flex-shrink: 0;
   cursor: pointer;
   overflow: hidden;
+  gap: 4px;
 }
 
 .clipCard:active {
@@ -172,7 +175,7 @@
 
 .detailInnerArea {
   flex: 1;
-  background: #e7ffa5;
+  background: #fff;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
