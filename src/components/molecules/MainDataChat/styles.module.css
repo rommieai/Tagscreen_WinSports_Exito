@@ -2,7 +2,7 @@
   display: flex;
   padding-bottom: 10px;
   border-radius: 0 10px 10px 10px;
-  background: #2B2B2B;
+  background: #0d222e;
   padding: 18px 8px 12px;
   position: relative;
   align-items: center;
@@ -12,7 +12,7 @@
 
 .tab {
   border-radius: 7px;
-  background: #666666;
+  background: #666;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   padding: 5px 12px 4px;
   color: #fff;
@@ -21,11 +21,11 @@
   font-size: 10px;
   font-weight: 700;
   transition: all 0.3s ease;
-  margin: 0 8px;
+  margin: 0 6px;
 }
 
 .tabActive {
-  background: #ffbc00;
+  background: #ffe600;
   color: #2c2c2c;
 }
 

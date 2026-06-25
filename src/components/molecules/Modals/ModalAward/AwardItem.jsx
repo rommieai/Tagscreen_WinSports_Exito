@@ -7,9 +7,12 @@ export default function AwardItem({ item }) {
     <div className={styles.awardCard}>
       {discount && (
         <div className={styles.discountBadge}>
-          <span className={styles.discountValue}>{discount}</span>
-          <span className={styles.discountPercent}>%</span>
-          <span className={styles.discountLabel}>de dcto</span>
+          <img
+            src="/images/icons/ico-discount.png"
+            alt="Icono descuento"
+            width="20"
+            height="36"
+          />
         </div>
       )}
 

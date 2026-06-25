@@ -2,7 +2,8 @@
   width: 100%;
   height: 100%;
   border-radius: 0 10px 10px 10px;
-  background: url("/images/backgrounds/bg-modal-bag.jpg") no-repeat center center/cover;
+  background: url("/images/backgrounds/bg-modal-bag.jpg") no-repeat center
+    center/cover;
   padding: 16px 20px 15px;
 }
 
@@ -129,7 +130,7 @@
   font-family: "Poppins", sans-serif;
   font-size: 7px;
   font-weight: 500;
-  color: #ffe600;
+  color: #ff5501;
   line-height: 1;
 }
 
@@ -182,7 +183,7 @@ div.userChoice a {
 
 .slide {
   flex-shrink: 0;
-  width: 107px;
+  width: 110px;
   padding: 8px 4px 4px;
 }
 
