@@ -61,8 +61,8 @@ export default function CardModal() {
           modalData?.type === "box"
             ? modalData?.num_caja
             : modalData?.type === "logo"
-            ? modalData?.num_logo
-            : undefined,
+              ? modalData?.num_logo
+              : undefined,
       });
     }
 
@@ -80,8 +80,8 @@ export default function CardModal() {
           openedDataRef.current?.type === "box"
             ? openedDataRef.current?.num_caja
             : openedDataRef.current?.type === "logo"
-            ? openedDataRef.current?.num_logo
-            : undefined,
+              ? openedDataRef.current?.num_logo
+              : undefined,
         tiempo_permanencia_seg,
         con_interaccion: popupInteractedRef.current,
       });
@@ -169,8 +169,6 @@ export default function CardModal() {
     </svg>
   );
 
-  console.log(modalType)
-
   const overlayVariants = {
     hidden: {
       opacity: 0,
@@ -178,7 +176,7 @@ export default function CardModal() {
     },
     visible: {
       opacity: 1,
-      bottom: modalType === 'chat' ? "118px" : "75px",
+      bottom: modalType === "chat" ? "118px" : "75px",
       transition: {
         duration: 0.5,
         ease: "easeOut",
