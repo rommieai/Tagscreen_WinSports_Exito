@@ -74,6 +74,36 @@ export async function initFirebaseAnalytics() {
   }
 }
 
+const _BACKEND_URL = (import.meta.env.VITE_API_MAIN_URL || '/api/').replace(/\/$/, '') + '/analytics/track';
+const _ANALYTICS_ENV = import.meta.env.VITE_ANALYTICS_ENV || 'juego';
+const _MATCH_ID = import.meta.env.VITE_MATCH_ID || undefined;
+
+// Runtime env override — set by page-level code (e.g. Azteca sets 'azteca').
+// null means fall back to the build-time VITE_ANALYTICS_ENV.
+let _runtimeEnv = null;
+
+export function setAnalyticsEnv(env) {
+  _runtimeEnv = env;
+}
+
+function postToBackend(name, params = {}) {
+  const { session_id, ...rest } = params;
+  const properties = { ...rest };
+  if (_MATCH_ID) properties.match_id = _MATCH_ID;
+
+  fetch(_BACKEND_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event_name: name,
+      session_id: session_id || undefined,
+      properties,
+      client_time: new Date().toISOString(),
+      env: _runtimeEnv ?? _ANALYTICS_ENV,
+    }),
+  }).catch(() => {});
+}
+
 function isDebugMode() {
   return typeof window !== "undefined" &&
     window.localStorage?.getItem("analytics_debug") === "true";
@@ -81,6 +111,8 @@ function isDebugMode() {
 
 export async function trackEvent(name, params = {}) {
   const safe = safeParams(params);
+
+  postToBackend(name, safe);
 
   if (import.meta.env.DEV || isDebugMode()) {
     console.log(

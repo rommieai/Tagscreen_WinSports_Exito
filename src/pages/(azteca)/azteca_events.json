@@ -1,0 +1,11 @@
+{
+  "eventos": [
+    { "minutekey": "00:08", "event": "jersey", "teamJersey": "local" },
+    { "minutekey": "00:22", "event": "arbitro" },
+    { "minutekey": "00:27", "event": "bench" },
+    { "minutekey": "00:45", "event": "jersey", "teamJersey": "visitante" },
+    { "minutekey": "01:08", "event": "player", "playerName": "Brian Gutierrez" },
+    { "minutekey": "01:20", "event": "jersey", "teamJersey": "local" },
+    { "minutekey": "01:35", "event": "goal" }
+  ]
+}

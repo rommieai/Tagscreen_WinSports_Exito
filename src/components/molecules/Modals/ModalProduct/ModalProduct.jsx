@@ -56,6 +56,8 @@ export default function ModalProduct({ data, onClose }) {
                   nombre_producto: productoActual.nombre,
                   descuento_pct: productoActual.descuento,
                   link_destino: productoActual.link,
+                  brand: productoActual.brand || undefined,
+                  product: productoActual.nombre,
                 })
               }
             />

@@ -1,0 +1,99 @@
+.page {
+  min-height: 100vh;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.player_wrapper {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.logo {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-family: monospace;
+}
+
+.live_badge {
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  letter-spacing: 1.5px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.video {
+  width: 100%;
+  border-radius: 12px;
+  background: #000;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+  display: block;
+}
+
+.time_bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-family: monospace;
+}
+
+.time_item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.time_label {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.time_value {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.qr_hint {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+  font-family: sans-serif;
+  text-align: right;
+}
+
+.qr_hint strong {
+  color: rgba(255, 255, 255, 0.6);
+}
